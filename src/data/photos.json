@@ -658,6 +658,25 @@
   ],
   "thumb": "/img/work/dog-gate-installed-thumb.webp"
  },
+ "shop-dog": {
+  "alt": "The black shop dog asleep on the cool concrete floor of the shop",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/shop-dog-480.webp",
+    "avif": "/img/work/shop-dog-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/shop-dog-768.webp",
+    "avif": "/img/work/shop-dog-768.avif"
+   }
+  ],
+  "thumb": "/img/work/shop-dog-thumb.webp"
+ },
  "walnut-backer": {
   "alt": "Arched walnut panel showing its grain",
   "width": 4284,

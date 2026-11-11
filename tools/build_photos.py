@@ -47,6 +47,7 @@ PHOTOS = {
     'endgrain-brick-feet': ('C42569F4', 'Brick-pattern end-grain board on edge with brass feet'),
     'dog-gate-panel': ('E0BA5642', 'Wooden gate panel held up outdoors with two dogs beside it'),
     'dog-gate-installed': ('E86C9287', 'Barn-door dog gate installed in a doorway'),
+    'shop-dog': ('3CE50BCF', 'The black shop dog asleep on the cool concrete floor of the shop'),
     'walnut-backer': ('ED8206B0', 'Arched walnut panel showing its grain'),
 }
 WIDTHS = (480, 800, 1200)

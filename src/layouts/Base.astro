@@ -7,6 +7,7 @@ import '@fontsource/barlow-condensed/700.css';
 import '../styles/global.css';
 import fontDisplay from '@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2?url';
 import Icon from '../components/Icon.astro';
+import Sketch from '../components/Sketch.astro';
 import catalog from '../data/catalog.json';
 import photos from '../data/photos.json';
 import craft from '../data/craft.json';
@@ -30,7 +31,8 @@ const craftHide = craftIds.map((id) => `html:not(.craft-${id}) [data-craft~="${i
 const EMAIL = 'wolfriverwoodco@gmail.com';
 const FACEBOOK = 'https://www.facebook.com/profile.php?id=61592891616080';
 const thumb = (slug: string) => (photos as any)[slug].thumb;
-const byCat = (id: string) => catalog.products.filter((p) => p.category === id);
+// Products appear in every room they belong to (p.rooms); the first room is their home category.
+const byCat = (id: string) => catalog.products.filter((p: any) => (p.rooms || [p.category]).includes(id));
 const navCats = catalog.categories;
 const ld = {
   '@context': 'https://schema.org', '@type': 'LocalBusiness', name: 'Wolf River Wood Co.',
@@ -100,7 +102,7 @@ const ld = {
     <div class="wrap">
       <a class="utility__mail" href={`mailto:${EMAIL}`} aria-label={`Email ${EMAIL}`}><Icon name="envelope-simple" /><span>{EMAIL}</span></a>
       <nav class="utility__pills" aria-label="Quick links">
-        <a class="pill" href="/shop/holiday-serving-tray/">Holiday trays</a>
+        <a class="pill" href="/about/">About us</a>
         <a class="pill" href="/work/">Our work</a>
         <a class="pill pill--hot" href="/custom/">Custom work</a>
       </nav>
@@ -137,16 +139,14 @@ const ld = {
             <div class="menu-pop" id={`pop-${c.id}`} data-menu-pop>
               {byCat(c.id).map((p) => (
                 <a href={`/shop/${p.slug}/`}>
-                  <img src={thumb(p.photos[0])} alt="" width="56" height="56" loading="lazy" />
+                  {p.photos.length ? <img src={thumb(p.photos[0])} alt="" width="56" height="56" loading="lazy" /> : <Sketch type={p.sketch} small />}
                   <span><strong>{p.name}</strong><small>{p.mode === 'consult' ? 'Free consultation' : p.summary}</small></span>
                 </a>
               ))}
             </div>
           </li>
         ))}
-        <li class="nav__item"><a class="nav__link" href="/shop/" aria-current={current === 'shop' ? 'page' : undefined}>Shop all</a></li>
-        <li class="nav__item"><a class="nav__link" href="/work/" aria-current={current === 'work' ? 'page' : undefined}>Our work</a></li>
-        <li class="nav__item"><a class="nav__link" href="/custom/" aria-current={current === 'custom' ? 'page' : undefined}>Custom orders</a></li>
+        <li class="nav__item"><a class="nav__link nav__link--cta" href="/custom/" aria-current={current === 'custom' ? 'page' : undefined}>Custom orders</a></li>
       </ul>
     </nav>
   </header>
@@ -185,7 +185,7 @@ const ld = {
         <div>
           <h2>Custom</h2>
           <ul>
-            {byCat('furniture').map((p) => <li><a href={`/shop/${p.slug}/`}>{p.name}</a></li>)}
+            {catalog.products.filter((p) => p.mode === 'consult').map((p) => <li><a href={`/shop/${p.slug}/`}>{p.name}</a></li>)}
             <li><a href="/custom/#consult">Book a free consultation</a></li>
           </ul>
         </div>
@@ -195,6 +195,8 @@ const ld = {
             <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
             <li><a href={FACEBOOK} rel="noopener" target="_blank">Facebook<span class="sr-only"> (opens in a new tab)</span></a></li>
             <li><a href="/work/">Our work</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/care/">Product care</a></li>
           </ul>
         </div>
       </div>
@@ -217,14 +219,16 @@ const ld = {
             <details>
               <summary>{c.label} <Icon name="caret-down" size="18" /></summary>
               <ul>
-                {byCat(c.id).map((p) => <li><a href={`/shop/${p.slug}/`}><img src={thumb(p.photos[0])} alt="" width="40" height="40" loading="lazy" />{p.name}</a></li>)}
+                {byCat(c.id).map((p) => <li><a href={`/shop/${p.slug}/`}>{p.photos.length ? <img src={thumb(p.photos[0])} alt="" width="40" height="40" loading="lazy" /> : <Sketch type={p.sketch} small />}{p.name}</a></li>)}
               </ul>
             </details>
           </li>
         ))}
-        <li style="--i:3"><a href="/shop/">Shop all <Icon name="arrow-right" /></a></li>
-        <li style="--i:4"><a href="/work/">Our work <Icon name="arrow-right" /></a></li>
-        <li style="--i:5"><a href="/custom/">Custom orders <Icon name="arrow-right" /></a></li>
+        <li style="--i:7"><a href="/shop/">Shop all <Icon name="arrow-right" /></a></li>
+        <li style="--i:8"><a href="/work/">Our work <Icon name="arrow-right" /></a></li>
+        <li style="--i:9"><a href="/about/">About us <Icon name="arrow-right" /></a></li>
+        <li style="--i:10"><a href="/care/">Product care <Icon name="arrow-right" /></a></li>
+        <li style="--i:11"><a href="/custom/">Custom orders <Icon name="arrow-right" /></a></li>
       </ul>
     </div>
     <div class="drawer__foot">

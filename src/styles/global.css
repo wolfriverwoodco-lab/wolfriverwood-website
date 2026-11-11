@@ -850,6 +850,59 @@ html:not(.plane-ready) .sawline { display: none; }
 .craft-map .geo { display: block; font: 600 .8125rem/1 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--maple); font-variant-numeric: tabular-nums; }
 .map-credit a:hover { color: var(--maple); }
 
+
+/* ---- room-based shop: sketches for commission pieces without photos ---- */
+.sketch { display: grid; align-content: center; gap: 6px; margin: 0; aspect-ratio: 1; border-radius: var(--r); overflow: hidden;
+  background-color: var(--surface);
+  background-image: linear-gradient(color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px);
+  background-size: 18px 18px; }
+.sketch svg { width: 86%; height: auto; justify-self: center; overflow: visible; }
+.sketch__lines { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.sketch__floor { stroke: var(--ink-2); stroke-width: 1.2; stroke-dasharray: 4 5; }
+.sketch__dim { fill: none; stroke: var(--accent); stroke-width: 1.4; }
+.sketch figcaption { padding: 0 12px 10px; text-align: center; font: 600 .75rem/1.2 var(--font-display); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.sketch--small { aspect-ratio: auto; }
+.menu-pop .sketch--small, .mnav .sketch--small { width: 56px; height: 56px; background-size: 8px 8px; }
+.mnav .sketch--small { width: 40px; height: 40px; }
+.menu-pop .sketch--small .sketch__lines, .mnav .sketch--small .sketch__lines { stroke-width: 7; }
+.rail .sketch--small { aspect-ratio: 4 / 5; }
+.card .sketch { aspect-ratio: 1; }
+.gallery__main .sketch { aspect-ratio: 1; }
+.commission-list .sketch { aspect-ratio: 1; }
+.commission-list .sketch figcaption { display: none; }
+@media (max-width: 899px) { .gallery__main .sketch { border-radius: 0; aspect-ratio: 4 / 3.6; } }
+.rail--rooms { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; }
+.rail--rooms strong { font-size: 1.1875rem; }
+.rail--rooms span span { font-size: .8125rem; }
+@media (max-width: 1023px) { .rail--rooms { grid-template-columns: none; } }
+.nav__link--cta { color: var(--accent); }
+@media (min-width: 1024px) and (max-width: 1240px) { .nav__link { padding: 0 9px; letter-spacing: .05em; } }
+.menu-pop { max-height: calc(100vh - 220px); overflow-y: auto; }
+
+/* ---- about ---- */
+.photo.crop-top img { object-position: 50% 20%; }
+.about-dogs { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 20px; align-items: end; padding-block: 24px 64px; }
+.about-dogs__copy { align-self: center; }
+.about-dogs figcaption { margin-top: 8px; font-size: .875rem; color: var(--ink-2); }
+.about-dogs__b .photo { aspect-ratio: 3 / 4; }
+@media (max-width: 899px) { .about-dogs { grid-template-columns: 1fr 1fr; } .about-dogs__copy { grid-column: 1 / -1; } }
+.about-people { display: grid; gap: 18px; padding-bottom: 64px; border-top: 1px solid var(--line); padding-top: 40px; }
+.people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.people li { display: grid; gap: 8px; }
+.people strong { font: 600 1.375rem/1 var(--font-display); text-transform: uppercase; letter-spacing: .03em; }
+.people__photo { aspect-ratio: 4 / 5; display: grid; place-items: center; align-content: center; gap: 6px; border: 1.5px dashed var(--line); border-radius: var(--r); color: var(--ink-2); font-size: .8125rem; }
+@media (max-width: 767px) { .people { grid-template-columns: 1fr 1fr; } }
+.about-cta { display: grid; gap: 12px; justify-items: start; padding: 32px; margin-bottom: 96px; border-radius: var(--r); background: var(--surface); }
+
+/* ---- care ---- */
+.care__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); padding-bottom: 32px; }
+@media (max-width: 899px) { .care__grid { grid-template-columns: 1fr; } }
+.care h2 { font-size: 1.75rem; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+.care__list { margin: 0; padding-left: 1.3em; display: grid; gap: 12px; }
+.care__list li { padding-left: 4px; color: var(--ink-2); }
+.care__list strong { color: var(--ink); }
+.care__foot { padding-bottom: 96px; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
 }

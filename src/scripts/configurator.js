@@ -47,7 +47,7 @@ function init(p) {
   const thumbs = [...root.querySelectorAll('[data-thumb]')];
   function showPhoto(slug) {
     const ph = photos[slug];
-    if (!ph || main.dataset.slug === slug) return;
+    if (!ph || !main || main.dataset.slug === slug) return;
     main.dataset.slug = slug;
     main.classList.add('is-swapping');
     const source = main.parentElement.querySelector('source[type="image/avif"]');
@@ -65,7 +65,7 @@ function init(p) {
     pre.decode().then(swap, swap);
     thumbs.forEach((t) => t.setAttribute('aria-current', String(t.dataset.thumb === slug)));
   }
-  main.dataset.slug = p.photos[0];
+  if (main) main.dataset.slug = p.photos[0];
   thumbs.forEach((t) => t.addEventListener('click', () => showPhoto(t.dataset.thumb)));
 
   // ---- render

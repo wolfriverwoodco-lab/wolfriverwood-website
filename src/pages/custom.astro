@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
+import ProductVisual from '../components/ProductVisual.astro';
 import Icon from '../components/Icon.astro';
 import catalog from '../data/catalog.json';
-const commissions = catalog.products.filter((p) => p.category === 'furniture');
+const commissions = catalog.products.filter((p) => p.mode === 'consult');
 // The making sequence. Only steps with a real shop photo show one; the rest say a photo is needed.
 const steps = [
   { name: 'Rough lumber', text: 'Boards come in rough-sawn, and the figure is still hidden under the saw marks.', photo: null },
@@ -45,7 +46,7 @@ const steps = [
         <ul class="commission-list">
           {commissions.map((p) => (
             <li>
-              <Photo slug={p.photos[0]} wet sizes="140px" alt="" />
+              <ProductVisual product={p} sizes="140px" />
               <div>
                 <h3><a href={`/shop/${p.slug}/`}>{p.name}</a></h3>
                 <p>{p.summary}</p>

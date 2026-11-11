@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Photo from '../../components/Photo.astro';
+import Sketch from '../../components/Sketch.astro';
 import Icon from '../../components/Icon.astro';
 import catalog from '../../data/catalog.json';
 import photos from '../../data/photos.json';
@@ -37,8 +38,9 @@ const plus = (c: any) => (c.consult ? 'Quoted' : c.price ? `+${money(c.price)}` 
     <div class="pdp" data-pdp={p.slug}>
       <div class="gallery" data-plane data-opening>
         <div class="gallery__main" data-main-photo>
-          <Photo slug={p.photos[0]} eager wet brand sizes="(max-width: 899px) 100vw, 54vw" />
-          <Fragment set:html={loader} />
+          {p.photos.length
+            ? <><Photo slug={p.photos[0]} eager wet brand sizes="(max-width: 899px) 100vw, 54vw" /><Fragment set:html={loader} /></>
+            : <Sketch type={p.sketch} label={p.name} />}
         </div>
         {p.photos.length > 1 && (
           <ul class="thumbs" aria-label="More photos">
@@ -153,6 +155,8 @@ const plus = (c: any) => (c.consult ? 'Quoted' : c.price ? `+${money(c.price)}` 
             </dl>
           </section>
         )}
+
+        <p class="note"><Icon name="drop" /><span>How to look after it: <a href="/care/">Product care guide</a></span></p>
 
         <div class="acc">
           {Object.entries(p.details).map(([k, v], i) => (

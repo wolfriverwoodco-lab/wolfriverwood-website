@@ -1,0 +1,21 @@
+---
+// Shop-drawing sketch for commission pieces that don't have a finished-piece photo yet. Honest stand-in, never a fake photo.
+interface Props { type: string; small?: boolean; label?: string }
+const { type, small = false, label } = Astro.props;
+const shapes: Record<string, string> = {
+  dining: '<rect x="60" y="112" width="280" height="12" rx="2"/><rect x="76" y="124" width="248" height="14"/><path d="M88 138v102M312 138v102"/><path d="M34 70v170M34 168h46v72M80 168v-6M366 70v170M366 168h-46v72M320 168v-6"/>',
+  island: '<rect x="44" y="96" width="312" height="12" rx="2"/><rect x="64" y="108" width="236" height="132"/><path d="M64 140h236M143 108v132M222 108v132M300 108v132"/><path d="M96 124h16M175 124h16M254 124h16"/><path d="M332 108v18M318 150h40M338 150v90M324 240h28"/>',
+  vanity: '<rect x="150" y="26" width="100" height="70" rx="3"/><rect x="66" y="118" width="268" height="10" rx="2"/><ellipse cx="200" cy="118" rx="42" ry="6"/><path d="M200 106v-10"/><rect x="78" y="128" width="244" height="112"/><path d="M78 160h244M160 128v112M240 128v112M112 146h14M274 146h14M196 186h8"/>',
+  coffee: '<rect x="44" y="172" width="210" height="12" rx="2"/><path d="M60 184v56M238 184v56M60 214h178"/><rect x="286" y="126" width="80" height="12" rx="2"/><path d="M296 138v102M356 138v102M296 196h60"/>',
+  bed: '<rect x="70" y="78" width="260" height="96" rx="4"/><path d="M90 98h220v58"/><rect x="58" y="150" width="284" height="38" rx="8"/><rect x="58" y="188" width="284" height="20"/><path d="M68 208v32M332 208v32"/>',
+};
+const body = shapes[type] || shapes.dining;
+---
+<figure class:list={['sketch', small && 'sketch--small']} role={small ? undefined : 'img'} aria-label={small ? undefined : (label ? `Drawing of ${label.toLowerCase()}; photo coming` : 'Drawing; photo coming')} aria-hidden={small ? 'true' : undefined}>
+  <svg viewBox="0 0 400 270" aria-hidden="true">
+    <g class="sketch__lines" set:html={body} />
+    <path class="sketch__floor" d="M20 240h360" />
+    {!small && <g class="sketch__dim"><path d="M60 12h280M60 6v12M340 6v12" /></g>}
+  </svg>
+  {!small && <figcaption>Photo coming · drawing shows the kind of piece</figcaption>}
+</figure>

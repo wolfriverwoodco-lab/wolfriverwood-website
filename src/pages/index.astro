@@ -5,6 +5,7 @@ import Icon from '../components/Icon.astro';
 import catalog from '../data/catalog.json';
 import { money } from '../lib/pricing.js';
 import Dim from '../components/Dim.astro';
+import Sketch from '../components/Sketch.astro';
 import SawLine from '../components/SawLine.astro';
 import photos from '../data/photos.json';
 
@@ -19,6 +20,13 @@ const railPhoto: Record<string, string> = {
 };
 const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
 const photoCount = Object.keys(photos).length;
+// Shop by room: a real photo where the shop has one, otherwise a drawing of the kind of piece.
+const roomVisual: Record<string, { photo?: string; sketch?: string }> = {
+  dining: { sketch: 'dining' }, kitchen: { photo: 'diamond-boards-kitchen' }, living: { photo: 'built-in-wide' },
+  bedroom: { sketch: 'bed' }, bath: { sketch: 'vanity' }, builtins: { photo: 'fold-desk-open' }, gifts: { photo: 'coaster-padauk-set' },
+};
+const inRoom = (id: string) => catalog.products.filter((p: any) => (p.rooms || [p.category]).includes(id));
+const roomNote = (id: string) => { const ps = inRoom(id); const buy = ps.filter((p) => p.mode === 'buy').length; return buy ? `${ps.length} pieces · ${buy} to order online` : 'Free consultation'; };
 
 // Growth rings around the badge: slightly irregular, like real ones. Deterministic, so builds don't change.
 const ring = (r: number, k: number) => {
@@ -41,15 +49,16 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
   <section class="hero" data-plane data-opening>
     <div class="wrap hero__grid">
       <div class="hero__copy">
-        <h1>Custom woodwork from Collierville, Tennessee.</h1>
-        <p class="lede">Cutting boards, coasters and holiday trays you configure online, plus furniture and built-ins designed with you on a free call.</p>
+        <p class="hero__place">Wolf River Wood Co. · Collierville, Tennessee</p>
+        <h1>Heirloom furniture, built by hand to stay in the family.</h1>
+        <p class="lede">Dining tables, kitchen islands, vanities, built-ins and bedroom pieces, designed with you on a free call. Plus cutting boards and gifts you can order today.</p>
         <div class="hero__ctas">
-          <a class="btn" href="/shop/">Shop the workshop <Icon name="arrow-right" class="icon-arrow" /></a>
-          <a class="link-arrow" href="/custom/#consult">Book a free consultation <Icon name="arrow-right" /></a>
+          <a class="btn" href="/custom/#consult">Book a free consultation <Icon name="arrow-right" class="icon-arrow" /></a>
+          <a class="link-arrow" href="/shop/#gifts">Shop gifts &amp; kitchen <Icon name="arrow-right" /></a>
         </div>
       </div>
       <div class="hero__media">
-        <Photo slug="endgrain-brick-cover" eager wet sizes="(max-width: 767px) 100vw, 48vw" alt="End-grain cutting board in a brick pattern of dark and purple wood, standing on a table outside the shop" />
+        <Photo slug="built-in-cabinets" eager wet sizes="(max-width: 767px) 100vw, 48vw" alt="Built-in shelving and cabinets around a living room fireplace, built by Wolf River Wood Co." />
       </div>
     </div>
   </section>
@@ -57,16 +66,18 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
   <section class="section section--tight" data-plane aria-labelledby="rail-h">
     <div class="wrap">
       <div class="rail-head">
-        <h2 id="rail-h">Shop by piece</h2>
+        <h2 id="rail-h">Shop by room</h2>
         <a class="link-arrow" href="/shop/">Shop all <Icon name="arrow-right" /></a>
       </div>
-      <Dim label={`${rail.length} pieces · made to order`} />
-      <ul class="rail">
-        {rail.map((p) => (
+      <Dim label={`${catalog.categories.length} rooms · built to fit`} />
+      <ul class="rail rail--rooms">
+        {catalog.categories.map((c) => (
           <li>
-            <a href={`/shop/${p.slug}/`}>
-              <Photo slug={railPhoto[p.slug]} wet brand sizes="(max-width: 639px) 62vw, (max-width: 1023px) 36vw, 19vw" alt="" />
-              <span><strong>{p.name}</strong><span>From {money(p.basePrice)}</span></span>
+            <a href={`/shop/#${c.id}`}>
+              {roomVisual[c.id]?.photo
+                ? <Photo slug={roomVisual[c.id].photo!} wet brand sizes="(max-width: 639px) 62vw, (max-width: 1023px) 36vw, 15vw" alt="" />
+                : <Sketch type={roomVisual[c.id]?.sketch || 'dining'} small />}
+              <span><strong>{c.label}</strong><span>{roomNote(c.id)}</span></span>
             </a>
           </li>
         ))}
@@ -79,11 +90,11 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
     <div class="wrap flow">
       <Photo slug="diamond-board-bench" wet sizes="(max-width: 767px) 100vw, 45vw" alt="A long board with a row of dark diamonds, on the workbench before finishing" />
       <div>
-        <h2 id="flow-h">Made to order, start to finish</h2>
+        <h2 id="flow-h">Heirloom pieces, designed with you</h2>
         <ol>
-          <li><b aria-hidden="true">1</b><div><strong>Choose it</strong><p>Pick the size, pattern and details. The price updates as you go, before you commit.</p></div></li>
-          <li><b aria-hidden="true">2</b><div><strong>Order it</strong><p>Check out online. Every choice you made is saved on the order.</p></div></li>
-          <li><b aria-hidden="true">3</b><div><strong>We build it</strong><p>Your piece is cut, glued up, flattened and oiled in the Collierville shop.</p></div></li>
+          <li><b aria-hidden="true">1</b><div><strong>A free call</strong><p>Tell us about the room, the piece and how your family will use it. It costs nothing and commits you to nothing.</p></div></li>
+          <li><b aria-hidden="true">2</b><div><strong>A written quote</strong><p>You get the scope, the woods and the price in writing before anything is built.</p></div></li>
+          <li><b aria-hidden="true">3</b><div><strong>Built in Collierville</strong><p>Your piece is cut, joined and finished by hand in the shop, one commission at a time.</p></div></li>
         </ol>
       </div>
     </div>
@@ -101,14 +112,14 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
   <section class="section section--wood" data-plane aria-labelledby="banner-h">
     <div class="wrap">
       <div class="commission__copy">
-        <h2 id="banner-h">Furniture and built‑ins, designed with you.</h2>
-        <p class="lede">Dining tables, built-ins, vanities and dog gates start with a free call. You get a written quote before anything is built.</p>
-        <div><a class="btn" href="/custom/#consult">Book a free consultation <Icon name="arrow-right" class="icon-arrow" /></a></div>
+        <h2 id="banner-h">Gifts and kitchen pieces you can order today.</h2>
+        <p class="lede">End-grain cutting boards, coasters, holiday trays and signs. Choose the size and pattern, see the price, and order online.</p>
+        <div><a class="btn" href="/shop/#gifts">Shop gifts &amp; kitchen <Icon name="arrow-right" class="icon-arrow" /></a></div>
       </div>
       <ul class="strip">
-        <li><a href="/shop/built-ins/"><figure><Photo slug="built-in-cabinets" wet sizes="(max-width: 767px) 100vw, 45vw" /><figcaption>Built-ins &amp; cabinetry</figcaption></figure></a></li>
-        <li><a href="/shop/dog-gates/"><figure><Photo slug="dog-gate-installed" wet sizes="(max-width: 767px) 50vw, 28vw" /><figcaption>Dog gates</figcaption></figure></a></li>
-        <li><a href="/shop/desks-wall-units/"><figure><Photo slug="fold-desk-open" wet sizes="(max-width: 767px) 50vw, 28vw" /><figcaption>Desks &amp; wall units</figcaption></figure></a></li>
+        <li><a href="/shop/end-grain-cutting-board/"><figure><Photo slug="endgrain-checker-tall" wet sizes="(max-width: 767px) 100vw, 45vw" /><figcaption>End-grain cutting boards</figcaption></figure></a></li>
+        <li><a href="/shop/holiday-serving-tray/"><figure><Photo slug="pumpkin-tray" wet sizes="(max-width: 767px) 50vw, 28vw" /><figcaption>Holiday serving trays</figcaption></figure></a></li>
+        <li><a href="/shop/coaster-set/"><figure><Photo slug="coaster-octagon-holder" wet sizes="(max-width: 767px) 50vw, 28vw" /><figcaption>Coaster sets</figcaption></figure></a></li>
       </ul>
     </div>
   </section>
@@ -121,11 +132,11 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
       </div>
       <Dim label={`5 of ${photoCount} photos`} />
       <div class="mosaic">
-        <figure class="m-a"><Photo slug="striped-board-counter" wet sizes="(max-width: 767px) 100vw, 40vw" /><figcaption>Striped board</figcaption></figure>
-        <figure class="m-b"><Photo slug="diamond-board-feet" wet sizes="(max-width: 767px) 50vw, 33vw" /><figcaption>Diamond board with brass feet</figcaption></figure>
-        <figure class="m-c"><Photo slug="endgrain-checker-feet" wet sizes="(max-width: 767px) 50vw, 25vw" /><figcaption>End-grain checkerboard</figcaption></figure>
+        <figure class="m-a"><Photo slug="built-in-wide" wet sizes="(max-width: 767px) 100vw, 40vw" /><figcaption>Living room built-ins</figcaption></figure>
+        <figure class="m-b"><Photo slug="dog-gate-installed" wet sizes="(max-width: 767px) 50vw, 33vw" /><figcaption>Barn-door dog gate</figcaption></figure>
+        <figure class="m-c"><Photo slug="challenge-coin-display" wet sizes="(max-width: 767px) 50vw, 25vw" /><figcaption>Challenge coin display</figcaption></figure>
         <figure class="m-d"><Photo slug="diamond-band-board" wet sizes="(max-width: 767px) 100vw, 58vw" /><figcaption>Diamond band board</figcaption></figure>
-        <figure class="m-e"><Photo slug="coaster-padauk-set" wet sizes="40vw" /><figcaption>Striped coaster set</figcaption></figure>
+        <figure class="m-e"><Photo slug="fold-desk-open" wet sizes="40vw" /><figcaption>Fold-down desk</figcaption></figure>
       </div>
     </div>
   </section>
@@ -149,6 +160,7 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
           {rings.map((g) => <li data-ring={g.n} tabindex="0"><b>{g.n}</b><span>{g.label}</span><em>{g.when}</em></li>)}
         </ol>
         <p class="small rings-note" data-craft="rings">Draft: the real years come from the shop.</p>
+        <p><a class="link-arrow" href="/about/">Meet the shop and the shop dogs <Icon name="arrow-right" /></a></p>
         <p><a class="link-arrow" href="https://www.facebook.com/profile.php?id=61592891616080" rel="noopener" target="_blank">See new pieces on Facebook<span class="sr-only"> (opens in a new tab)</span> <Icon name="arrow-right" /></a></p>
       </div>
     </div>

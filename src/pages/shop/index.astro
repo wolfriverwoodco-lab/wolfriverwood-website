@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Photo from '../../components/Photo.astro';
+import ProductVisual from '../../components/ProductVisual.astro';
 import catalog from '../../data/catalog.json';
 import { money } from '../../lib/pricing.js';
 import Icon from '../../components/Icon.astro';
@@ -21,12 +21,12 @@ import Dim from '../../components/Dim.astro';
           <h2 id={`h-${c.id}`}>{c.label}</h2>
           <span class="muted">{c.blurb}</span>
         </header>
-        <Dim label={`${catalog.products.filter((p) => p.category === c.id).length} pieces`} />
+        <Dim label={`${catalog.products.filter((p: any) => (p.rooms || [p.category]).includes(c.id)).length} pieces`} />
         <ul class="grid-products">
-          {catalog.products.filter((p) => p.category === c.id).map((p) => (
+          {catalog.products.filter((p: any) => (p.rooms || [p.category]).includes(c.id)).map((p) => (
             <li class="card">
               <a href={`/shop/${p.slug}/`}>
-                <Photo slug={p.photos[0]} wet brand sizes="(max-width: 559px) 100vw, (max-width: 1023px) 50vw, 33vw" alt="" />
+                <ProductVisual product={p} brand sizes="(max-width: 559px) 100vw, (max-width: 1023px) 50vw, 33vw" />
                 <div>
                   <h3>{p.name}</h3>
                   <p>{p.summary}</p>

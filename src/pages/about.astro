@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+// People named by Roger for this page. Photos and roles come from the shop; nothing here is guessed.
+const people = ['Roger', 'AJ', 'Avery', 'Raj'];
+---
+<Base title="About Us" current="about" description="Wolf River Wood Co. is a family woodworking shop in Collierville, Tennessee, building heirloom furniture, built-ins and cutting boards by hand.">
+  <div class="wrap">
+    <header class="page-head" data-plane>
+      <p class="hero__place">Collierville, Tennessee</p>
+      <h1>About the shop</h1>
+      <p class="lede">Wolf River Wood Co. is a woodworking shop in Collierville, Tennessee. Furniture and built-ins are built one commission at a time, and boards and gifts are made in small batches.</p>
+    </header>
+
+    <section class="about-dogs" data-plane aria-labelledby="dogs-h">
+      <div class="about-dogs__copy stack gap-12">
+        <h2 id="dogs-h">The shop dogs</h2>
+        <p class="muted">Every shop needs a supervisor. Ours prefer the cool concrete floor.</p>
+      </div>
+      <figure class="about-dogs__a"><Photo slug="shop-dog" wet ratio="4 / 3.2" class="crop-top" sizes="(max-width: 767px) 100vw, 40vw" /></figure>
+      <figure class="about-dogs__b"><Photo slug="dog-gate-panel" wet sizes="(max-width: 767px) 100vw, 30vw" alt="Two of the dogs beside a wooden gate panel made in the shop" /><figcaption>Testing a dog gate before it goes home</figcaption></figure>
+    </section>
+
+    <section class="about-people" data-plane aria-labelledby="people-h">
+      <h2 id="people-h">The people</h2>
+      <ul class="people">
+        {people.map((n) => (
+          <li>
+            <div class="people__photo" role="img" aria-label={`Photo of ${n} coming`}><Icon name="camera" size="28" /><span>Photo coming</span></div>
+            <strong>{n}</strong>
+          </li>
+        ))}
+      </ul>
+      <p class="small muted">Draft: photos of Roger, AJ, Avery, and Raj and his people are on the way from the shop.</p>
+    </section>
+
+    <section class="about-cta" data-plane>
+      <h2>Have a piece in mind?</h2>
+      <p class="muted">Tell us about the room and what you want built. The first call is free.</p>
+      <p><a class="btn" href="/custom/#consult">Book a free consultation <Icon name="arrow-right" class="icon-arrow" /></a></p>
+    </section>
+  </div>
+</Base>

@@ -4,11 +4,429 @@
   "currency": "USD",
   "consultThresholdCents": null,
   "categories": [
-    { "id": "kitchen", "label": "Kitchen", "blurb": "Cutting boards and serving trays" },
-    { "id": "home", "label": "Home & Gifts", "blurb": "Coasters, signs and displays" },
-    { "id": "furniture", "label": "Furniture & Built-ins", "blurb": "Quoted after a free consultation" }
+    {
+      "id": "dining",
+      "label": "Dining",
+      "blurb": "Tables and sets built to seat the family"
+    },
+    {
+      "id": "kitchen",
+      "label": "Kitchen",
+      "blurb": "Islands, cutting boards and serving pieces"
+    },
+    {
+      "id": "living",
+      "label": "Living & Den",
+      "blurb": "Coffee and end tables, built-ins and displays"
+    },
+    {
+      "id": "bedroom",
+      "label": "Bedroom",
+      "blurb": "Beds, dressers, nightstands and desks"
+    },
+    {
+      "id": "bath",
+      "label": "Bath",
+      "blurb": "Vanities built to fit the room"
+    },
+    {
+      "id": "builtins",
+      "label": "Built-ins",
+      "blurb": "Cabinets, wall units, desks and dog gates"
+    },
+    {
+      "id": "gifts",
+      "label": "Gifts & Decor",
+      "blurb": "Boards, coasters, signs and holiday trays"
+    }
   ],
   "products": [
+    {
+      "slug": "dining-tables",
+      "name": "Dining Tables & Sets",
+      "category": "dining",
+      "mode": "consult",
+      "summary": "Dining tables, benches and sets meant to stay in the family.",
+      "description": "A dining table is designed around your room and the people who sit at it. Tell us the size, the seating and the woods you like, and we’ll start from there.",
+      "photos": [],
+      "photoNote": "Photos of finished tables are coming. The drawing shows the kind of piece.",
+      "options": [
+        {
+          "id": "piece",
+          "label": "Piece",
+          "required": false,
+          "choices": [
+            {
+              "id": "table",
+              "label": "Table"
+            },
+            {
+              "id": "set",
+              "label": "Table and chairs or benches"
+            },
+            {
+              "id": "bench",
+              "label": "Bench"
+            }
+          ]
+        },
+        {
+          "id": "seats",
+          "label": "Seats",
+          "required": false,
+          "choices": [
+            {
+              "id": "4",
+              "label": "4"
+            },
+            {
+              "id": "6",
+              "label": "6"
+            },
+            {
+              "id": "8",
+              "label": "8"
+            },
+            {
+              "id": "10",
+              "label": "10 or more"
+            }
+          ]
+        }
+      ],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid."
+      },
+      "rooms": [
+        "dining"
+      ],
+      "sketch": "dining"
+    },
+    {
+      "slug": "kitchen-islands",
+      "name": "Kitchen Islands",
+      "category": "kitchen",
+      "rooms": [
+        "kitchen"
+      ],
+      "mode": "consult",
+      "summary": "Islands built to fit your kitchen, with storage and seating where you want it.",
+      "description": "An island is measured to your kitchen and the way you cook. We design the cabinets, storage and overhang with you, then build it in the shop.",
+      "photos": [],
+      "sketch": "island",
+      "photoNote": "Photos of finished pieces are coming. The drawing shows the kind of piece.",
+      "options": [
+        {
+          "id": "seating",
+          "label": "Seating",
+          "required": false,
+          "choices": [
+            {
+              "id": "none",
+              "label": "No seating"
+            },
+            {
+              "id": "overhang",
+              "label": "Overhang for stools"
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "label": "Storage",
+          "required": false,
+          "choices": [
+            {
+              "id": "doors",
+              "label": "Doors"
+            },
+            {
+              "id": "drawers",
+              "label": "Drawers"
+            },
+            {
+              "id": "mix",
+              "label": "Doors and drawers"
+            }
+          ]
+        }
+      ],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid."
+      }
+    },
+    {
+      "slug": "coffee-end-tables",
+      "name": "Coffee & End Tables",
+      "category": "living",
+      "rooms": [
+        "living"
+      ],
+      "mode": "consult",
+      "summary": "Coffee tables, end tables and consoles for the living room or den.",
+      "description": "Tables for the living room and den, sized to your sofa and room. Tell us what you have in mind and the woods you like.",
+      "photos": [],
+      "sketch": "coffee",
+      "photoNote": "Photos of finished pieces are coming. The drawing shows the kind of piece.",
+      "options": [
+        {
+          "id": "piece",
+          "label": "Piece",
+          "required": false,
+          "choices": [
+            {
+              "id": "coffee",
+              "label": "Coffee table"
+            },
+            {
+              "id": "end",
+              "label": "End table"
+            },
+            {
+              "id": "console",
+              "label": "Console table"
+            }
+          ]
+        }
+      ],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid."
+      }
+    },
+    {
+      "slug": "bedroom-furniture",
+      "name": "Bedroom Furniture",
+      "category": "bedroom",
+      "rooms": [
+        "bedroom"
+      ],
+      "mode": "consult",
+      "summary": "Beds, dressers and nightstands made to match.",
+      "description": "Bedroom pieces built one at a time or as a set, so everything in the room matches.",
+      "photos": [],
+      "sketch": "bed",
+      "photoNote": "Photos of finished pieces are coming. The drawing shows the kind of piece.",
+      "options": [
+        {
+          "id": "piece",
+          "label": "Piece",
+          "required": false,
+          "choices": [
+            {
+              "id": "bed",
+              "label": "Bed frame"
+            },
+            {
+              "id": "dresser",
+              "label": "Dresser"
+            },
+            {
+              "id": "nightstand",
+              "label": "Nightstand"
+            },
+            {
+              "id": "set",
+              "label": "A set"
+            }
+          ]
+        }
+      ],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid."
+      }
+    },
+    {
+      "slug": "bathroom-vanities",
+      "name": "Bathroom Vanities",
+      "category": "bath",
+      "rooms": [
+        "bath"
+      ],
+      "mode": "consult",
+      "summary": "Vanity cabinets built to fit your bathroom. Countertops are not included.",
+      "description": "Vanities are built to the exact size of your space, with the doors and drawers you need. We build the cabinet; countertops and plumbing are not part of the work.",
+      "photos": [],
+      "sketch": "vanity",
+      "photoNote": "Photos of finished pieces are coming. The drawing shows the kind of piece.",
+      "options": [
+        {
+          "id": "sinks",
+          "label": "Sinks",
+          "required": false,
+          "choices": [
+            {
+              "id": "single",
+              "label": "Single"
+            },
+            {
+              "id": "double",
+              "label": "Double"
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "label": "Storage",
+          "required": false,
+          "choices": [
+            {
+              "id": "doors",
+              "label": "Doors"
+            },
+            {
+              "id": "drawers",
+              "label": "Drawers"
+            },
+            {
+              "id": "mix",
+              "label": "Doors and drawers"
+            }
+          ]
+        }
+      ],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid."
+      }
+    },
+    {
+      "slug": "built-ins",
+      "name": "Built-ins & Cabinetry",
+      "category": "builtins",
+      "mode": "consult",
+      "summary": "Shelving, cabinets and entertainment walls built to fit the room.",
+      "description": "Built-ins are measured and designed around your room, so they start with a free conversation rather than a price tag.",
+      "photos": [
+        "built-in-wide",
+        "built-in-cabinets"
+      ],
+      "options": [
+        {
+          "id": "room",
+          "label": "Room",
+          "required": false,
+          "choices": [
+            {
+              "id": "living",
+              "label": "Living room"
+            },
+            {
+              "id": "office",
+              "label": "Office"
+            },
+            {
+              "id": "bedroom",
+              "label": "Bedroom"
+            },
+            {
+              "id": "other",
+              "label": "Somewhere else"
+            }
+          ]
+        },
+        {
+          "id": "type",
+          "label": "Piece",
+          "required": false,
+          "choices": [
+            {
+              "id": "shelving",
+              "label": "Shelving"
+            },
+            {
+              "id": "cabinets",
+              "label": "Cabinets"
+            },
+            {
+              "id": "media",
+              "label": "Entertainment wall"
+            }
+          ]
+        }
+      ],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid."
+      },
+      "rooms": [
+        "builtins",
+        "living"
+      ]
+    },
+    {
+      "slug": "desks-wall-units",
+      "name": "Desks & Wall Units",
+      "category": "builtins",
+      "mode": "consult",
+      "summary": "Fold-down desks and wall units built for a specific kid, room or corner.",
+      "description": "A wall-mounted desk folds flat with a chalkboard face and opens into a work surface with shelves. Pieces like this are built to order.",
+      "photos": [
+        "fold-desk-open",
+        "fold-desk-closed"
+      ],
+      "options": [],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call. If it’s a fit, you get a written quote."
+      },
+      "rooms": [
+        "builtins",
+        "bedroom"
+      ]
+    },
+    {
+      "slug": "dog-gates",
+      "name": "Custom Dog Gates",
+      "category": "builtins",
+      "mode": "consult",
+      "summary": "Barn-door gates sized to your doorway.",
+      "description": "Every doorway is different, so gates are measured first. Book a call and we’ll work out the size, the swing and the finish.",
+      "photos": [
+        "dog-gate-installed",
+        "dog-gate-barn",
+        "dog-gate-panel"
+      ],
+      "options": [
+        {
+          "id": "width",
+          "label": "Opening",
+          "required": false,
+          "choices": [
+            {
+              "id": "door",
+              "label": "Standard doorway"
+            },
+            {
+              "id": "wide",
+              "label": "Wide opening"
+            },
+            {
+              "id": "stairs",
+              "label": "Top of stairs"
+            }
+          ]
+        }
+      ],
+      "rules": [],
+      "upsells": [],
+      "details": {
+        "How it works": "Book a free call and send a photo of the opening. You get a written quote after that."
+      },
+      "rooms": [
+        "builtins"
+      ]
+    },
     {
       "slug": "end-grain-cutting-board",
       "name": "End-Grain Cutting Board",
@@ -17,41 +435,149 @@
       "basePrice": 16500,
       "summary": "Hundreds of blocks glued up so the knife meets the end of the grain.",
       "description": "End-grain boards are cut, turned on end and glued up a second time, so the pattern runs all the way through the board. Choose the size and pattern, then the details.",
-      "photos": ["endgrain-brick-cover", "endgrain-brick-counter", "endgrain-brick-feet", "endgrain-checker-tall", "endgrain-checker-feet", "diamond-band-board", "diamond-board-feet"],
+      "photos": [
+        "endgrain-brick-cover",
+        "endgrain-brick-counter",
+        "endgrain-brick-feet",
+        "endgrain-checker-tall",
+        "endgrain-checker-feet",
+        "diamond-band-board",
+        "diamond-board-feet"
+      ],
       "options": [
-        { "id": "size", "label": "Size", "required": true, "choices": [
-          { "id": "s", "label": "Small", "detail": "about 12 x 9 in", "price": 0 },
-          { "id": "m", "label": "Medium", "detail": "about 16 x 11 in", "price": 6000 },
-          { "id": "l", "label": "Large", "detail": "about 20 x 14 in", "price": 13000 },
-          { "id": "custom", "label": "Custom size", "consult": true }
-        ]},
-        { "id": "pattern", "label": "Pattern", "required": true, "choices": [
-          { "id": "brick", "label": "Brick", "detail": "dark, purple and light woods", "price": 0, "photo": "endgrain-brick-cover" },
-          { "id": "checker", "label": "Checkerboard", "detail": "dark and light", "price": 0, "photo": "endgrain-checker-tall" },
-          { "id": "diamond", "label": "Diamond band", "detail": "dark diamonds on stripes", "price": 2500, "photo": "diamond-band-board" }
-        ]},
-        { "id": "feet", "label": "Feet", "required": true, "choices": [
-          { "id": "none", "label": "No feet", "detail": "use both faces", "price": 0 },
-          { "id": "brass", "label": "Brass feet", "detail": "lifts the board off the counter", "price": 2400 }
-        ]},
-        { "id": "groove", "label": "Juice groove", "required": true, "choices": [
-          { "id": "no", "label": "No groove", "price": 0 },
-          { "id": "yes", "label": "Juice groove", "detail": "routed around the edge", "price": 1500 }
-        ]}
+        {
+          "id": "size",
+          "label": "Size",
+          "required": true,
+          "choices": [
+            {
+              "id": "s",
+              "label": "Small",
+              "detail": "about 12 x 9 in",
+              "price": 0
+            },
+            {
+              "id": "m",
+              "label": "Medium",
+              "detail": "about 16 x 11 in",
+              "price": 6000
+            },
+            {
+              "id": "l",
+              "label": "Large",
+              "detail": "about 20 x 14 in",
+              "price": 13000
+            },
+            {
+              "id": "custom",
+              "label": "Custom size",
+              "consult": true
+            }
+          ]
+        },
+        {
+          "id": "pattern",
+          "label": "Pattern",
+          "required": true,
+          "choices": [
+            {
+              "id": "brick",
+              "label": "Brick",
+              "detail": "dark, purple and light woods",
+              "price": 0,
+              "photo": "endgrain-brick-cover"
+            },
+            {
+              "id": "checker",
+              "label": "Checkerboard",
+              "detail": "dark and light",
+              "price": 0,
+              "photo": "endgrain-checker-tall"
+            },
+            {
+              "id": "diamond",
+              "label": "Diamond band",
+              "detail": "dark diamonds on stripes",
+              "price": 2500,
+              "photo": "diamond-band-board"
+            }
+          ]
+        },
+        {
+          "id": "feet",
+          "label": "Feet",
+          "required": true,
+          "choices": [
+            {
+              "id": "none",
+              "label": "No feet",
+              "detail": "use both faces",
+              "price": 0
+            },
+            {
+              "id": "brass",
+              "label": "Brass feet",
+              "detail": "lifts the board off the counter",
+              "price": 2400
+            }
+          ]
+        },
+        {
+          "id": "groove",
+          "label": "Juice groove",
+          "required": true,
+          "choices": [
+            {
+              "id": "no",
+              "label": "No groove",
+              "price": 0
+            },
+            {
+              "id": "yes",
+              "label": "Juice groove",
+              "detail": "routed around the edge",
+              "price": 1500
+            }
+          ]
+        }
       ],
       "rules": [
-        { "if": { "size": "s" }, "disallow": { "groove": ["yes"] }, "reason": "A small board is too narrow for a juice groove. Choose Medium or Large to add one." }
+        {
+          "if": {
+            "size": "s"
+          },
+          "disallow": {
+            "groove": [
+              "yes"
+            ]
+          },
+          "reason": "A small board is too narrow for a juice groove. Choose Medium or Large to add one."
+        }
       ],
       "upsells": [
-        { "id": "engrave", "label": "Engraved initials or date", "price": 2000, "note": "One line, on the side or the back" },
-        { "id": "butter", "label": "Board butter, 4 oz", "price": 1400, "note": "For the monthly re-oil" }
+        {
+          "id": "engrave",
+          "label": "Engraved initials or date",
+          "price": 2000,
+          "note": "One line, on the side or the back"
+        },
+        {
+          "id": "butter",
+          "label": "Board butter, 4 oz",
+          "price": 1400,
+          "note": "For the monthly re-oil"
+        }
       ],
       "details": {
         "Dimensions": "Sizes are approximate, and thickness runs about 1.5 in. Exact dimensions are confirmed before the board is cut.",
         "Woods & finish": "Pattern woods vary with what is on the rack. Species names will be listed once the owner confirms them.",
         "Production & delivery": "Each board is made to order. Lead time, pickup and shipping are being finalised.",
         "Product care": "Hand wash and dry standing up. Never use the dishwasher and never soak it. Re-oil when the surface looks dry."
-      }
+      },
+      "rooms": [
+        "kitchen",
+        "gifts"
+      ]
     },
     {
       "slug": "edge-grain-cutting-board",
@@ -61,232 +587,565 @@
       "basePrice": 8500,
       "summary": "Long strips of contrasting wood, edge-glued into one board.",
       "description": "Lighter than end grain and easy to live with, a striped board is the everyday board. Pick a size and a stripe.",
-      "photos": ["striped-board-counter", "striped-chevron-board", "endgrain-stripe-board", "diamond-boards-kitchen"],
+      "photos": [
+        "striped-board-counter",
+        "striped-chevron-board",
+        "endgrain-stripe-board",
+        "diamond-boards-kitchen"
+      ],
       "options": [
-        { "id": "size", "label": "Size", "required": true, "choices": [
-          { "id": "s", "label": "Small", "detail": "about 12 x 8 in", "price": 0 },
-          { "id": "m", "label": "Medium", "detail": "about 16 x 10 in", "price": 3500 },
-          { "id": "l", "label": "Large", "detail": "about 20 x 12 in", "price": 7000 }
-        ]},
-        { "id": "stripe", "label": "Stripe", "required": true, "choices": [
-          { "id": "classic", "label": "Classic stripes", "detail": "dark and light", "price": 0, "photo": "striped-board-counter" },
-          { "id": "chevron", "label": "Chevron band", "detail": "a herringbone strip", "price": 2000, "photo": "striped-chevron-board" },
-          { "id": "accent", "label": "Accent stripe", "detail": "one red stripe", "price": 1000, "photo": "endgrain-stripe-board" }
-        ]}
+        {
+          "id": "size",
+          "label": "Size",
+          "required": true,
+          "choices": [
+            {
+              "id": "s",
+              "label": "Small",
+              "detail": "about 12 x 8 in",
+              "price": 0
+            },
+            {
+              "id": "m",
+              "label": "Medium",
+              "detail": "about 16 x 10 in",
+              "price": 3500
+            },
+            {
+              "id": "l",
+              "label": "Large",
+              "detail": "about 20 x 12 in",
+              "price": 7000
+            }
+          ]
+        },
+        {
+          "id": "stripe",
+          "label": "Stripe",
+          "required": true,
+          "choices": [
+            {
+              "id": "classic",
+              "label": "Classic stripes",
+              "detail": "dark and light",
+              "price": 0,
+              "photo": "striped-board-counter"
+            },
+            {
+              "id": "chevron",
+              "label": "Chevron band",
+              "detail": "a herringbone strip",
+              "price": 2000,
+              "photo": "striped-chevron-board"
+            },
+            {
+              "id": "accent",
+              "label": "Accent stripe",
+              "detail": "one red stripe",
+              "price": 1000,
+              "photo": "endgrain-stripe-board"
+            }
+          ]
+        }
       ],
       "rules": [],
       "upsells": [
-        { "id": "engrave", "label": "Engraved initials or date", "price": 2000, "note": "One line, on the back" },
-        { "id": "butter", "label": "Board butter, 4 oz", "price": 1400, "note": "For the monthly re-oil" }
+        {
+          "id": "engrave",
+          "label": "Engraved initials or date",
+          "price": 2000,
+          "note": "One line, on the back"
+        },
+        {
+          "id": "butter",
+          "label": "Board butter, 4 oz",
+          "price": 1400,
+          "note": "For the monthly re-oil"
+        }
       ],
       "details": {
         "Dimensions": "Sizes are approximate, and thickness runs about 1 in.",
         "Woods & finish": "Species names will be listed once the owner confirms them.",
         "Production & delivery": "Made to order. Lead time and shipping are being finalised.",
         "Product care": "Hand wash and dry standing up. Re-oil when the surface looks dry."
-      }
+      },
+      "rooms": [
+        "kitchen",
+        "gifts"
+      ]
     },
     {
       "slug": "holiday-serving-tray",
       "name": "Holiday Serving Tray",
-      "category": "kitchen",
+      "category": "gifts",
       "mode": "buy",
       "seasonal": true,
       "basePrice": 7000,
       "summary": "Thanksgiving, fall and Christmas shapes for the holiday table.",
       "description": "Cut to a seasonal shape, then either carved into a sectioned party tray or left flat as a serving board.",
-      "photos": ["pumpkin-tray", "pumpkin-board"],
+      "photos": [
+        "pumpkin-tray",
+        "pumpkin-board"
+      ],
       "options": [
-        { "id": "shape", "label": "Shape", "required": true, "choices": [
-          { "id": "pumpkin", "label": "Pumpkin", "price": 0, "photo": "pumpkin-tray" },
-          { "id": "tree", "label": "Christmas tree", "detail": "photo coming", "price": 0 }
-        ]},
-        { "id": "style", "label": "Style", "required": true, "choices": [
-          { "id": "carved", "label": "Carved party tray", "detail": "grooved sections", "price": 4500, "photo": "pumpkin-tray" },
-          { "id": "flat", "label": "Flat serving board", "price": 0, "photo": "pumpkin-board" }
-        ]},
-        { "id": "wood", "label": "Wood", "required": true, "choices": [
-          { "id": "cherry", "label": "Cherry", "price": 0 },
-          { "id": "walnut-cherry", "label": "Walnut and cherry", "price": 2000 }
-        ]}
+        {
+          "id": "shape",
+          "label": "Shape",
+          "required": true,
+          "choices": [
+            {
+              "id": "pumpkin",
+              "label": "Pumpkin",
+              "price": 0,
+              "photo": "pumpkin-tray"
+            },
+            {
+              "id": "tree",
+              "label": "Christmas tree",
+              "detail": "photo coming",
+              "price": 0
+            }
+          ]
+        },
+        {
+          "id": "style",
+          "label": "Style",
+          "required": true,
+          "choices": [
+            {
+              "id": "carved",
+              "label": "Carved party tray",
+              "detail": "grooved sections",
+              "price": 4500,
+              "photo": "pumpkin-tray"
+            },
+            {
+              "id": "flat",
+              "label": "Flat serving board",
+              "price": 0,
+              "photo": "pumpkin-board"
+            }
+          ]
+        },
+        {
+          "id": "wood",
+          "label": "Wood",
+          "required": true,
+          "choices": [
+            {
+              "id": "cherry",
+              "label": "Cherry",
+              "price": 0
+            },
+            {
+              "id": "walnut-cherry",
+              "label": "Walnut and cherry",
+              "price": 2000
+            }
+          ]
+        }
       ],
       "rules": [],
       "upsells": [
-        { "id": "engrave", "label": "Engraved family name", "price": 2000, "note": "On the back" }
+        {
+          "id": "engrave",
+          "label": "Engraved family name",
+          "price": 2000,
+          "note": "On the back"
+        }
       ],
       "details": {
         "Dimensions": "About 16 in across. Exact size is confirmed with the order.",
         "Woods & finish": "Cherry, or walnut with cherry. These are named in the owner’s recent posts and still to be confirmed for the catalogue.",
         "Production & delivery": "Holiday cut-off dates will be posted here.",
         "Product care": "Hand wash only. Wipe it dry, then re-oil once the surface looks pale."
-      }
+      },
+      "rooms": [
+        "gifts",
+        "kitchen",
+        "dining"
+      ]
     },
     {
       "slug": "coaster-set",
       "name": "Coaster Set with Holder",
-      "category": "home",
+      "category": "gifts",
       "mode": "buy",
       "basePrice": 4800,
       "summary": "Striped or solid coasters that live in their own holder.",
       "description": "A set of coasters cut from the same boards, with a matching holder so they stay together on the table.",
-      "photos": ["coaster-padauk-set", "coaster-holder-angled", "coaster-octagon-holder", "coaster-octagon-pair", "coaster-stack"],
+      "photos": [
+        "coaster-padauk-set",
+        "coaster-holder-angled",
+        "coaster-octagon-holder",
+        "coaster-octagon-pair",
+        "coaster-stack"
+      ],
       "options": [
-        { "id": "shape", "label": "Shape", "required": true, "choices": [
-          { "id": "square", "label": "Square", "price": 0, "photo": "coaster-padauk-set" },
-          { "id": "octagon", "label": "Octagon", "price": 800, "photo": "coaster-octagon-holder" }
-        ]},
-        { "id": "wood", "label": "Wood", "required": true, "choices": [
-          { "id": "red-stripe", "label": "Red stripe", "price": 0, "photo": "coaster-padauk-set" },
-          { "id": "walnut", "label": "Walnut", "price": 0, "photo": "coaster-octagon-pair" },
-          { "id": "mixed", "label": "Mixed set", "price": 600, "photo": "coaster-stack" }
-        ]},
-        { "id": "count", "label": "Set of", "required": true, "choices": [
-          { "id": "4", "label": "4 coasters", "price": 0 },
-          { "id": "6", "label": "6 coasters", "price": 2000 }
-        ]}
+        {
+          "id": "shape",
+          "label": "Shape",
+          "required": true,
+          "choices": [
+            {
+              "id": "square",
+              "label": "Square",
+              "price": 0,
+              "photo": "coaster-padauk-set"
+            },
+            {
+              "id": "octagon",
+              "label": "Octagon",
+              "price": 800,
+              "photo": "coaster-octagon-holder"
+            }
+          ]
+        },
+        {
+          "id": "wood",
+          "label": "Wood",
+          "required": true,
+          "choices": [
+            {
+              "id": "red-stripe",
+              "label": "Red stripe",
+              "price": 0,
+              "photo": "coaster-padauk-set"
+            },
+            {
+              "id": "walnut",
+              "label": "Walnut",
+              "price": 0,
+              "photo": "coaster-octagon-pair"
+            },
+            {
+              "id": "mixed",
+              "label": "Mixed set",
+              "price": 600,
+              "photo": "coaster-stack"
+            }
+          ]
+        },
+        {
+          "id": "count",
+          "label": "Set of",
+          "required": true,
+          "choices": [
+            {
+              "id": "4",
+              "label": "4 coasters",
+              "price": 0
+            },
+            {
+              "id": "6",
+              "label": "6 coasters",
+              "price": 2000
+            }
+          ]
+        }
       ],
       "rules": [
-        { "if": { "shape": "octagon" }, "disallow": { "wood": ["red-stripe", "mixed"] }, "reason": "Octagon coasters are cut from one solid board, so they come in walnut only." }
+        {
+          "if": {
+            "shape": "octagon"
+          },
+          "disallow": {
+            "wood": [
+              "red-stripe",
+              "mixed"
+            ]
+          },
+          "reason": "Octagon coasters are cut from one solid board, so they come in walnut only."
+        }
       ],
       "upsells": [
-        { "id": "engrave", "label": "Engraved monogram on each coaster", "price": 1200 }
+        {
+          "id": "engrave",
+          "label": "Engraved monogram on each coaster",
+          "price": 1200
+        }
       ],
       "details": {
         "Dimensions": "Each coaster is about 4 in across.",
         "Woods & finish": "Species names will be listed once the owner confirms them.",
         "Production & delivery": "Made to order. Lead time and shipping are being finalised.",
         "Product care": "Wipe clean. Don’t soak them."
-      }
+      },
+      "rooms": [
+        "gifts",
+        "living"
+      ]
     },
     {
       "slug": "challenge-coin-display",
       "name": "Challenge Coin Display",
-      "category": "home",
+      "category": "gifts",
       "mode": "buy",
       "basePrice": 18500,
       "summary": "Shelved display for a coin collection, with an engraved crest.",
       "description": "An arched walnut display with shelves sized for challenge coins. The crest on top can be engraved from your unit’s artwork.",
-      "photos": ["challenge-coin-display", "walnut-backer"],
+      "photos": [
+        "challenge-coin-display",
+        "walnut-backer"
+      ],
       "options": [
-        { "id": "shelves", "label": "Shelves", "required": true, "choices": [
-          { "id": "3", "label": "3 shelves", "price": 0 },
-          { "id": "5", "label": "5 shelves", "price": 7000 }
-        ]},
-        { "id": "wood", "label": "Wood", "required": true, "choices": [
-          { "id": "walnut", "label": "Walnut", "price": 0 },
-          { "id": "cherry", "label": "Cherry", "price": 0 }
-        ]},
-        { "id": "crest", "label": "Crest", "required": true, "choices": [
-          { "id": "none", "label": "Plain arch", "price": 0 },
-          { "id": "engraved", "label": "Engraved crest", "detail": "you send the artwork", "price": 4500 }
-        ]}
+        {
+          "id": "shelves",
+          "label": "Shelves",
+          "required": true,
+          "choices": [
+            {
+              "id": "3",
+              "label": "3 shelves",
+              "price": 0
+            },
+            {
+              "id": "5",
+              "label": "5 shelves",
+              "price": 7000
+            }
+          ]
+        },
+        {
+          "id": "wood",
+          "label": "Wood",
+          "required": true,
+          "choices": [
+            {
+              "id": "walnut",
+              "label": "Walnut",
+              "price": 0
+            },
+            {
+              "id": "cherry",
+              "label": "Cherry",
+              "price": 0
+            }
+          ]
+        },
+        {
+          "id": "crest",
+          "label": "Crest",
+          "required": true,
+          "choices": [
+            {
+              "id": "none",
+              "label": "Plain arch",
+              "price": 0
+            },
+            {
+              "id": "engraved",
+              "label": "Engraved crest",
+              "detail": "you send the artwork",
+              "price": 4500
+            }
+          ]
+        }
       ],
       "rules": [],
       "upsells": [
-        { "id": "mount", "label": "Wall-mount hardware", "price": 1000 }
+        {
+          "id": "mount",
+          "label": "Wall-mount hardware",
+          "price": 1000
+        }
       ],
       "details": {
         "Dimensions": "Overall size depends on the number of shelves. Exact dimensions are confirmed before cutting.",
         "Woods & finish": "Species names will be listed once the owner confirms them.",
         "Production & delivery": "Made to order. The crest artwork is approved before engraving.",
         "Product care": "Dust with a dry cloth."
-      }
+      },
+      "rooms": [
+        "gifts",
+        "living"
+      ]
     },
     {
       "slug": "monogram-sign",
       "name": "Inlaid Monogram Sign",
-      "category": "home",
+      "category": "gifts",
       "mode": "buy",
       "basePrice": 12000,
       "summary": "A light-wood letter inlaid in a dark panel.",
       "description": "One letter, inlaid so it sits flush in a dark panel with a light border. Good for a front porch, a mantel or a wedding gift.",
-      "photos": ["monogram-sign"],
+      "photos": [
+        "monogram-sign"
+      ],
       "options": [
-        { "id": "letter", "label": "Letter", "required": true, "type": "letter", "choices": [
-          { "id": "A", "label": "A", "price": 0 }, { "id": "B", "label": "B", "price": 0 }, { "id": "C", "label": "C", "price": 0 }, { "id": "D", "label": "D", "price": 0 }, { "id": "E", "label": "E", "price": 0 }, { "id": "F", "label": "F", "price": 0 }, { "id": "G", "label": "G", "price": 0 }, { "id": "H", "label": "H", "price": 0 }, { "id": "I", "label": "I", "price": 0 }, { "id": "J", "label": "J", "price": 0 }, { "id": "K", "label": "K", "price": 0 }, { "id": "L", "label": "L", "price": 0 }, { "id": "M", "label": "M", "price": 0 }, { "id": "N", "label": "N", "price": 0 }, { "id": "O", "label": "O", "price": 0 }, { "id": "P", "label": "P", "price": 0 }, { "id": "Q", "label": "Q", "price": 0 }, { "id": "R", "label": "R", "price": 0 }, { "id": "S", "label": "S", "price": 0 }, { "id": "T", "label": "T", "price": 0 }, { "id": "U", "label": "U", "price": 0 }, { "id": "V", "label": "V", "price": 0 }, { "id": "W", "label": "W", "price": 0 }, { "id": "X", "label": "X", "price": 0 }, { "id": "Y", "label": "Y", "price": 0 }, { "id": "Z", "label": "Z", "price": 0 }
-        ]},
-        { "id": "size", "label": "Size", "required": true, "choices": [
-          { "id": "12x18", "label": "12 x 18 in", "price": 0 },
-          { "id": "18x24", "label": "18 x 24 in", "price": 5000 }
-        ]}
+        {
+          "id": "letter",
+          "label": "Letter",
+          "required": true,
+          "type": "letter",
+          "choices": [
+            {
+              "id": "A",
+              "label": "A",
+              "price": 0
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "price": 0
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "price": 0
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "price": 0
+            },
+            {
+              "id": "E",
+              "label": "E",
+              "price": 0
+            },
+            {
+              "id": "F",
+              "label": "F",
+              "price": 0
+            },
+            {
+              "id": "G",
+              "label": "G",
+              "price": 0
+            },
+            {
+              "id": "H",
+              "label": "H",
+              "price": 0
+            },
+            {
+              "id": "I",
+              "label": "I",
+              "price": 0
+            },
+            {
+              "id": "J",
+              "label": "J",
+              "price": 0
+            },
+            {
+              "id": "K",
+              "label": "K",
+              "price": 0
+            },
+            {
+              "id": "L",
+              "label": "L",
+              "price": 0
+            },
+            {
+              "id": "M",
+              "label": "M",
+              "price": 0
+            },
+            {
+              "id": "N",
+              "label": "N",
+              "price": 0
+            },
+            {
+              "id": "O",
+              "label": "O",
+              "price": 0
+            },
+            {
+              "id": "P",
+              "label": "P",
+              "price": 0
+            },
+            {
+              "id": "Q",
+              "label": "Q",
+              "price": 0
+            },
+            {
+              "id": "R",
+              "label": "R",
+              "price": 0
+            },
+            {
+              "id": "S",
+              "label": "S",
+              "price": 0
+            },
+            {
+              "id": "T",
+              "label": "T",
+              "price": 0
+            },
+            {
+              "id": "U",
+              "label": "U",
+              "price": 0
+            },
+            {
+              "id": "V",
+              "label": "V",
+              "price": 0
+            },
+            {
+              "id": "W",
+              "label": "W",
+              "price": 0
+            },
+            {
+              "id": "X",
+              "label": "X",
+              "price": 0
+            },
+            {
+              "id": "Y",
+              "label": "Y",
+              "price": 0
+            },
+            {
+              "id": "Z",
+              "label": "Z",
+              "price": 0
+            }
+          ]
+        },
+        {
+          "id": "size",
+          "label": "Size",
+          "required": true,
+          "choices": [
+            {
+              "id": "12x18",
+              "label": "12 x 18 in",
+              "price": 0
+            },
+            {
+              "id": "18x24",
+              "label": "18 x 24 in",
+              "price": 5000
+            }
+          ]
+        }
       ],
       "rules": [],
       "upsells": [
-        { "id": "hanger", "label": "Hanging hardware", "price": 800 }
+        {
+          "id": "hanger",
+          "label": "Hanging hardware",
+          "price": 800
+        }
       ],
       "details": {
         "Dimensions": "Sizes are approximate.",
         "Woods & finish": "Species names will be listed once the owner confirms them.",
         "Production & delivery": "Made to order.",
         "Product care": "Indoor or covered porch. Dust with a dry cloth."
-      }
-    },
-    {
-      "slug": "built-ins",
-      "name": "Built-ins & Cabinetry",
-      "category": "furniture",
-      "mode": "consult",
-      "summary": "Shelving, cabinets and entertainment walls built to fit the room.",
-      "description": "Built-ins are measured and designed around your room, so they start with a free conversation rather than a price tag.",
-      "photos": ["built-in-wide", "built-in-cabinets"],
-      "options": [
-        { "id": "room", "label": "Room", "required": false, "choices": [
-          { "id": "living", "label": "Living room" }, { "id": "office", "label": "Office" }, { "id": "bedroom", "label": "Bedroom" }, { "id": "other", "label": "Somewhere else" }
-        ]},
-        { "id": "type", "label": "Piece", "required": false, "choices": [
-          { "id": "shelving", "label": "Shelving" }, { "id": "cabinets", "label": "Cabinets" }, { "id": "media", "label": "Entertainment wall" }
-        ]}
-      ],
-      "rules": [], "upsells": [],
-      "details": { "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid." }
-    },
-    {
-      "slug": "dining-tables",
-      "name": "Dining Tables & Furniture",
-      "category": "furniture",
-      "mode": "consult",
-      "summary": "Tables, vanities, islands and the larger pieces meant to stay in a family.",
-      "description": "Larger furniture is designed with you. Tell us the room, the size and the woods you like, and we’ll start from there.",
-      "photos": ["walnut-backer"],
-      "photoNote": "Photos of larger commissions are coming soon.",
-      "options": [
-        { "id": "piece", "label": "Piece", "required": false, "choices": [
-          { "id": "dining", "label": "Dining table" }, { "id": "coffee", "label": "Coffee or end table" }, { "id": "island", "label": "Kitchen island" }, { "id": "vanity", "label": "Bathroom vanity" }, { "id": "bedroom", "label": "Bedroom furniture" }
-        ]},
-        { "id": "seats", "label": "Seats", "required": false, "choices": [
-          { "id": "4", "label": "4" }, { "id": "6", "label": "6" }, { "id": "8", "label": "8" }, { "id": "10", "label": "10 or more" }
-        ]}
-      ],
-      "rules": [], "upsells": [],
-      "details": { "How it works": "Book a free call. If it’s a fit, you get a written quote. Work is scheduled once the quote is accepted and the deposit is paid." }
-    },
-    {
-      "slug": "dog-gates",
-      "name": "Custom Dog Gates",
-      "category": "furniture",
-      "mode": "consult",
-      "summary": "Barn-door gates sized to your doorway.",
-      "description": "Every doorway is different, so gates are measured first. Book a call and we’ll work out the size, the swing and the finish.",
-      "photos": ["dog-gate-installed", "dog-gate-barn", "dog-gate-panel"],
-      "options": [
-        { "id": "width", "label": "Opening", "required": false, "choices": [
-          { "id": "door", "label": "Standard doorway" }, { "id": "wide", "label": "Wide opening" }, { "id": "stairs", "label": "Top of stairs" }
-        ]}
-      ],
-      "rules": [], "upsells": [],
-      "details": { "How it works": "Book a free call and send a photo of the opening. You get a written quote after that." }
-    },
-    {
-      "slug": "desks-wall-units",
-      "name": "Desks & Wall Units",
-      "category": "furniture",
-      "mode": "consult",
-      "summary": "Fold-down desks and wall units built for a specific kid, room or corner.",
-      "description": "A wall-mounted desk folds flat with a chalkboard face and opens into a work surface with shelves. Pieces like this are built to order.",
-      "photos": ["fold-desk-open", "fold-desk-closed"],
-      "options": [],
-      "rules": [], "upsells": [],
-      "details": { "How it works": "Book a free call. If it’s a fit, you get a written quote." }
+      },
+      "rooms": [
+        "gifts"
+      ]
     }
   ]
 }

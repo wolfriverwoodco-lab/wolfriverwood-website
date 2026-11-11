@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Product Care" current="care" description="How to look after a Wolf River Wood Co. cutting board, serving tray or piece of furniture so it lasts for generations.">
+  <div class="wrap care">
+    <header class="page-head" data-plane>
+      <h1>Product care</h1>
+      <p class="lede">Wood is a natural material. A little care keeps it looking good for generations.</p>
+      <p class="note"><Icon name="info" />Draft care guide, waiting for approval from Wolf River Wood Co.</p>
+    </header>
+
+    <div class="care__grid">
+      <section data-plane aria-labelledby="care-boards">
+        <h2 id="care-boards">Cutting boards and serving trays</h2>
+        <ol class="care__list">
+          <li><strong>Wash by hand.</strong> Use warm, soapy water and a soft sponge. Rinse and wipe dry straight away.</li>
+          <li><strong>Never use the dishwasher, and never soak it.</strong> Standing water and high heat make wood swell, crack and warp.</li>
+          <li><strong>Dry it standing up.</strong> Stand the board on its edge so air reaches both faces.</li>
+          <li><strong>Oil it when it looks dry.</strong> About once a month, or whenever the wood looks pale, rub in food-grade mineral oil or board butter, let it soak in overnight, then wipe off the extra.</li>
+          <li><strong>Use both faces.</strong> Flip the board now and then so it wears evenly. Boards with feet use one face.</li>
+          <li><strong>Freshen it up.</strong> To lift smells or stains, scrub with coarse salt and half a lemon, rinse, dry and oil.</li>
+        </ol>
+      </section>
+
+      <section data-plane aria-labelledby="care-furniture">
+        <h2 id="care-furniture">Furniture and built-ins</h2>
+        <ol class="care__list">
+          <li><strong>Dust with a soft, dry cloth.</strong> Wipe spills right away with a damp cloth, then dry.</li>
+          <li><strong>Use coasters, trivets and placemats.</strong> Hot dishes and wet glasses leave rings in any finish.</li>
+          <li><strong>Keep it out of harsh sun and heat.</strong> Direct sunlight fades wood, and heat vents dry it out.</li>
+          <li><strong>Expect the wood to move a little.</strong> Wood takes in and gives off moisture with the seasons. Small seasonal gaps are normal. A steady indoor humidity of about 35 to 55% keeps movement small.</li>
+          <li><strong>Lift, don't drag.</strong> Felt pads under legs protect both the furniture and your floors.</li>
+          <li><strong>Ask before refinishing.</strong> Questions about a scratch or a worn spot? Get in touch and we'll tell you how to fix it.</li>
+        </ol>
+      </section>
+    </div>
+
+    <p class="care__foot muted">Questions about your piece? Email <a href="mailto:wolfriverwoodco@gmail.com">wolfriverwoodco@gmail.com</a>.</p>
+  </div>
+</Base>

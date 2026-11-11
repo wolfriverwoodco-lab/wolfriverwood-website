@@ -1,0 +1,10 @@
+---
+// A product's lead image: its first photo, or a shop-drawing sketch when no photo exists yet.
+import Photo from './Photo.astro';
+import Sketch from './Sketch.astro';
+interface Props { product: any; sizes?: string; brand?: boolean; eager?: boolean; alt?: string }
+const { product: p, sizes, brand = false, eager = false, alt } = Astro.props;
+---
+{p.photos?.length
+  ? <Photo slug={p.photos[0]} wet brand={brand} eager={eager} sizes={sizes} alt={alt ?? ''} />
+  : <Sketch type={p.sketch} label={p.name} />}

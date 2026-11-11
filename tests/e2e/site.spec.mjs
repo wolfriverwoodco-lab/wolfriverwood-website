@@ -15,7 +15,8 @@ test.beforeEach(async ({ page }) => {
 test('home identifies custom woodworking in Collierville above the fold', async ({ page }) => {
   await page.goto('/');
   const h1 = page.locator('h1');
-  await expect(h1).toHaveText(/Custom woodwork from Collierville, Tennessee/);
+  await expect(h1).toHaveText(/Heirloom furniture, built by hand/);
+  await expect(page.locator('.hero__place')).toContainText('Collierville, Tennessee');
   const box = await h1.boundingBox();
   expect(box.y + box.height).toBeLessThan(page.viewportSize().height);
   await expect(page.locator('.hero .btn')).toBeInViewport();
@@ -181,7 +182,7 @@ test('consult form validates, then is intercepted (nothing sent)', async ({ page
   await expect(page.locator('#e-email')).toHaveText(/valid email/);
   await page.fill('#c-name', 'Test Person');
   await page.fill('#c-email', 'test@example.com');
-  await page.selectOption('#c-project', 'Dining Tables & Furniture');
+  await page.selectOption('#c-project', 'Dining Tables & Sets');
   await page.locator('[data-submit]').click();
   await expect(page.locator('[data-success]')).toContainText('not sent');
   await expect(page.locator('[data-success]')).toBeFocused();
@@ -208,7 +209,7 @@ test('desktop category menu works by keyboard', async ({ page, isMobile }) => {
   await t.focus();
   await page.keyboard.press('Enter');
   await expect(t).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#pop-kitchen a').first()).toBeVisible();
+  await expect(page.locator('#pop-dining a').first()).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(t).toHaveAttribute('aria-expanded', 'false');
   await expect(t).toBeFocused();
@@ -230,7 +231,7 @@ test('staging notice never covers the add-to-cart controls', async ({ page }) =>
   expect(overlap).toBe(false);
 });
 
-for (const path of ['/', '/shop/', PDP, '/shop/dining-tables/', '/custom/', '/work/', '/checkout/']) {
+for (const path of ['/', '/shop/', PDP, '/shop/dining-tables/', '/shop/bathroom-vanities/', '/custom/', '/work/', '/checkout/', '/about/', '/care/']) {
   test(`axe: ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.waitForTimeout(1500);
