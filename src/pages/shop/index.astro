@@ -4,6 +4,7 @@ import Photo from '../../components/Photo.astro';
 import catalog from '../../data/catalog.json';
 import { money } from '../../lib/pricing.js';
 import Icon from '../../components/Icon.astro';
+import Dim from '../../components/Dim.astro';
 ---
 <Base title="Shop" current="shop" description="Made-to-order cutting boards, coasters, holiday trays, coin displays and signs, plus custom furniture by consultation. Collierville, Tennessee.">
   <div class="wrap">
@@ -20,11 +21,12 @@ import Icon from '../../components/Icon.astro';
           <h2 id={`h-${c.id}`}>{c.label}</h2>
           <span class="muted">{c.blurb}</span>
         </header>
+        <Dim label={`${catalog.products.filter((p) => p.category === c.id).length} pieces`} />
         <ul class="grid-products">
           {catalog.products.filter((p) => p.category === c.id).map((p) => (
             <li class="card">
               <a href={`/shop/${p.slug}/`}>
-                <Photo slug={p.photos[0]} wet sizes="(max-width: 559px) 100vw, (max-width: 1023px) 50vw, 33vw" alt="" />
+                <Photo slug={p.photos[0]} wet brand sizes="(max-width: 559px) 100vw, (max-width: 1023px) 50vw, 33vw" alt="" />
                 <div>
                   <h3>{p.name}</h3>
                   <p>{p.summary}</p>

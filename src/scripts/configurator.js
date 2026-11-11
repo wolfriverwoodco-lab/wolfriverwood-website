@@ -2,7 +2,8 @@ import catalog from '../data/catalog.json';
 import photos from '../data/photos.json';
 import { findProduct, priceConfig, disallowedChoices, money } from '../lib/pricing.js';
 import { cart } from './cart.js';
-import { openDrawer } from './site.js';
+import { openDrawer, craftOn } from './site.js';
+import { sizeOf, drawingSVG, cutRows, woodOf } from '../lib/shopdraw.js';
 
 const root = document.querySelector('[data-pdp]');
 const product = root && findProduct(catalog, root.dataset.pdp);
@@ -101,6 +102,7 @@ function init(p) {
       if (changedName === o.id && c?.photo) showPhoto(c.photo);
     }
     form.querySelectorAll('[data-consult-link]').forEach((a) => (a.href = consultHref()));
+    renderShopDrawing(s);
     if (!isBuy) return;
 
     const r = priceConfig(catalog, p.slug, s);
@@ -121,10 +123,43 @@ function init(p) {
     const total = r.ok ? money(r.total) : '-';
     $('[data-price]').textContent = r.ok ? money(r.unit) : money(p.basePrice);
     $('[data-qty]').textContent = String(qty);
+    renderTally();
     form.querySelector('[data-step="-1"]').disabled = qty <= 1;
     form.querySelector('[data-step="1"]').disabled = qty >= 10;
     $('[data-add-label]').textContent = `${editKey ? 'Update cart' : 'Add to cart'} · ${total}`;
     if (stickyPrice) stickyPrice.textContent = total;
+  }
+
+  // ---- shop drawing: plan view, cut list, passport (all from the catalog's own labels)
+  const drawingEl = root.querySelector('[data-drawing]');
+  const cutBody = root.querySelector('[data-cutlist]');
+  const ppWood = root.querySelector('[data-pp-wood]');
+  const sizeOpt = p.options.find((o) => o.id === 'size');
+  let lastSize;
+  function renderShopDrawing(s) {
+    if (drawingEl && sizeOpt && s.selections.size !== lastSize) {
+      lastSize = s.selections.size;
+      drawingEl.innerHTML = drawingSVG(sizeOf(sizeOpt.choices.find((c) => c.id === lastSize)), { maxL: Number(drawingEl.dataset.maxl) || 24 });
+    }
+    if (cutBody) {
+      const rows = cutRows(p, s.selections, s.upsells);
+      if (isBuy) rows.push({ part: 'Quantity', spec: String(qty) });
+      cutBody.replaceChildren(...rows.map((r, i) => {
+        const tr = document.createElement('tr');
+        for (const v of [String(i + 1).padStart(2, '0'), r.part, r.spec]) { const td = document.createElement('td'); td.textContent = v; tr.append(td); }
+        return tr;
+      }));
+    }
+    const w = woodOf(p, s.selections);
+    if (ppWood && w) ppWood.textContent = w;
+  }
+  // ---- tally marks for quantity (lumber crayon): groups of five, struck through
+  const tally = root.querySelector('[data-tally]');
+  function renderTally() {
+    if (!tally) return;
+    const groups = [];
+    for (let left = qty; left > 0; left -= 5) groups.push(`<i class="${left >= 5 ? 'five' : ''}">${'<b></b>'.repeat(Math.min(4, left))}</i>`);
+    tally.innerHTML = groups.join('');
   }
 
   form.addEventListener('change', (e) => render(e.target.name));
@@ -147,7 +182,11 @@ function init(p) {
     }
     cart.add({ slug: p.slug, ...s }, editKey || undefined);
     if (editKey) history.replaceState(null, '', location.pathname);
-    openDrawer('cart', $('[data-add]'));
+    // Glue-up: let the clamp on the bag icon play where you can see it, then open the cart.
+    const wait = craftOn('glueup') && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 760 : 0;
+    const btn = $('[data-add]');
+    if (wait) btn.setAttribute('aria-busy', 'true'); // the header is sticky, so the bag icon is always on screen
+    setTimeout(() => { btn.removeAttribute('aria-busy'); openDrawer('cart', btn); }, wait);
   });
 
   // ---- mobile sticky buy bar: appears once the real button scrolls out of view

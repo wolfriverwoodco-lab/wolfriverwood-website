@@ -1,0 +1,8 @@
+[out:json][timeout:90];
+(
+  way["highway"~"^(motorway|trunk|primary|secondary|tertiary|motorway_link|trunk_link|primary_link|residential|unclassified)$"](35.000,-89.745,35.110,-89.590);
+  way["waterway"~"^(river|stream|canal)$"](34.995,-89.75,35.115,-89.585);
+  way["natural"="water"](35.000,-89.745,35.110,-89.590);
+  way["railway"="rail"](35.000,-89.745,35.110,-89.590);
+);
+out geom;

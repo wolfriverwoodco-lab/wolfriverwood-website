@@ -4,6 +4,14 @@ import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import catalog from '../data/catalog.json';
 const commissions = catalog.products.filter((p) => p.category === 'furniture');
+// The making sequence. Only steps with a real shop photo show one; the rest say a photo is needed.
+const steps = [
+  { name: 'Rough lumber', text: 'Boards come in rough-sawn, and the figure is still hidden under the saw marks.', photo: null },
+  { name: 'Milled square', text: 'Each board is flattened, squared and cut to its parts.', photo: null },
+  { name: 'Glued up', text: 'Parts are glued and clamped so the pattern locks together.', photo: 'boards-in-progress' },
+  { name: 'Flattened and sanded', text: 'The glue-up is flattened, then sanded through finer and finer grits.', photo: null },
+  { name: 'Oiled', text: 'Oil goes on and the grain comes up. Then it’s yours.', photo: 'endgrain-brick-counter' },
+];
 ---
 <Base title="Custom Orders & Free Consultation" current="custom" description="Dining tables, built-ins, vanities, desks and dog gates designed with you. Book a free consultation with Wolf River Wood Co. in Collierville, Tennessee.">
   <div class="wrap">
@@ -11,6 +19,25 @@ const commissions = catalog.products.filter((p) => p.category === 'furniture');
       <h1>Custom orders</h1>
       <p class="lede">Larger pieces are designed around your room, so they start with a free conversation, not a checkout.</p>
     </header>
+
+    <section class="sequence pb-96" data-craft="sequence" data-plane aria-labelledby="seq-h">
+      <div class="sequence__head">
+        <h2 id="seq-h">From rough lumber to oil</h2>
+        <p class="muted">How every piece is made, step by step.</p>
+      </div>
+      <ol class="sequence__steps" tabindex="0" aria-label="Making steps, from rough lumber to oil">
+        {steps.map((st, i) => (
+          <li>
+            {st.photo ? <Photo slug={st.photo} wet ratio="4 / 3" sizes="(max-width: 767px) 80vw, 20vw" /> : (
+              <div class="sequence__tbd" role="img" aria-label="Shop photo needed for this step"><Icon name="camera" size="28" /><span>Shop photo needed</span></div>
+            )}
+            <p class="sequence__n">{String(i + 1).padStart(2, '0')}</p>
+            <h3>{st.name}</h3>
+            <p class="muted">{st.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
 
     <div class="split pb-96">
       <section data-plane aria-labelledby="what-h">

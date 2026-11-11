@@ -65,3 +65,27 @@ npx html-validate "dist/**/*.html"
 ```
 Git Bash: `export MSYS_NO_PATHCONV=1` before passing URL paths like `/shop/` to node scripts.
 Release build: `PUBLIC_STAGING=false npm run build` removes the staging notice and noindex meta; also replace `public/robots.txt` and the `X-Robots-Tag` in `public/_headers`.
+
+---
+
+# Craft styling pass (2026-11-11)
+
+## Outcome
+All 13 craft ideas from the brainstorm are built into the preview. Each one can be switched on or off independently. A **Style checklist** drawer, opened from the staging notice, turns them on and off live, remembers the choices in this browser and copies a "keep / drop" list. Defaults: all on. In the release build (`PUBLIC_STAGING=false`) there is no panel, and only the ids listed in `PUBLIC_CRAFT` are on.
+
+## Design
+- Registry: `src/data/craft.json` holds the id, group, name, a one-line description and where to see it.
+- Switch: `html.craft-<id>`. Blocks that exist only for one idea carry `data-craft="<id>"` and are hidden by a generated rule when it's off. Behaviour in JS checks the class when it runs, so live toggles take effect.
+- No flash: an inline head script applies the saved overrides from localStorage (`wrw-craft-v1`) before the page paints.
+- Ideas: dims, cutlist, storystick, brand (shop drawing); grit, oil, checker (finish schedule); crayon, sequence, glueup, movement (workbench); passport, rings (content).
+
+## Readiness review
+- Content ideas need owner data. The passport, rings and sequence show labelled "to confirm" values or "Photo needed" slots, never invented history, species or claims.
+- Seam interaction: new section pseudo-elements aren't direct children, so the plane rule doesn't hide them. Grit lines sit under the plane face.
+- Accessibility: decorative pieces are `aria-hidden`. The cut list is a real `<table>` with a caption. Checklist checkboxes have labels. Everything degrades with reduced motion.
+- Performance: no new images or fonts; the SVGs are inline and small. The crayon look uses a CSS mask, not a handwriting font.
+- Rollback: everything is on branch `feat/craft-styles`. Any idea can also be turned off by removing its id.
+- Low memory on this machine: run the e2e tests against the wrangler preview only if it starts. Otherwise verify the pages through the static server and say so.
+
+## Acceptance
+Every idea is visible with all on and absent with each switched off (checked one at a time). Choices survive a reload. Copy picks produces the list. The existing e2e tests still pass, html-validate is clean, and the release build has no panel.

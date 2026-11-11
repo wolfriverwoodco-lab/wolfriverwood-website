@@ -4,6 +4,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+export const craftOn = (id) => document.documentElement.classList.contains(`craft-${id}`);
 
 /* ---------- drawers: native modal <dialog> (inert background, Esc), plus slide motion and focus restore ---------- */
 const openers = new Map();
@@ -61,6 +62,23 @@ toggles.forEach((btn) => {
 document.addEventListener('click', (e) => { if (!e.target.closest('.nav__item')) closeAll(); });
 
 /* ---------- the seam: sections are planed into view ---------- */
+/* ---------- logo intro: runs once per visit; any input skips it; the page's own motion waits for it ---------- */
+const introDone = new Promise((resolve) => {
+  const html = document.documentElement;
+  if (!html.classList.contains('intro') || !craftOn('howl')) { html.classList.remove('intro'); resolve(); return; }
+  const ms = (v) => { const t = getComputedStyle(html).getPropertyValue(v).trim(); const n = parseFloat(t) || 0; return /\d\s*s$/.test(t) && !/ms$/.test(t) ? n * 1000 : n; };
+  let over = false;
+  const end = (skipped) => {
+    if (over) return; over = true;
+    if (skipped) html.classList.add('intro-skip');
+    setTimeout(() => { html.classList.remove('intro', 'intro-skip'); resolve(); }, skipped ? 40 : 0);
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => removeEventListener(t, skip, true));
+  };
+  const skip = () => end(true);
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => addEventListener(t, skip, { capture: true, passive: true }));
+  setTimeout(() => end(false), ms('--i-total') + 120);
+});
+
 function initSeam() {
   if (!document.documentElement.classList.contains('plane-ready')) return;
   const sections = $$('[data-plane]');
@@ -80,15 +98,112 @@ function initSeam() {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => { if (en.isIntersecting) { plane(en.target); io.unobserve(en.target); } });
   }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
-  sections.forEach((el) => io.observe(el));
+  introDone.then(() => sections.forEach((el) => io.observe(el)));
   // Deep links / reloads mid-page: reveal everything above the viewport immediately.
   requestAnimationFrame(() => sections.forEach((el) => { if (el.getBoundingClientRect().bottom < 0) { plane(el); el.classList.add('is-done'); } }));
   // Safety net: nothing may stay covered (e.g. a tall section in a short viewport).
-  setTimeout(() => sections.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) plane(el); }), 2500);
+  introDone.then(() => setTimeout(() => sections.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) plane(el); }), 2500));
   // Reduced motion switched on mid-visit: drop the seam entirely.
   reduce.addEventListener('change', (e) => { if (e.matches) { sections.forEach(plane); document.documentElement.classList.remove('plane-ready'); } });
 }
 initSeam();
+
+/* ---------- saw cut: blade runs along the seam, the next section drops down, "Made to order" rises into the gap ---------- */
+function initSaw() {
+  const line = $('[data-sawline]');
+  const target = $('[data-saw-target]');
+  if (!line || !target) return;
+  const html = document.documentElement;
+  const ms = (v) => { const t = getComputedStyle(html).getPropertyValue(v).trim(); const n = parseFloat(t) || 0; return /\d\s*s$/.test(t) && !/ms$/.test(t) ? n * 1000 : n; };
+  const size = () => { if (html.classList.contains('saw-pending')) html.style.setProperty('--saw-h', `${target.offsetHeight}px`); };
+  size(); addEventListener('resize', size); addEventListener('load', size);
+  let done = false;
+  const finish = (animate) => {
+    if (done) return;
+    done = true;
+    target.classList.add('is-planed', 'is-done'); // never re-hidden if the saw is switched off later
+    const wasPending = html.classList.contains('saw-pending');
+    if (!animate || !wasPending) {
+      // Already scrolled past the line while the page was closed up: settle it without moving what's on screen.
+      const shift = wasPending && line.getBoundingClientRect().top < 0 ? target.offsetHeight : 0;
+      html.classList.remove('saw-pending');
+      if (shift) scrollBy(0, shift);
+      line.classList.add('is-cut');
+      return;
+    }
+    target.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
+    html.classList.replace('saw-pending', 'saw-dropping');
+    setTimeout(() => html.classList.remove('saw-dropping'), ms('--d-fall') + ms('--d-rise') + 200);
+  };
+  const cut = () => {
+    if (line.classList.contains('is-cutting') || done) return;
+    if (!craftOn('saw') || !html.classList.contains('plane-ready')) { finish(false); return; }
+    line.classList.add('is-cutting');
+    target.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
+    const run = line.querySelector('.saw__run');
+    const next = () => { line.classList.replace('is-cutting', 'is-cut'); setTimeout(() => finish(line.getBoundingClientRect().top >= 0), ms('--d-pause')); };
+    run.addEventListener('animationend', next, { once: true });
+    setTimeout(() => finish(false), ms('--d-cut') + ms('--d-pause') + 1500); // safety: never leave the page closed up
+  };
+  // Reloaded or deep-linked below the line: open it up, no cut.
+  if (line.getBoundingClientRect().top < 0) { finish(false); return; }
+  const io = new IntersectionObserver(([en]) => { if (en.isIntersecting) { io.disconnect(); cut(); } }, { rootMargin: '0px 0px -22% 0px' });
+  io.observe(line.querySelector('.saw__track'));
+  // Switched off or on from the checklist mid-visit: open the page up rather than replay.
+  document.addEventListener('craft-change', (e) => { if (e.detail.id === 'saw') { io.disconnect(); finish(false); } });
+}
+initSaw();
+
+/* ---------- growth rings: a ring, its pin and its list item light up together ---------- */
+function initRings() {
+  const maker = $('.maker');
+  if (!maker || !maker.querySelector('[data-ring]')) return;
+  const set = (n) => {
+    if (n) maker.dataset.active = n; else delete maker.dataset.active;
+    $$('[data-ring]', maker).forEach((el) => el.classList.toggle('is-active', el.dataset.ring === n));
+  };
+  maker.addEventListener('pointerover', (e) => { const t = e.target.closest('[data-ring]'); if (t && e.pointerType === 'mouse') set(t.dataset.ring); });
+  maker.addEventListener('pointerout', (e) => { if (e.pointerType === 'mouse' && !e.relatedTarget?.closest?.('[data-ring]')) set(null); });
+  maker.addEventListener('focusin', (e) => { const t = e.target.closest('[data-ring]'); if (t) set(t.dataset.ring); });
+  maker.addEventListener('focusout', (e) => { if (!maker.contains(e.relatedTarget)) set(null); });
+  // Touch: tap a ring, pin or item to highlight it; tap it again (or elsewhere) to clear.
+  maker.addEventListener('click', (e) => { const t = e.target.closest('[data-ring]'); if (!t) return set(null); set(maker.dataset.active === t.dataset.ring ? null : t.dataset.ring); });
+}
+initRings();
+
+/* ---------- parallax: background layers drift slower than the page (transform only; still with reduced motion) ---------- */
+function initParallax() {
+  const els = $$('[data-parallax]');
+  if (!els.length || reduce.matches) return;
+  let queued = false;
+  const run = () => {
+    queued = false;
+    for (const el of els) {
+      const r = el.parentElement.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > innerHeight + 100) continue;
+      const p = (innerHeight - r.top) / (innerHeight + r.height); // 0 entering at the bottom, 1 leaving at the top
+      el.style.transform = `translate3d(0, ${((p - 0.5) * 18).toFixed(2)}%, 0)`;
+    }
+  };
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+  addEventListener('resize', run);
+  run();
+}
+initParallax();
+
+/* ---------- story stick: a ruler on the left edge that fills with scroll ---------- */
+const stick = $('.storystick');
+if (stick) {
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    stick.style.setProperty('--p', max > 0 ? Math.min(1, scrollY / max).toFixed(4) : '0');
+  };
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update);
+  update();
+}
 
 /* ---------- cart drawer rendering ---------- */
 const body = $('[data-cart-body]');
@@ -104,7 +219,13 @@ function renderCart() {
   count.textContent = String(n);
   count.hidden = n === 0;
   cartBtn.setAttribute('aria-label', `Open cart, ${n} item${n === 1 ? '' : 's'}`);
-  if (n > lastCount && !reduce.matches) { count.classList.remove('bump'); void count.offsetWidth; count.classList.add('bump'); }
+  if (n > lastCount && !reduce.matches) {
+    // Glue-up: the bag gets clamped. Otherwise the count just bumps.
+    const cls = craftOn('glueup') ? 'is-clamping' : 'bump';
+    const el = cls === 'bump' ? count : cartBtn;
+    el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
+    el.addEventListener('animationend', () => el.classList.remove(cls), { once: true });
+  }
   lastCount = n;
   const undo = lastRemoved ? `<p class="undo" role="status">Removed ${esc(lastRemoved.name)}. <button class="text-btn" type="button" data-undo>Undo</button></p>` : '';
   if (!lines.length) {
@@ -113,9 +234,11 @@ function renderCart() {
     return;
   }
   foot.hidden = false;
+  // The line just added gets squeezed into place (glue-up), once.
+  const fresh = craftOn('glueup') && !reduce.matches && Date.now() - (cart.lastAdded?.at || 0) < 1500 ? cart.lastAdded.key : null;
   $('[data-cart-subtotal]').textContent = money(lines.filter((l) => l.ok).reduce((s, l) => s + l.total, 0));
   body.innerHTML = undo + lines.map((l) => `
-    <article class="cart-line" data-key="${esc(l.key)}">
+    <article class="cart-line${l.key === fresh ? ' is-glued' : ''}" data-key="${esc(l.key)}">
       <img src="${esc(l.thumb)}" alt="" width="76" height="76" loading="lazy" />
       <div>
         <h3>${esc(l.product?.name || 'Unavailable item')}</h3>

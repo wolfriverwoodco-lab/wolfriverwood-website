@@ -4,6 +4,9 @@ import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import catalog from '../data/catalog.json';
 import { money } from '../lib/pricing.js';
+import Dim from '../components/Dim.astro';
+import SawLine from '../components/SawLine.astro';
+import photos from '../data/photos.json';
 
 const buyables = catalog.products.filter((p) => p.mode === 'buy');
 const railPhoto: Record<string, string> = {
@@ -15,6 +18,24 @@ const railPhoto: Record<string, string> = {
   'monogram-sign': 'monogram-sign',
 };
 const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
+const photoCount = Object.keys(photos).length;
+
+// Growth rings around the badge: slightly irregular, like real ones. Deterministic, so builds don't change.
+const ring = (r: number, k: number) => {
+  const pts: string[] = [];
+  for (let i = 0; i <= 96; i++) {
+    const t = (i / 96) * Math.PI * 2;
+    const rr = r + Math.sin(t * 3 + k) * 2.2 + Math.sin(t * 7 + k * 2) * 1.1 + Math.cos(t * 2 + k) * 1.6;
+    pts.push(`${(200 + rr * Math.cos(t)).toFixed(1)},${(200 + rr * Math.sin(t)).toFixed(1)}`);
+  }
+  return `M${pts.join('L')}Z`;
+};
+const rings = [
+  { r: 124, n: 1, a: -2.5, label: 'First boards', when: 'Year to confirm' },
+  { r: 152, n: 2, a: -0.95, label: 'Furniture and built-ins', when: 'Year to confirm' },
+  { r: 182, n: 3, a: 0.55, label: 'Shop opens online', when: '2026' },
+];
+const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1), y: (200 + r * Math.sin(a)).toFixed(1) });
 ---
 <Base current="home">
   <section class="hero" data-plane data-opening>
@@ -39,11 +60,12 @@ const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
         <h2 id="rail-h">Shop by piece</h2>
         <a class="link-arrow" href="/shop/">Shop all <Icon name="arrow-right" /></a>
       </div>
+      <Dim label={`${rail.length} pieces · made to order`} />
       <ul class="rail">
         {rail.map((p) => (
           <li>
             <a href={`/shop/${p.slug}/`}>
-              <Photo slug={railPhoto[p.slug]} wet sizes="(max-width: 639px) 62vw, (max-width: 1023px) 36vw, 19vw" alt="" />
+              <Photo slug={railPhoto[p.slug]} wet brand sizes="(max-width: 639px) 62vw, (max-width: 1023px) 36vw, 19vw" alt="" />
               <span><strong>{p.name}</strong><span>From {money(p.basePrice)}</span></span>
             </a>
           </li>
@@ -52,7 +74,8 @@ const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
     </div>
   </section>
 
-  <section class="section section--surface" data-plane aria-labelledby="flow-h">
+  <SawLine />
+  <section class="section section--surface" data-plane data-saw-target aria-labelledby="flow-h">
     <div class="wrap flow">
       <Photo slug="diamond-board-bench" wet sizes="(max-width: 767px) 100vw, 45vw" alt="A long board with a row of dark diamonds, on the workbench before finishing" />
       <div>
@@ -65,6 +88,15 @@ const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
       </div>
     </div>
   </section>
+  <script is:inline>
+    // Saw cut: before the rest of the page paints, close the gap so the next section sits right under the line.
+    (function () {
+      var h = document.documentElement, t = document.querySelector('[data-saw-target]');
+      if (!t || !h.classList.contains('craft-saw') || !h.classList.contains('plane-ready')) return;
+      h.style.setProperty('--saw-h', t.offsetHeight + 'px');
+      h.classList.add('saw-pending');
+    })();
+  </script>
 
   <section class="section section--wood" data-plane aria-labelledby="banner-h">
     <div class="wrap">
@@ -87,6 +119,7 @@ const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
         <h2 id="work-h">Recent work</h2>
         <a class="link-arrow" href="/work/">See all work <Icon name="arrow-right" /></a>
       </div>
+      <Dim label={`5 of ${photoCount} photos`} />
       <div class="mosaic">
         <figure class="m-a"><Photo slug="striped-board-counter" wet sizes="(max-width: 767px) 100vw, 40vw" /><figcaption>Striped board</figcaption></figure>
         <figure class="m-b"><Photo slug="diamond-board-feet" wet sizes="(max-width: 767px) 50vw, 33vw" /><figcaption>Diamond board with brass feet</figcaption></figure>
@@ -97,14 +130,28 @@ const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
     </div>
   </section>
 
-  <section class="section section--wood" data-plane aria-labelledby="maker-h">
+  <section class="section section--wood" data-plane data-oiled aria-labelledby="maker-h">
+    <div class="mapbg" data-craft="map" aria-hidden="true"><img src="/img/collierville-map.svg" alt="" width="1600" height="1387" loading="lazy" decoding="async" data-parallax /></div>
     <div class="wrap maker">
-      <div class="badge" role="img" aria-label="Wolf River Wood Co. badge"></div>
+      <div class="maker__mark">
+        <svg class="rings" data-craft="rings" viewBox="0 0 400 400" aria-hidden="true">
+          {rings.map((g, i) => <path d={ring(g.r, i * 1.7 + .4)} class:list={['ring', i === rings.length - 1 && 'ring--now']} data-ring={g.n} />)}
+          {rings.map((g, i) => <path d={ring(g.r, i * 1.7 + .4)} class="ring-hit" data-ring={g.n} />)}
+          {rings.map((g) => { const m = marker(g.r, g.a); return <g class="ring-pin" data-ring={g.n}><circle cx={m.x} cy={m.y} r="14" /><text x={m.x} y={Number(m.y) + 5} text-anchor="middle">{g.n}</text></g>; })}
+        </svg>
+        <div class="badge" role="img" aria-label="Wolf River Wood Co. badge"></div>
+      </div>
       <div class="stack gap-18">
+        <p class="geo" data-craft="map">Collierville, Tennessee · 35.04° N, 89.66° W</p>
         <h2 id="maker-h">One shop, one piece at a time</h2>
         <p class="lede">Wolf River Wood Co. is a woodworking shop in Collierville, Tennessee. Boards and gifts are made in small batches. Furniture is built one commission at a time.</p>
+        <ol class="rings-legend" data-craft="rings" aria-label="The shop so far, ring by ring">
+          {rings.map((g) => <li data-ring={g.n} tabindex="0"><b>{g.n}</b><span>{g.label}</span><em>{g.when}</em></li>)}
+        </ol>
+        <p class="small rings-note" data-craft="rings">Draft: the real years come from the shop.</p>
         <p><a class="link-arrow" href="https://www.facebook.com/profile.php?id=61592891616080" rel="noopener" target="_blank">See new pieces on Facebook<span class="sr-only"> (opens in a new tab)</span> <Icon name="arrow-right" /></a></p>
       </div>
     </div>
+      <p class="map-credit" data-craft="map">Map data &copy; <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap contributors<span class="sr-only"> (opens in a new tab)</span></a></p>
   </section>
 </Base>

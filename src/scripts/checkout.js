@@ -1,4 +1,5 @@
 import { cart, money } from './cart.js';
+import { loaderHTML } from './loader.js';
 
 const form = document.querySelector('[data-checkout-form]');
 const linesEl = document.querySelector('[data-sum-lines]');
@@ -46,7 +47,7 @@ form.addEventListener('submit', async (e) => {
   const lines = priced.map((l) => ({ slug: l.slug, selections: l.selections, upsells: l.upsells, qty: l.qty, unit: l.unit ?? undefined }));
   const btn = form.querySelector('[data-submit]');
   const err = form.querySelector('[data-error]');
-  const label = btn.textContent; btn.textContent = 'Checking…';
+  const label = btn.innerHTML; btn.innerHTML = `${loaderHTML}Checking…`;
   btn.disabled = true; btn.setAttribute('aria-busy', 'true'); err.hidden = true;
   try {
     const res = await fetch('/api/checkout', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ lines, contact }) });
@@ -68,6 +69,6 @@ form.addEventListener('submit', async (e) => {
     err.textContent = "We couldn’t reach the server. Nothing was submitted. Please try again.";
     err.hidden = false;
   } finally {
-    btn.textContent = label; btn.disabled = false; btn.removeAttribute('aria-busy');
+    btn.innerHTML = label; btn.disabled = false; btn.removeAttribute('aria-busy');
   }
 });

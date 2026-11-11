@@ -1,0 +1,203 @@
+{
+  "_note": "Craft styling ideas. Each id switches html.craft-<id>. Staging shows a checklist to turn them on and off.",
+  "groups": [
+    {
+      "id": "drawing",
+      "label": "The shop drawing",
+      "blurb": "Precise and measured, like plans pinned over the bench."
+    },
+    {
+      "id": "finish",
+      "label": "The finish schedule",
+      "blurb": "The finish going on: oil and end grain."
+    },
+    {
+      "id": "bench",
+      "label": "The workbench",
+      "blurb": "Hand-marked, physical, the shop at work."
+    },
+    {
+      "id": "content",
+      "label": "The craft as proof",
+      "blurb": "Content that needs real details from the shop."
+    }
+  ],
+  "items": [
+    {
+      "id": "howl",
+      "group": "drawing",
+      "name": "Howling logo intro",
+      "what": "On the first page of a visit, the header wolf throws its head back and howls (sound arcs ripple from its muzzle) while the lettering zooms in. Once per visit, never with reduced motion.",
+      "where": [
+        {
+          "label": "Home (replay)",
+          "href": "/?intro"
+        }
+      ]
+    },
+    {
+      "id": "dims",
+      "group": "drawing",
+      "name": "Dimension lines",
+      "what": "Section headings get a measured dimension line. Product pages show a plan-view drawing of the board that redraws when you change the size.",
+      "where": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "End-grain board",
+          "href": "/shop/end-grain-cutting-board/"
+        }
+      ]
+    },
+    {
+      "id": "cutlist",
+      "group": "drawing",
+      "name": "Cut list spec table",
+      "what": "The product's choices read like a woodworker's cut list: part, spec, quantity. Updates as you configure.",
+      "where": [
+        {
+          "label": "End-grain board",
+          "href": "/shop/end-grain-cutting-board/"
+        }
+      ]
+    },
+    {
+      "id": "storystick",
+      "group": "drawing",
+      "name": "Story stick",
+      "what": "A ruler down the left edge that fills as you scroll. Wide desktop screens only.",
+      "where": [
+        {
+          "label": "Home",
+          "href": "/"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "group": "drawing",
+      "name": "Maker's mark",
+      "what": "The wolf mark pressed into product photos like a hot-iron brand, and stamped on a finished order.",
+      "where": [
+        {
+          "label": "Shop",
+          "href": "/shop/"
+        }
+      ]
+    },
+    {
+      "id": "oil",
+      "group": "finish",
+      "name": "Oil sheen",
+      "what": "The final, oiled section catches a slow pass of light across the badge when it arrives.",
+      "where": [
+        {
+          "label": "Home (bottom)",
+          "href": "/#maker-h"
+        }
+      ]
+    },
+    {
+      "id": "checker",
+      "group": "finish",
+      "name": "End-grain loader",
+      "what": "While a photo or the server is working, a small checkerboard fills in tile by tile, like the end-grain boards.",
+      "where": [
+        {
+          "label": "Pick a pattern",
+          "href": "/shop/end-grain-cutting-board/"
+        }
+      ]
+    },
+    {
+      "id": "crayon",
+      "group": "bench",
+      "name": "Lumber crayon marks",
+      "what": "Demo-price and seasonal tags look marked in red lumber crayon. Quantity also shows as tally marks.",
+      "where": [
+        {
+          "label": "End-grain board",
+          "href": "/shop/end-grain-cutting-board/"
+        },
+        {
+          "label": "Shop",
+          "href": "/shop/"
+        }
+      ]
+    },
+    {
+      "id": "sequence",
+      "group": "bench",
+      "name": "The making sequence",
+      "what": "Custom page walks through rough lumber, milled, glued up, flattened, oiled. Missing steps show where a shop photo is needed.",
+      "where": [
+        {
+          "label": "Custom orders",
+          "href": "/custom/"
+        }
+      ]
+    },
+    {
+      "id": "glueup",
+      "group": "bench",
+      "name": "Glue-up cart",
+      "what": "Adding to the cart clamps the bag icon and squeezes the new line into place, like a glue-up.",
+      "where": [
+        {
+          "label": "Add a board",
+          "href": "/shop/end-grain-cutting-board/"
+        }
+      ]
+    },
+    {
+      "id": "saw",
+      "group": "bench",
+      "name": "Saw cut between sections",
+      "what": "On the homepage, a spinning saw blade runs along the line above “Made to order”, then that section drops down into place.",
+      "where": [
+        {
+          "label": "Home",
+          "href": "/#flow-h"
+        }
+      ]
+    },
+    {
+      "id": "passport",
+      "group": "content",
+      "name": "Board passport",
+      "what": "Each piece gets a provenance card: wood, source, shop hours, finish, oiled-on date. Needs real details from the shop.",
+      "where": [
+        {
+          "label": "End-grain board",
+          "href": "/shop/end-grain-cutting-board/"
+        }
+      ]
+    },
+    {
+      "id": "rings",
+      "group": "content",
+      "name": "Growth-ring timeline",
+      "what": "The shop's story as growth rings around the badge, one ring per milestone. Needs the real years from the shop.",
+      "where": [
+        {
+          "label": "Home (bottom)",
+          "href": "/#maker-h"
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "group": "content",
+      "name": "Collierville map with parallax",
+      "what": "A stylised map of Collierville in the brand colours (roads in cream and maple, the Wolf River in padauk) drifts behind the “One shop” section as you scroll. Map data from OpenStreetMap.",
+      "where": [
+        {
+          "label": "Home (bottom)",
+          "href": "/#maker-h"
+        }
+      ]
+    }
+  ]
+}

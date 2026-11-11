@@ -9,6 +9,7 @@ import fontDisplay from '@fontsource/barlow-condensed/files/barlow-condensed-lat
 import Icon from '../components/Icon.astro';
 import catalog from '../data/catalog.json';
 import photos from '../data/photos.json';
+import craft from '../data/craft.json';
 
 interface Props { title?: string; description?: string; current?: string; ogImage?: string; bodyClass?: string }
 const {
@@ -22,6 +23,10 @@ const fullTitle = title ? `${title} | Wolf River Wood Co.` : 'Wolf River Wood Co
 // Preview build: staging notice + noindex on. Release build sets PUBLIC_STAGING=false.
 const staging = import.meta.env.PUBLIC_STAGING !== 'false';
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// Craft styling switches: staging starts with every idea on; release keeps only PUBLIC_CRAFT ids.
+const craftIds = craft.items.map((i) => i.id);
+const craftOn = staging ? craftIds : String(import.meta.env.PUBLIC_CRAFT || '').split(',').map((x) => x.trim()).filter((x) => craftIds.includes(x));
+const craftHide = craftIds.map((id) => `html:not(.craft-${id}) [data-craft~="${id}"]{display:none !important}`).join('');
 const EMAIL = 'wolfriverwoodco@gmail.com';
 const FACEBOOK = 'https://www.facebook.com/profile.php?id=61592891616080';
 const thumb = (slug: string) => (photos as any)[slug].thumb;
@@ -35,7 +40,7 @@ const ld = {
 };
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" class={craftOn.length ? craftOn.map((id) => `craft-${id}`).join(' ') : undefined}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -61,12 +66,34 @@ const ld = {
   <meta property="og:image:alt" content="Wolf River Wood Co. badge beside an end-grain cutting board" />
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <style is:inline set:html={craftHide}></style>
+  {staging && <script is:inline define:vars={{ craftIds }}>
+    // Saved checklist choices apply before first paint, so nothing flickers on or off.
+    try {
+      const saved = JSON.parse(localStorage.getItem('wrw-craft-v1') || '{}');
+      for (const id of craftIds) if (id in saved) document.documentElement.classList.toggle('craft-' + id, !!saved[id]);
+    } catch {}
+  </script>}
+  <script is:inline define:vars={{ introEveryLoad: staging }}>
+    // Logo intro. Preview build: every page load. Release build: at most once every 3 hours per browser.
+    // Never with reduced motion; ?intro always plays it.
+    try {
+      var KEY = 'wrw-intro-at', GAP = 3 * 60 * 60 * 1000, now = Date.now(), last = 0;
+      try { last = Number(localStorage.getItem(KEY)) || 0; } catch (e) {}
+      var play = location.search.indexOf('intro') > -1 || introEveryLoad || now - last > GAP;
+      if (play && !window.__wrwNoIntro && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('intro');
+        try { localStorage.setItem(KEY, String(now)); } catch (e) {}
+      }
+    } catch (e) {}
+  </script>
   <script is:inline>
     // Motion is opt-in: only with JS and without reduced motion does the seam hide content.
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('plane-ready');
   </script>
 </head>
 <body class={bodyClass}>
+  <div class="intro-veil" data-craft="howl" aria-hidden="true"><i class="intro-veil__grain"></i></div>
   <a class="skip" href="#main">Skip to content</a>
 
   <div class="utility">
@@ -81,14 +108,17 @@ const ld = {
   </div>
 
   <header class="header">
-    {staging && <div class="staging" role="note"><Icon name="pencil-simple" size="14" />Website in progress — being built by HospCreative</div>}
+    {staging && <div class="staging" role="note"><Icon name="pencil-simple" size="14" /><span>Website in progress — being built by HospCreative</span><button class="staging__btn" type="button" data-drawer-open="craft" aria-haspopup="dialog">Style checklist</button></div>}
     <div class="wrap header__bar">
       <div class="header__left">
         <button class="icon-btn only-mobile" type="button" data-drawer-open="menu" aria-label="Open menu" aria-haspopup="dialog"><Icon name="list" size="26" /></button>
       </div>
-      <a class="lockup" href="/" aria-label="Wolf River Wood Co., home">
+      <a class="lockup lockup--header" href="/" aria-label="Wolf River Wood Co., home">
+        <span class="lockup__moon" data-craft="howl" aria-hidden="true"></span>
         <span class="lockup__mark" aria-hidden="true"></span>
+        <span class="lockup__howl" data-craft="howl" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <span class="lockup__word" aria-hidden="true"></span>
+        <span class="lockup__shine" data-craft="howl" aria-hidden="true"></span>
       </a>
       <div class="header__right">
         <button class="icon-btn" type="button" data-drawer-open="cart" aria-haspopup="dialog" aria-label="Open cart, 0 items" data-cart-button>
@@ -120,6 +150,22 @@ const ld = {
       </ul>
     </nav>
   </header>
+  <script is:inline>
+    // Logo intro: measure where the header logo lives, so it can start large in the middle of the screen and glide here.
+    (function () {
+      var h = document.documentElement, l = document.querySelector('.lockup--header');
+      if (!l || !h.classList.contains('intro') || !h.classList.contains('craft-howl')) return;
+      var r = l.getBoundingClientRect(), small = innerWidth < 768;
+      // Frame the whole shot: the moon hangs past the wolf on the left by about a third of the mark's width.
+      var mw = parseFloat(getComputedStyle(l).getPropertyValue('--mw')) || 40, over = mw * 0.36;
+      var s = Math.min(small ? 2.3 : 3.4, (innerWidth * (small ? 0.76 : 0.6)) / (r.width + over));
+      h.style.setProperty('--ix', (innerWidth / 2 - (r.left + r.width / 2) + (over / 2) * s) + 'px');
+      h.style.setProperty('--iy', (innerHeight / 2 - (r.top + r.height / 2)) + 'px');
+      h.style.setProperty('--is', s);
+    })();
+  </script>
+
+  <div class="storystick" data-craft="storystick" aria-hidden="true"><i></i></div>
 
   <main id="main">
     <slot />
@@ -199,9 +245,43 @@ const ld = {
     </div>
   </dialog>
 
+  {staging && (
+    <dialog class="drawer craft-panel" id="drawer-craft" aria-labelledby="craft-title" data-drawer="craft">
+      <div class="drawer__head">
+        <h2 id="craft-title">Style checklist</h2>
+        <button class="icon-btn" type="button" data-drawer-close aria-label="Close style checklist"><Icon name="x" size="24" /></button>
+      </div>
+      <div class="drawer__body">
+        <p class="muted small craft-panel__intro">Tick the ideas to keep. Each one turns on or off across the site as you click, and your choices stay in this browser. Copy your picks when you're done.</p>
+        {craft.groups.map((g) => (
+          <fieldset class="craft-group">
+            <legend>{g.label}<span>{g.blurb}</span></legend>
+            {craft.items.filter((i) => i.group === g.id).map((i) => (
+              <div class="craft-item">
+                <input type="checkbox" id={`craft-${i.id}`} value={i.id} data-craft-toggle checked />
+                <label for={`craft-${i.id}`}><b>{i.name}</b><small>{i.what}</small></label>
+                <p class="craft-item__where">See it: {i.where.map((w, n) => <>{n > 0 && ' · '}<a href={w.href}>{w.label}</a></>)}</p>
+              </div>
+            ))}
+          </fieldset>
+        ))}
+      </div>
+      <div class="drawer__foot">
+        <div class="craft-panel__bulk">
+          <button class="text-btn" type="button" data-craft-all="1">Turn all on</button>
+          <button class="text-btn" type="button" data-craft-all="0">Turn all off</button>
+        </div>
+        <button class="btn btn--block" type="button" data-craft-copy>Copy my picks</button>
+        <p class="small muted" data-craft-status role="status"></p>
+      </div>
+    </dialog>
+  )}
 
   <script>
     import '../scripts/site.js';
   </script>
+  {staging && <script>
+    import '../scripts/craft-panel.js';
+  </script>}
 </body>
 </html>

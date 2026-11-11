@@ -3,9 +3,9 @@
 import photos from '../data/photos.json';
 interface Props {
   slug: string; sizes?: string; eager?: boolean; class?: string; alt?: string;
-  wet?: boolean; ratio?: string; fit?: 'cover' | 'contain';
+  wet?: boolean; ratio?: string; fit?: 'cover' | 'contain'; brand?: boolean;
 }
-const { slug, sizes = '100vw', eager = false, class: cls = '', alt, wet = false, ratio, fit = 'cover' } = Astro.props;
+const { slug, sizes = '100vw', eager = false, class: cls = '', alt, wet = false, ratio, fit = 'cover', brand = false } = Astro.props;
 const p = (photos as Record<string, any>)[slug];
 if (!p) throw new Error(`Photo not found: ${slug}`);
 const srcset = p.variants.map((v: any) => `${v.src} ${v.w}w`).join(', ');
@@ -25,4 +25,5 @@ const box = ratio ?? `${p.width} / ${p.height}`;
     class={fit === 'contain' ? 'fit-contain' : undefined}
   />
   </picture>
+  {brand && <span class="brandmark" data-craft="brand" aria-hidden="true"></span>}
 </figure>

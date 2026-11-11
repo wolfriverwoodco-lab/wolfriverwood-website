@@ -6,6 +6,8 @@ const pick = (page, id) => page.locator(`label[for="${id}"]`).click();
 const addBtn = (page) => page.locator('[data-add]');
 
 test.beforeEach(async ({ page }) => {
+  // The logo intro plays once per visit; most tests start as a returning page view.
+  await page.addInitScript(() => { if (!location.search.includes('intro')) window.__wrwNoIntro = true; });
   await page.goto('/');
   await page.evaluate(() => localStorage.clear());
 });
@@ -25,9 +27,12 @@ test('seam reveals every section and nothing stays covered', async ({ page }) =>
   await page.goto('/');
   const h = await page.evaluate(() => document.documentElement.scrollHeight);
   for (let y = 0; y <= h; y += 300) { await page.evaluate((y) => scrollTo(0, y), y); await page.waitForTimeout(60); }
-  await page.waitForTimeout(1800);
+  // The saw cut (cut, pause, fall, rise) takes about 5s, so allow up to 8s for every section to arrive.
+  await page.waitForFunction(() => [...document.querySelectorAll('[data-plane]')].every((s) => s.classList.contains('is-planed')), null, { timeout: 8000 });
   const covered = await page.evaluate(() => [...document.querySelectorAll('[data-plane]')].filter((s) => !s.classList.contains('is-planed')).length);
   expect(covered).toBe(0);
+  // the saw section ends fully in place, not mid-animation
+  await page.waitForFunction(() => { const t = document.querySelector('[data-saw-target]'); return !t || getComputedStyle(t).clipPath !== 'inset(0px 0px 100%)'; }, null, { timeout: 8000 });
   // scroll back up: revealed content stays revealed
   await page.evaluate(() => scrollTo(0, 0));
   await page.waitForTimeout(300);
@@ -236,3 +241,56 @@ for (const path of ['/', '/shop/', PDP, '/shop/dining-tables/', '/custom/', '/wo
     expect(v, v.join('\n')).toEqual([]);
   });
 }
+
+test('style checklist toggles each craft idea live and remembers it', async ({ page }) => {
+  await page.goto('/shop/end-grain-cutting-board/');
+  await page.evaluate(() => localStorage.removeItem('wrw-craft-v1'));
+  await page.reload();
+  // every idea starts on in the preview
+  await expect(page.locator('.cutlist')).toBeVisible();
+  await expect(page.locator('.passport')).toBeVisible();
+  // the cut list and drawing follow the configuration
+  await pick(page, 'size-l');
+  await expect(page.locator('[data-cutlist]')).toContainText('Large, about 20 x 14 in');
+  await expect(page.locator('[data-drawing] svg')).toHaveAttribute('aria-label', /20 in by 14 in/);
+  // switch the cut list off from the checklist
+  await page.locator('.staging__btn').click();
+  await page.locator('label[for="craft-cutlist"]').click();
+  await expect(page.locator('html')).not.toHaveClass(/craft-cutlist/);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.cutlist')).toBeHidden();
+  // survives a reload, others untouched
+  await page.reload();
+  await expect(page.locator('.cutlist')).toBeHidden();
+  await expect(page.locator('.passport')).toBeVisible();
+  // all off hides every idea's blocks
+  await page.locator('.staging__btn').click();
+  await page.locator('[data-craft-all="0"]').click();
+  await expect(page.locator('[data-craft-status]')).toHaveText('All ideas are off.');
+  const visible = await page.evaluate(() => [...document.querySelectorAll('[data-craft]')].filter((e) => e.getClientRects().length).length);
+  expect(visible).toBe(0);
+  await page.evaluate(() => localStorage.removeItem('wrw-craft-v1'));
+});
+
+test('logo intro: centred, howls, glides into the header, skippable', async ({ page }) => {
+  await page.goto('/?intro');
+  const lock = page.locator('.lockup--header');
+  await expect(page.locator('html')).toHaveClass(/intro/);
+  await page.waitForTimeout(1200);
+  const mid = await lock.boundingBox();
+  const vp = page.viewportSize();
+  expect(Math.abs(mid.x + mid.width / 2 - vp.width / 2)).toBeLessThan(40); // centred while it plays
+  // finishes on its own and lands in the header
+  await expect(page.locator('html')).not.toHaveClass(/intro/, { timeout: 7000 });
+  await expect(lock).toHaveCSS('transform', 'none');
+  await expect(page.locator('.hero')).toHaveClass(/is-planed/);
+  // preview build: every page load plays it, including clicking to another page
+  await page.evaluate(() => { window.__wrwNoIntro = false; });
+  await page.goto('/shop/?intro');
+  await expect(page.locator('html')).toHaveClass(/intro/);
+  await expect(page.locator('html')).not.toHaveClass(/intro/, { timeout: 7000 });
+  // any input skips it
+  await page.goto('/?intro');
+  await page.mouse.click(10, vp.height - 10);
+  await expect(page.locator('html')).not.toHaveClass(/intro/, { timeout: 1000 });
+});

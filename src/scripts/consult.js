@@ -1,5 +1,6 @@
 import catalog from '../data/catalog.json';
 import { findProduct, validateConfig, describeSelections } from '../lib/pricing.js';
+import { loaderHTML } from './loader.js';
 
 const form = document.querySelector('[data-consult-form]');
 if (form) init();
@@ -58,7 +59,7 @@ function init() {
 
     const btn = form.querySelector('[data-submit]');
     const err = form.querySelector('[data-error]');
-    const label = btn.innerHTML; btn.textContent = 'Sending…';
+    const label = btn.innerHTML; btn.innerHTML = `${loaderHTML}Sending…`;
     btn.disabled = true; btn.setAttribute('aria-busy', 'true');
     err.hidden = true;
     try {

@@ -22,6 +22,7 @@ let memory = read();
 
 export const cart = {
   lines: () => memory,
+  lastAdded: null,
   subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
   /** Add or merge. If replaceKey is given (edit flow), that line is replaced. */
   add({ slug, selections, upsells = [], qty = 1 }, replaceKey) {
@@ -31,6 +32,7 @@ export const cart = {
     if (hit && replaceKey !== key) hit.qty = Math.min(10, hit.qty + qty);
     else if (hit) hit.qty = qty;
     else lines = [...lines, { key, slug, selections, upsells, qty }];
+    cart.lastAdded = { key, at: Date.now() };
     write([...lines]);
     return key;
   },

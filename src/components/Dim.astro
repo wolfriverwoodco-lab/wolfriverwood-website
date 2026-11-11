@@ -1,0 +1,6 @@
+---
+// Shop-drawing dimension line under a heading. Decorative; the label repeats real counts only.
+interface Props { label: string }
+const { label } = Astro.props;
+---
+<div class="dimline" data-craft="dims" aria-hidden="true"><span>{label}</span></div>

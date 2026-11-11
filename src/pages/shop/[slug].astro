@@ -5,6 +5,7 @@ import Icon from '../../components/Icon.astro';
 import catalog from '../../data/catalog.json';
 import photos from '../../data/photos.json';
 import { money } from '../../lib/pricing.js';
+import { sizeOf, drawingSVG, cutRows, woodOf } from '../../lib/shopdraw.js';
 
 export function getStaticPaths() {
   return catalog.products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
@@ -18,6 +19,13 @@ const cat = catalog.categories.find((c) => c.id === p.category)!;
 const defaults: Record<string, string> = {};
 for (const o of p.options) if (o.required) defaults[o.id] = (o.choices.find((c: any) => !c.price && !c.consult) || o.choices[0]).id;
 const thumb = (s: string) => (photos as any)[s].thumb;
+const sizeOpt = p.options.find((o: any) => o.id === 'size');
+const hasDrawing = Boolean(sizeOpt && sizeOpt.choices.some((c: any) => sizeOf(c)));
+const maxL = hasDrawing ? Math.max(...sizeOpt.choices.map((c: any) => sizeOf(c)?.l || 0)) : 24;
+const drawing = hasDrawing ? drawingSVG(sizeOf(sizeOpt.choices.find((c: any) => c.id === defaults.size)), { maxL: maxL + 2 }) : '';
+const rows = cutRows(p, defaults, []);
+const wood = woodOf(p, defaults);
+const loader = `<span class="eg-loader" data-craft="checker" aria-hidden="true">${'<i></i>'.repeat(9)}</span>`;
 const plus = (c: any) => (c.consult ? 'Quoted' : c.price ? `+${money(c.price)}` : '');
 ---
 <Base title={p.name} current="shop" description={`${p.summary} Made to order in Collierville, Tennessee.`} bodyClass={isBuy ? 'has-sticky-buy' : ''}>
@@ -29,7 +37,8 @@ const plus = (c: any) => (c.consult ? 'Quoted' : c.price ? `+${money(c.price)}` 
     <div class="pdp" data-pdp={p.slug}>
       <div class="gallery" data-plane data-opening>
         <div class="gallery__main" data-main-photo>
-          <Photo slug={p.photos[0]} eager wet sizes="(max-width: 899px) 100vw, 54vw" />
+          <Photo slug={p.photos[0]} eager wet brand sizes="(max-width: 899px) 100vw, 54vw" />
+          <Fragment set:html={loader} />
         </div>
         {p.photos.length > 1 && (
           <ul class="thumbs" aria-label="More photos">
@@ -102,12 +111,48 @@ const plus = (c: any) => (c.consult ? 'Quoted' : c.price ? `+${money(c.price)}` 
             <div class="qty" role="group" aria-label="Quantity">
               <button type="button" data-step="-1" aria-label="Decrease quantity"><Icon name="minus" size="16" /></button>
               <output data-qty aria-live="polite">1</output>
+              <span class="tally" data-craft="crayon" data-tally aria-hidden="true"><i></i></span>
               <button type="button" data-step="1" aria-label="Increase quantity"><Icon name="plus" size="16" /></button>
             </div>
             <button class="btn btn--block" type="submit" data-add><span data-add-label>Add to cart</span></button>
           </div>
         )}
         {isBuy && <p class="note" data-custom-note><Icon name="pencil-simple" /><span>Want something these options don’t cover? <a href="/custom/#consult" data-consult-link>Book a free consultation</a> and bring your choices with you.</span></p>}
+
+        {hasDrawing && (
+          <figure class="drawing" data-craft="dims">
+            <div class="drawing__svg" data-drawing data-maxl={maxL + 2} set:html={drawing} />
+            <figcaption><span>Plan view</span><span>Approximate sizes · thickness to confirm</span></figcaption>
+          </figure>
+        )}
+        {p.options.length > 0 && (
+        <table class="cutlist" data-craft="cutlist">
+          <caption><span>Cut list</span><span>{p.name}</span></caption>
+          <thead><tr><th scope="col">No.</th><th scope="col">Part</th><th scope="col">Spec</th></tr></thead>
+          <tbody data-cutlist>
+            {rows.map((r, i) => <tr><td>{String(i + 1).padStart(2, '0')}</td><td>{r.part}</td><td>{r.spec}</td></tr>)}
+          </tbody>
+        </table>
+        )}
+
+        {isBuy && (
+          <section class="passport" data-craft="passport" aria-labelledby="pp-h">
+            <header>
+              <span class="brandmark brandmark--ink" aria-hidden="true"></span>
+              <div><h2 id="pp-h">Board passport</h2><p class="small muted">Comes with every piece. Draft: the shop fills in the real details.</p></div>
+            </header>
+            <dl>
+              <dt>Piece</dt><dd>{p.name}</dd>
+              {wood && <><dt>Wood</dt><dd data-pp-wood>{wood}</dd></>}
+              <dt>Lumber from</dt><dd class="tbd">To confirm with the shop</dd>
+              <dt>Shop hours</dt><dd class="tbd">Logged per piece, to confirm</dd>
+              <dt>Finish</dt><dd class="tbd">To confirm with the shop</dd>
+              <dt>Oiled on</dt><dd>Dated when it ships</dd>
+              <dt>Made in</dt><dd>Collierville, Tennessee</dd>
+              <dt>Piece no.</dt><dd>Assigned with your order</dd>
+            </dl>
+          </section>
+        )}
 
         <div class="acc">
           {Object.entries(p.details).map(([k, v], i) => (

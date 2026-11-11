@@ -1,0 +1,5 @@
+# Cloudflare Pages project for the Wolf River Wood Co. site (client's own Cloudflare account).
+# Deploy: npm run build && npx wrangler pages deploy (uses OAuth + CLOUDFLARE_ACCOUNT_ID; never a global API token).
+name = "wolfriverwood"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-11-10"
