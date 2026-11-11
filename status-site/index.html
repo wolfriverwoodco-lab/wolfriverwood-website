@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Wolf River Wood Co. | Website project status</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --bg:#f2f1ed; --card:#e7e4dd; --ink:#1f1412; --ink2:#5a4a42; --line:#cbc5ba; --acc:#962714; --ok:#2f5d3a; --warn:#8a5a00; color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#17110f; --card:#211816; --ink:#efe9e1; --ink2:#bfb1a6; --line:#3d302b; --acc:#e0805a; --ok:#8fc79c; --warn:#e8b860; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 system-ui, -apple-system, Segoe UI, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font-size: 2rem; line-height: 1.1; margin: 0 0 6px; }
+  h2 { font-size: 1.25rem; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  p { margin: 0 0 10px; }
+  .muted { color: var(--ink2); }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  li { background: var(--card); border-radius: 4px; padding: 14px 16px; }
+  li strong { display: block; }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-right: 6px; border: 1px solid currentColor; }
+  .impl { color: var(--ok); } .fix { color: var(--warn); } .none { color: var(--ink2); } .appr { color: var(--acc); }
+  table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+  th { font-size: .8125rem; color: var(--ink2); font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; font-size: .875rem; }
+  @media (max-width: 700px) { table, thead, tbody, tr, th, td { display: block; } thead { display: none; } tr { background: var(--card); border-radius: 4px; padding: 10px 6px; margin-bottom: 10px; } td { border: 0; padding: 4px 8px; } td::before { content: attr(data-l); display: block; font-size: .75rem; color: var(--ink2); font-weight: 600; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Wolf River Wood Co. website</h1>
+  <p class="muted">Project status, kept by HospCreative. Last updated November 10, 2026.</p>
+  <p>The first private preview is built and tested on our machine. It is not published yet. Prices, options and policies in the preview are placeholders until you confirm them.</p>
+  <div class="legend">
+    <span><span class="tag impl">Implemented</span>built and tested</span>
+    <span><span class="tag fix">Demo data</span>works, using placeholder data</span>
+    <span><span class="tag none">Not connected</span>outside services not hooked up yet</span>
+    <span><span class="tag appr">Approved</span>you signed off</span>
+  </div>
+
+  <h2>Done</h2>
+  <ul>
+    <li><span class="tag impl">Implemented</span><strong>Logo cleaned up and turned into a full set</strong>Rebuilt from your Facebook logo. The circle is now perfectly round and centered, and "RIVER" no longer touches the ring. Made a vector version, light and dark versions, a wolf-head icon, a horizontal header logo, browser icons and a link-preview image.</li>
+    <li><span class="tag impl">Implemented</span><strong>Site design and pages</strong>Home, Shop, a page for every product, Custom Orders with a consultation request, Our Work gallery and Checkout. Built to work well on phones first. All photos are yours, from the shared Drive folder.</li>
+    <li><span class="tag fix">Demo data</span><strong>Product configurator</strong>Customers pick size, pattern and extras and see the price update. Combinations that don't work (for example a juice groove on a small board) are blocked with an explanation. "Custom size" sends them to a free consultation with their choices attached.</li>
+    <li><span class="tag fix">Demo data</span><strong>Cart and test checkout</strong>Slide-out cart. Different versions of the same product stay as separate lines. You can edit, change quantity, and remove with undo. Checkout re-checks every price on the server. No payment is taken.</li>
+    <li><span class="tag fix">Demo data</span><strong>Free consultation request</strong>The form checks the details and keeps the product choices, but in the preview nothing is sent anywhere.</li>
+    <li><span class="tag impl">Implemented</span><strong>Testing</strong>42 automated browser tests on desktop and phone, accessibility checks on every page with 0 issues, and fast load scores on mobile (97 to 100).</li>
+  </ul>
+
+  <h2>In progress</h2>
+  <ul>
+    <li><strong>Private preview link</strong>Next we publish the preview to your Cloudflare account behind a password so you can click through it. Waiting on Clarke's go-ahead.</li>
+  </ul>
+
+  <h2>Planned next</h2>
+  <ul>
+    <li><span class="tag none">Not connected</span><strong>Booking calendar</strong>The consultation button opens your GoHighLevel calendar, with the customer's product choices saved on their contact.</li>
+    <li><span class="tag none">Not connected</span><strong>Online payments</strong>Real checkout through a hosted payment page, so card details never touch the website. Tested in test mode first.</li>
+    <li><span class="tag none">Not connected</span><strong>Quotes and deposits</strong>A simple screen where you enter the agreed price and deposit percentage, preview the numbers and send the customer a link to accept and pay. You won't need to work inside GoHighLevel.</li>
+    <li><span class="tag none">Not connected</span><strong>GoHighLevel sync</strong>Contacts, orders and project stages recorded in GoHighLevel, with retries so a payment is never lost if GoHighLevel is down.</li>
+  </ul>
+
+  <h2>Waiting on you</h2>
+  <table>
+    <thead><tr><th>What we need</th><th>Used for</th><th>Without it</th><th>How to send it</th></tr></thead>
+    <tbody>
+      <tr><td data-l="What we need">The products you want to sell online, in priority order</td><td data-l="Used for">Shop and menus</td><td data-l="Without it">The shop shows our best guess from your photos</td><td data-l="How to send it">Reply in Discord</td></tr>
+      <tr><td data-l="What we need">For each product: sizes, wood choices, finish, engraving options and which combinations aren't possible</td><td data-l="Used for">Product configurator</td><td data-l="Without it">Options are placeholders</td><td data-l="How to send it">A quick list in Discord or a Google Doc in the shared folder</td></tr>
+      <tr><td data-l="What we need">Prices: base price, extra charge per option, and add-ons (like board butter)</td><td data-l="Used for">Prices and checkout</td><td data-l="Without it">Real orders can't go live</td><td data-l="How to send it">Same list as above</td></tr>
+      <tr><td data-l="What we need">Which items are buy-online and which need a consultation first. Optionally, a price above which every order gets a call.</td><td data-l="Used for">Consultation routing</td><td data-l="Without it">Only furniture and "custom size" go to a call</td><td data-l="How to send it">Discord</td></tr>
+      <tr><td data-l="What we need">Shipping, pickup and delivery areas and charges; sales tax handling; lead times</td><td data-l="Used for">Checkout and product pages</td><td data-l="Without it">These show "being finalised"</td><td data-l="How to send it">Discord</td></tr>
+      <tr><td data-l="What we need">Deposit percentage, when the balance is due, and your cancellation, refund and custom-order policies</td><td data-l="Used for">Quotes, deposits and policy pages</td><td data-l="Without it">The quote and deposit tool can't go live</td><td data-l="How to send it">Discord, or we can draft them for you to approve</td></tr>
+      <tr><td data-l="What we need">Booking calendar setup: meeting length, the hours you're available, and phone or video</td><td data-l="Used for">Free consultation booking</td><td data-l="Without it">Requests can't be booked automatically</td><td data-l="How to send it">We can set it up together on a short call</td></tr>
+      <tr><td data-l="What we need">The names of the woods you use (for example walnut, cherry, maple, padauk, purpleheart)</td><td data-l="Used for">Product descriptions</td><td data-l="Without it">We describe woods by color only</td><td data-l="How to send it">Discord</td></tr>
+      <tr><td data-l="What we need">Photos of you and the team, a short bio and the approved public contact details (is wolfriverwoodco@gmail.com right? a phone number?)</td><td data-l="Used for">About section and footer</td><td data-l="Without it">A short shop description only</td><td data-l="How to send it">Drive folder, plus text in Discord</td></tr>
+      <tr><td data-l="What we need">Photos of larger finished pieces (tables, vanities, built-ins), and whether you're OK with in-progress shots</td><td data-l="Used for">Furniture pages and gallery</td><td data-l="Without it">The furniture page uses a walnut panel photo</td><td data-l="How to send it">Drive folder</td></tr>
+      <tr><td data-l="What we need">A Christmas tree tray photo</td><td data-l="Used for">Holiday tray page</td><td data-l="Without it">That option shows "photo coming"</td><td data-l="How to send it">Drive folder</td></tr>
+      <tr><td data-l="What we need">Your OK on the cleaned-up logo and its new versions</td><td data-l="Used for">Whole site</td><td data-l="Without it">Nothing is blocked; we just want your sign-off</td><td data-l="How to send it">Discord</td></tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

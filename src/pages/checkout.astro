@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Checkout" description="Checkout for Wolf River Wood Co. orders.">
+  <div class="wrap">
+    <header class="page-head">
+      <h1>Checkout</h1>
+    </header>
+    <div class="checkout">
+      <div class="stack gap-24">
+        <div class="test-banner" role="note"><Icon name="warning-circle" /><p><strong>Preview checkout.</strong> Payments aren’t connected yet. Placing an order here checks your cart on the server and takes no payment.</p></div>
+        <form class="form" data-checkout-form novalidate>
+          <div class="two">
+            <div class="field"><label for="k-name">Name</label><input id="k-name" type="text" name="name" autocomplete="name" required aria-describedby="e-name" /><p class="err" id="e-name"></p></div>
+            <div class="field"><label for="k-email">Email</label><input id="k-email" name="email" type="email" autocomplete="email" spellcheck="false" required aria-describedby="e-email" /><p class="err" id="e-email"></p></div>
+          </div>
+          <p class="note"><Icon name="info" />Delivery and pickup options, shipping and tax will appear here once they’re set.</p>
+          <p class="form-error" data-error role="alert" hidden></p>
+          <button class="btn" type="submit" data-submit>Place test order</button>
+        </form>
+        <div class="success" data-success hidden tabindex="-1">
+          <h2>Test order checked</h2>
+          <p data-success-msg></p>
+          <p class="muted">Reference <strong data-ref></strong></p>
+          <a class="link-arrow" href="/shop/">Back to the shop <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+      <aside class="summary" aria-labelledby="sum-h">
+        <h2 id="sum-h" class="h-sm">Order summary</h2>
+        <div data-sum-lines></div>
+        <div class="totals"><span>Subtotal</span><span data-sum-total></span></div>
+        <p class="note" data-sum-note>Prices are demo prices and are re-checked on the server.</p>
+      </aside>
+    </div>
+  </div>
+  <script>
+    import '../scripts/checkout.js';
+  </script>
+</Base>

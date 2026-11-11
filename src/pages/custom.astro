@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import catalog from '../data/catalog.json';
+const commissions = catalog.products.filter((p) => p.category === 'furniture');
+---
+<Base title="Custom Orders & Free Consultation" current="custom" description="Dining tables, built-ins, vanities, desks and dog gates designed with you. Book a free consultation with Wolf River Wood Co. in Collierville, Tennessee.">
+  <div class="wrap">
+    <header class="page-head" data-plane>
+      <h1>Custom orders</h1>
+      <p class="lede">Larger pieces are designed around your room, so they start with a free conversation, not a checkout.</p>
+    </header>
+
+    <div class="split pb-96">
+      <section data-plane aria-labelledby="what-h">
+        <h2 id="what-h" class="sr-only">What we build to order</h2>
+        <ul class="commission-list">
+          {commissions.map((p) => (
+            <li>
+              <Photo slug={p.photos[0]} wet sizes="140px" alt="" />
+              <div>
+                <h3><a href={`/shop/${p.slug}/`}>{p.name}</a></h3>
+                <p>{p.summary}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="terms">
+          <h3>How a commission works</h3>
+          <ol>
+            <li>Book a free call. It costs nothing and doesn’t commit you to anything.</li>
+            <li>If it’s a fit, you get a written quote with the scope and price.</li>
+            <li>Accept the quote and pay a deposit online to get on the schedule.</li>
+            <li>Your piece is built, and the balance is due as agreed in the quote.</li>
+          </ol>
+          <p class="note"><Icon name="info" />Deposit amounts, lead times and balance timing are being finalised with the shop.</p>
+        </div>
+      </section>
+
+      <section id="consult" data-plane aria-labelledby="consult-h">
+        <div class="stack gap-10 mb-24">
+          <h2 id="consult-h">Book a free consultation</h2>
+          <p class="muted">Tell us a little about the piece. We’ll reply to set up a call.</p>
+        </div>
+
+        <form class="form" data-consult-form novalidate>
+          <div class="context-box" data-context hidden>
+            <strong>Bringing your choices</strong>
+            <dl data-context-list></dl>
+            <button class="text-btn" type="button" data-context-clear data-flush>Remove these choices</button>
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="c-name">Name</label>
+              <input id="c-name" type="text" name="name" autocomplete="name" required aria-describedby="e-name" />
+              <p class="err" id="e-name"></p>
+            </div>
+            <div class="field">
+              <label for="c-email">Email</label>
+              <input id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" spellcheck="false" />
+              <p class="err" id="e-email"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-phone">Phone <span>(optional)</span></label>
+            <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+          </div>
+          <div class="field">
+            <label for="c-project">What would you like built?</label>
+            <select id="c-project" name="project" required aria-describedby="e-project">
+              <option value="">Choose one</option>
+              {commissions.map((p) => <option value={p.name}>{p.name}</option>)}
+              <option value="Custom board or gift">Custom board or gift</option>
+              <option value="Something else">Something else</option>
+            </select>
+            <p class="err" id="e-project"></p>
+          </div>
+          <div class="field">
+            <label for="c-msg">Details <span>(optional)</span></label>
+            <textarea id="c-msg" name="message" aria-describedby="h-msg"></textarea>
+            <p class="hint" id="h-msg">Room, rough size, woods you like, timing. A photo can follow by email.</p>
+          </div>
+          <p class="form-error" data-error role="alert" hidden></p>
+          <button class="btn" type="submit" data-submit>Request my free consultation <Icon name="arrow-right" class="icon-arrow" /></button>
+          <p class="note"><Icon name="info" />A consultation is free. Booking one does not reserve shop time or commit you to a purchase.</p>
+        </form>
+
+        <div class="success" data-success hidden tabindex="-1">
+          <h2>Request checked</h2>
+          <p data-success-msg></p>
+          <a class="link-arrow" href="/shop/">Keep browsing <Icon name="arrow-right" /></a>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script>
+    import '../scripts/consult.js';
+  </script>
+</Base>

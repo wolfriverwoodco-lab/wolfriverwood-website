@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+// Only finished pieces from the owner’s own photos. Nothing here is a rendering or a stock image.
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const groups = [
+  { title: 'Furniture & built-ins', items: [
+    ['built-in-wide', 'Living room built-ins'], ['dog-gate-installed', 'Barn-door dog gate'], ['fold-desk-open', 'Fold-down wall desk, open'],
+    ['fold-desk-closed', 'The same desk, closed'], ['adirondack-chair', 'Adirondack chair'], ['dog-gate-barn', 'Dog gate in a bedroom doorway'],
+  ]},
+  { title: 'Boards & trays', items: [
+    ['endgrain-brick-counter', 'End-grain board, brick pattern'], ['diamond-band-board', 'Diamond band board'], ['pumpkin-tray', 'Pumpkin party tray'],
+    ['endgrain-checker-tall', 'End-grain checkerboard'], ['striped-chevron-board', 'Striped board with chevron band'], ['endgrain-stripe-board', 'End-grain board with accent stripe'],
+    ['pumpkin-board', 'Pumpkin serving board'], ['striped-board-counter', 'Striped board'], ['diamond-board-feet', 'Diamond board with brass feet'],
+  ]},
+  { title: 'Gifts & displays', items: [
+    ['challenge-coin-display', 'Challenge coin display'], ['monogram-sign', 'Inlaid monogram sign'], ['coaster-octagon-holder', 'Octagon coaster set'],
+    ['coaster-padauk-set', 'Striped coaster set'], ['coaster-holder-angled', 'Coasters in an angled holder'],
+  ]},
+  { title: 'In the shop', items: [
+    ['boards-in-progress', 'Boards glued up, waiting to be flattened'], ['diamond-board-bench', 'A diamond board on the bench'], ['walnut-backer', 'Walnut panel before finishing'],
+  ]},
+];
+---
+<Base title="Our Work" current="work" description="Finished pieces from Wolf River Wood Co.: built-ins, dog gates, desks, end-grain cutting boards, holiday trays, coin displays and signs.">
+  <div class="wrap">
+    <header class="page-head" data-plane>
+      <h1>Our work</h1>
+      <p class="lede">Pieces built in the Collierville shop. Larger commissions are added as they’re finished.</p>
+    </header>
+    {groups.map((g) => (
+      <section class="section--tight" data-plane aria-labelledby={`g-${slug(g.title)}`}>
+        <h2 id={`g-${slug(g.title)}`} class="mb-24">{g.title}</h2>
+        <div class="work-grid">
+          {g.items.map(([slug, cap]) => (
+            <figure><Photo slug={slug} wet sizes="(max-width: 640px) 100vw, 33vw" /><figcaption>{cap}</figcaption></figure>
+          ))}
+        </div>
+      </section>
+    ))}
+    <section class="section" data-plane>
+      <div class="stack gap-16">
+        <h2>Have something in mind?</h2>
+        <p class="lede">If you don’t see it here, it can probably still be built.</p>
+        <div><a class="btn" href="/custom/#consult">Book a free consultation <Icon name="arrow-right" class="icon-arrow" /></a></div>
+      </div>
+    </section>
+  </div>
+</Base>

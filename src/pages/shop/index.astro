@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import catalog from '../../data/catalog.json';
+import { money } from '../../lib/pricing.js';
+import Icon from '../../components/Icon.astro';
+---
+<Base title="Shop" current="shop" description="Made-to-order cutting boards, coasters, holiday trays, coin displays and signs, plus custom furniture by consultation. Collierville, Tennessee.">
+  <div class="wrap">
+    <header class="page-head">
+      <h1>Shop the workshop</h1>
+      <p class="lede">Every piece is made to order. Configure it here, or book a free consultation for furniture and built-ins.</p>
+    </header>
+    <nav class="filters" aria-label="Jump to a category">
+      {catalog.categories.map((c) => <a class="chip-link" href={`#${c.id}`}>{c.label}</a>)}
+    </nav>
+    {catalog.categories.map((c) => (
+      <section class="cat-block" id={c.id} data-plane aria-labelledby={`h-${c.id}`}>
+        <header>
+          <h2 id={`h-${c.id}`}>{c.label}</h2>
+          <span class="muted">{c.blurb}</span>
+        </header>
+        <ul class="grid-products">
+          {catalog.products.filter((p) => p.category === c.id).map((p) => (
+            <li class="card">
+              <a href={`/shop/${p.slug}/`}>
+                <Photo slug={p.photos[0]} wet sizes="(max-width: 559px) 100vw, (max-width: 1023px) 50vw, 33vw" alt="" />
+                <div>
+                  <h3>{p.name}</h3>
+                  <p>{p.summary}</p>
+                  <div class="card__meta">
+                    <span>{p.mode === 'buy' ? `From ${money(p.basePrice)}` : 'Free consultation'}</span>
+                    {p.seasonal && <span class="tag">Seasonal</span>}
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p class="note shop-foot"><Icon name="info" /><span>Prices shown are demo prices for review and are not yet confirmed by Wolf River Wood Co.</span></p>
+  </div>
+</Base>

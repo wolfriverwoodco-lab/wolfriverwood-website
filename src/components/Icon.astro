@@ -1,0 +1,10 @@
+---
+// Phosphor (regular) icons, inlined. One family, one weight, sized with the font.
+interface Props { name: string; size?: string; label?: string; class?: string }
+const { name, size = '1.25em', label, class: cls = '' } = Astro.props;
+const icons = import.meta.glob('/node_modules/@phosphor-icons/core/assets/regular/*.svg', { query: '?raw', import: 'default', eager: true });
+const raw = (icons[`/node_modules/@phosphor-icons/core/assets/regular/${name}.svg`] as string) || '';
+if (!raw) throw new Error(`Icon not found: ${name}`);
+const svg = raw.replace('<svg ', `<svg width="${size}" height="${size}" class="icon ${cls}" ${label ? `role="img" aria-label="${label}"` : 'aria-hidden="true" focusable="false"'} `);
+---
+<Fragment set:html={svg} />

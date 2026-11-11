@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import catalog from '../data/catalog.json';
+import { money } from '../lib/pricing.js';
+
+const buyables = catalog.products.filter((p) => p.mode === 'buy');
+const railPhoto: Record<string, string> = {
+  'end-grain-cutting-board': 'endgrain-checker-tall',
+  'edge-grain-cutting-board': 'striped-board-counter',
+  'holiday-serving-tray': 'pumpkin-tray',
+  'coaster-set': 'coaster-octagon-holder',
+  'challenge-coin-display': 'challenge-coin-display',
+  'monogram-sign': 'monogram-sign',
+};
+const rail = buyables.filter((p) => p.slug !== 'edge-grain-cutting-board');
+---
+<Base current="home">
+  <section class="hero" data-plane data-opening>
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <h1>Custom woodwork from Collierville, Tennessee.</h1>
+        <p class="lede">Cutting boards, coasters and holiday trays you configure online, plus furniture and built-ins designed with you on a free call.</p>
+        <div class="hero__ctas">
+          <a class="btn" href="/shop/">Shop the workshop <Icon name="arrow-right" class="icon-arrow" /></a>
+          <a class="link-arrow" href="/custom/#consult">Book a free consultation <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+      <div class="hero__media">
+        <Photo slug="endgrain-brick-cover" eager wet sizes="(max-width: 767px) 100vw, 48vw" alt="End-grain cutting board in a brick pattern of dark and purple wood, standing on a table outside the shop" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" data-plane aria-labelledby="rail-h">
+    <div class="wrap">
+      <div class="rail-head">
+        <h2 id="rail-h">Shop by piece</h2>
+        <a class="link-arrow" href="/shop/">Shop all <Icon name="arrow-right" /></a>
+      </div>
+      <ul class="rail">
+        {rail.map((p) => (
+          <li>
+            <a href={`/shop/${p.slug}/`}>
+              <Photo slug={railPhoto[p.slug]} wet sizes="(max-width: 639px) 62vw, (max-width: 1023px) 36vw, 19vw" alt="" />
+              <span><strong>{p.name}</strong><span>From {money(p.basePrice)}</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--surface" data-plane aria-labelledby="flow-h">
+    <div class="wrap flow">
+      <Photo slug="diamond-board-bench" wet sizes="(max-width: 767px) 100vw, 45vw" alt="A long board with a row of dark diamonds, on the workbench before finishing" />
+      <div>
+        <h2 id="flow-h">Made to order, start to finish</h2>
+        <ol>
+          <li><b aria-hidden="true">1</b><div><strong>Choose it</strong><p>Pick the size, pattern and details. The price updates as you go, before you commit.</p></div></li>
+          <li><b aria-hidden="true">2</b><div><strong>Order it</strong><p>Check out online. Every choice you made is saved on the order.</p></div></li>
+          <li><b aria-hidden="true">3</b><div><strong>We build it</strong><p>Your piece is cut, glued up, flattened and oiled in the Collierville shop.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--wood" data-plane aria-labelledby="banner-h">
+    <div class="wrap">
+      <div class="commission__copy">
+        <h2 id="banner-h">Furniture and built‑ins, designed with you.</h2>
+        <p class="lede">Dining tables, built-ins, vanities and dog gates start with a free call. You get a written quote before anything is built.</p>
+        <div><a class="btn" href="/custom/#consult">Book a free consultation <Icon name="arrow-right" class="icon-arrow" /></a></div>
+      </div>
+      <ul class="strip">
+        <li><a href="/shop/built-ins/"><figure><Photo slug="built-in-cabinets" wet sizes="(max-width: 767px) 100vw, 45vw" /><figcaption>Built-ins &amp; cabinetry</figcaption></figure></a></li>
+        <li><a href="/shop/dog-gates/"><figure><Photo slug="dog-gate-installed" wet sizes="(max-width: 767px) 50vw, 28vw" /><figcaption>Dog gates</figcaption></figure></a></li>
+        <li><a href="/shop/desks-wall-units/"><figure><Photo slug="fold-desk-open" wet sizes="(max-width: 767px) 50vw, 28vw" /><figcaption>Desks &amp; wall units</figcaption></figure></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" data-plane aria-labelledby="work-h">
+    <div class="wrap">
+      <div class="rail-head">
+        <h2 id="work-h">Recent work</h2>
+        <a class="link-arrow" href="/work/">See all work <Icon name="arrow-right" /></a>
+      </div>
+      <div class="mosaic">
+        <figure class="m-a"><Photo slug="striped-board-counter" wet sizes="(max-width: 767px) 100vw, 40vw" /><figcaption>Striped board</figcaption></figure>
+        <figure class="m-b"><Photo slug="diamond-board-feet" wet sizes="(max-width: 767px) 50vw, 33vw" /><figcaption>Diamond board with brass feet</figcaption></figure>
+        <figure class="m-c"><Photo slug="endgrain-checker-feet" wet sizes="(max-width: 767px) 50vw, 25vw" /><figcaption>End-grain checkerboard</figcaption></figure>
+        <figure class="m-d"><Photo slug="diamond-band-board" wet sizes="(max-width: 767px) 100vw, 58vw" /><figcaption>Diamond band board</figcaption></figure>
+        <figure class="m-e"><Photo slug="coaster-padauk-set" wet sizes="40vw" /><figcaption>Striped coaster set</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--wood" data-plane aria-labelledby="maker-h">
+    <div class="wrap maker">
+      <div class="badge" role="img" aria-label="Wolf River Wood Co. badge"></div>
+      <div class="stack gap-18">
+        <h2 id="maker-h">One shop, one piece at a time</h2>
+        <p class="lede">Wolf River Wood Co. is a woodworking shop in Collierville, Tennessee. Boards and gifts are made in small batches. Furniture is built one commission at a time.</p>
+        <p><a class="link-arrow" href="https://www.facebook.com/profile.php?id=61592891616080" rel="noopener" target="_blank">See new pieces on Facebook<span class="sr-only"> (opens in a new tab)</span> <Icon name="arrow-right" /></a></p>
+      </div>
+    </div>
+  </section>
+</Base>

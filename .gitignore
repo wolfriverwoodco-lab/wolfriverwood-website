@@ -10,3 +10,7 @@ Thumbs.db
 !.env.example
 .claude/
 .playwright-mcp/
+_client-assets/
+test-results/
+playwright-report/
+.astro/

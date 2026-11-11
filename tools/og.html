@@ -1,0 +1,19 @@
+<!doctype html>
+<!-- Source for public/og-default.jpg (1200x630). Render: open /tools-og/ via the dev server and screenshot at 1200x630. -->
+<html><head><meta charset="utf-8"><title>og</title>
+<style>
+  @font-face { font-family: 'BC'; src: url(/og-font.woff2) format('woff2'); font-weight: 600; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body { display: grid; grid-template-columns: 540px 660px; background: #1f1412; color: #efe9e1; font-family: 'BC', 'Arial Narrow', sans-serif; }
+  .l { display: grid; align-content: center; justify-items: start; gap: 26px; padding: 0 56px; }
+  .badge { width: 210px; height: 210px; background: #efe9e1; -webkit-mask: url(/brand/logo-badge.svg) center / contain no-repeat; mask: url(/brand/logo-badge.svg) center / contain no-repeat; }
+  h1 { margin: 0; font-weight: 600; font-size: 54px; line-height: 1.02; text-transform: uppercase; letter-spacing: .01em; }
+  p { margin: 0; font-size: 26px; letter-spacing: .14em; text-transform: uppercase; color: #e3c295; }
+  .r { position: relative; overflow: hidden; }
+  .r img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+  .r::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #e3c295; z-index: 1; }
+</style></head>
+<body>
+  <div class="l"><div class="badge"></div><h1>Custom woodwork,<br>built by hand</h1><p>Collierville, Tennessee</p></div>
+  <div class="r"><img src="/img/work/endgrain-brick-cover-1024.webp" alt=""></div>
+</body></html>

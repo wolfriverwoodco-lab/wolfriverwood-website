@@ -1,0 +1,134 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import Icon from '../../components/Icon.astro';
+import catalog from '../../data/catalog.json';
+import photos from '../../data/photos.json';
+import { money } from '../../lib/pricing.js';
+
+export function getStaticPaths() {
+  return catalog.products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+const { product: p } = Astro.props as { product: any };
+const isBuy = p.mode === 'buy';
+// Consult-only pieces have nothing to submit, so their options are a plain group, not a form.
+const Wrapper = isBuy ? 'form' : 'div';
+const cat = catalog.categories.find((c) => c.id === p.category)!;
+// Defaults: first free choice of each required option. Paid extras are never preselected.
+const defaults: Record<string, string> = {};
+for (const o of p.options) if (o.required) defaults[o.id] = (o.choices.find((c: any) => !c.price && !c.consult) || o.choices[0]).id;
+const thumb = (s: string) => (photos as any)[s].thumb;
+const plus = (c: any) => (c.consult ? 'Quoted' : c.price ? `+${money(c.price)}` : '');
+---
+<Base title={p.name} current="shop" description={`${p.summary} Made to order in Collierville, Tennessee.`} bodyClass={isBuy ? 'has-sticky-buy' : ''}>
+  <div class="wrap">
+    <nav class="crumbs page-head pb-20" aria-label="Breadcrumb">
+      <ol><li><a href="/shop/">Shop</a></li><li><a href={`/shop/#${cat.id}`}>{cat.label}</a></li><li aria-current="page">{p.name}</li></ol>
+    </nav>
+
+    <div class="pdp" data-pdp={p.slug}>
+      <div class="gallery" data-plane data-opening>
+        <div class="gallery__main" data-main-photo>
+          <Photo slug={p.photos[0]} eager wet sizes="(max-width: 899px) 100vw, 54vw" />
+        </div>
+        {p.photos.length > 1 && (
+          <ul class="thumbs" aria-label="More photos">
+            {p.photos.map((s: string, i: number) => (
+              <li><button type="button" data-thumb={s} aria-current={i === 0 ? 'true' : 'false'} aria-label={`Show photo ${i + 1}: ${(photos as any)[s].alt}`}>
+                <img src={thumb(s)} alt="" width="72" height="72" loading="lazy" />
+              </button></li>
+            ))}
+          </ul>
+        )}
+        {p.photoNote && <p class="note"><Icon name="info" />{p.photoNote}</p>}
+      </div>
+
+      <Wrapper class="buy" data-config novalidate={isBuy ? true : undefined}>
+        <div class="stack gap-12">
+          <h1>{p.name}</h1>
+          {isBuy ? (
+            <div class="price-row">
+              <span class="price" data-price aria-live="polite">{money(p.basePrice)}</span>
+              <span class="demo-flag"><Icon name="info" size="14" />Demo price, not yet confirmed</span>
+            </div>
+          ) : (
+            <p class="demo-flag self-start"><Icon name="calendar-blank" size="14" />Quoted after a free consultation</p>
+          )}
+          <p class="muted">{p.description}</p>
+        </div>
+
+        {p.options.map((o: any) => (
+          <fieldset class="opt" data-opt={o.id}>
+            <legend>{o.label}{!o.required && <span>optional</span>}<span data-chosen={o.id}></span></legend>
+            <div class:list={['choices', o.type === 'letter' && 'choices--letters']}>
+              {o.choices.map((c: any) => (
+                <div class="choice">
+                  <input type="radio" name={o.id} id={`${o.id}-${c.id}`} value={c.id} checked={defaults[o.id] === c.id} />
+                  <label for={`${o.id}-${c.id}`}>
+                    <b>{c.label}</b>
+                    {(c.detail || plus(c)) && o.type !== 'letter' && <small>{[c.detail, plus(c)].filter(Boolean).join(' · ')}</small>}
+                  </label>
+                </div>
+              ))}
+            </div>
+            <p class="opt__why" data-why={o.id} aria-live="polite"></p>
+          </fieldset>
+        ))}
+
+        {p.upsells.length > 0 && (
+          <fieldset class="opt">
+            <legend>Optional extras</legend>
+            <div class="extras">
+              {p.upsells.map((u: any) => (
+                <label class="extra">
+                  <input type="checkbox" name={`upsell-${u.id}`} value={u.id} data-upsell />
+                  <span>{u.label}{u.note && <small>{u.note}</small>}</span>
+                  <b>+{money(u.price)}</b>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        )}
+
+        <p class="form-error" data-error role="alert" hidden></p>
+
+        <div class="consult-route" data-consult-route hidden={isBuy}>
+          <p><strong data-consult-reason>{isBuy ? '' : 'This piece is designed with you.'}</strong> Your choices so far go with your request, so you won’t have to repeat them.</p>
+          <a class="btn" href="/custom/#consult" data-consult-link>Book a free consultation <Icon name="calendar-blank" /></a>
+        </div>
+
+        {isBuy && (
+          <div class="buy__actions" data-buy-actions>
+            <div class="qty" role="group" aria-label="Quantity">
+              <button type="button" data-step="-1" aria-label="Decrease quantity"><Icon name="minus" size="16" /></button>
+              <output data-qty aria-live="polite">1</output>
+              <button type="button" data-step="1" aria-label="Increase quantity"><Icon name="plus" size="16" /></button>
+            </div>
+            <button class="btn btn--block" type="submit" data-add><span data-add-label>Add to cart</span></button>
+          </div>
+        )}
+        {isBuy && <p class="note" data-custom-note><Icon name="pencil-simple" /><span>Want something these options don’t cover? <a href="/custom/#consult" data-consult-link>Book a free consultation</a> and bring your choices with you.</span></p>}
+
+        <div class="acc">
+          {Object.entries(p.details).map(([k, v], i) => (
+            <details open={i === 0 && !isBuy}>
+              <summary>{k}<Icon name="caret-down" size="16" /></summary>
+              <p>{v as string}</p>
+            </details>
+          ))}
+        </div>
+      </Wrapper>
+    </div>
+  </div>
+
+  {isBuy && (
+    <div class="sticky-buy" data-sticky-buy aria-hidden="true">
+      <div><span class="muted small">{p.name}</span><br /><strong data-sticky-price>{money(p.basePrice)}</strong></div>
+      <button class="btn" type="button" data-sticky-add tabindex="-1">Add to cart</button>
+    </div>
+  )}
+
+  <script>
+    import '../../scripts/configurator.js';
+  </script>
+</Base>

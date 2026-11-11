@@ -1,0 +1,28 @@
+---
+// Client photo from the build manifest. Responsive srcset, intrinsic ratio reserved (no CLS).
+import photos from '../data/photos.json';
+interface Props {
+  slug: string; sizes?: string; eager?: boolean; class?: string; alt?: string;
+  wet?: boolean; ratio?: string; fit?: 'cover' | 'contain';
+}
+const { slug, sizes = '100vw', eager = false, class: cls = '', alt, wet = false, ratio, fit = 'cover' } = Astro.props;
+const p = (photos as Record<string, any>)[slug];
+if (!p) throw new Error(`Photo not found: ${slug}`);
+const srcset = p.variants.map((v: any) => `${v.src} ${v.w}w`).join(', ');
+const avifset = p.variants.map((v: any) => `${v.avif} ${v.w}w`).join(', ');
+const fallback = p.variants[Math.min(1, p.variants.length - 1)];
+const box = ratio ?? `${p.width} / ${p.height}`;
+---
+<figure class:list={['photo', cls]} style={`--ar:${box}`} data-wet={wet ? '' : undefined}>
+  <picture>
+  <source type="image/avif" srcset={avifset} sizes={sizes} />
+  <img
+    src={fallback.src} srcset={srcset} sizes={sizes}
+    width={p.width} height={p.height}
+    alt={alt ?? p.alt}
+    loading={eager ? 'eager' : 'lazy'} decoding="async"
+    fetchpriority={eager ? 'high' : undefined}
+    class={fit === 'contain' ? 'fit-contain' : undefined}
+  />
+  </picture>
+</figure>

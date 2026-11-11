@@ -1,0 +1,26 @@
+{
+  "name": "wolfriverwood-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler pages dev dist --port 8797",
+    "photos": "node tools/build_photos.mjs",
+    "test": "node --test tests/unit/*.test.js"
+  },
+  "dependencies": {
+    "@fontsource/barlow": "^5.3.0",
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@phosphor-icons/core": "^2.1.1",
+    "astro": "^5.18.2"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.0",
+    "html-validate": "^11.21.0",
+    "node-vibrant": "^4.0.4",
+    "sharp": "^0.35.5",
+    "wrangler": "^4.160.0"
+  }
+}

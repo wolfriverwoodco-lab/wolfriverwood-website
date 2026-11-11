@@ -1,0 +1,685 @@
+{
+ "monogram-sign": {
+  "alt": "Dark wood sign with a large inlaid light-wood letter B and a light border",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/monogram-sign-480.webp",
+    "avif": "/img/work/monogram-sign-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/monogram-sign-768.webp",
+    "avif": "/img/work/monogram-sign-768.avif"
+   }
+  ],
+  "thumb": "/img/work/monogram-sign-thumb.webp"
+ },
+ "built-in-cabinets": {
+  "alt": "Built-in shelving and cabinets around a living room fireplace and TV",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/built-in-cabinets-480.webp",
+    "avif": "/img/work/built-in-cabinets-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/built-in-cabinets-800.webp",
+    "avif": "/img/work/built-in-cabinets-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/built-in-cabinets-1024.webp",
+    "avif": "/img/work/built-in-cabinets-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/built-in-cabinets-thumb.webp"
+ },
+ "adirondack-chair": {
+  "alt": "Light wood Adirondack chair on a patio",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/adirondack-chair-480.webp",
+    "avif": "/img/work/adirondack-chair-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/adirondack-chair-768.webp",
+    "avif": "/img/work/adirondack-chair-768.avif"
+   }
+  ],
+  "thumb": "/img/work/adirondack-chair-thumb.webp"
+ },
+ "dog-gate-barn": {
+  "alt": "Barn-door style wooden dog gate fitted across a bedroom doorway",
+  "width": 868,
+  "height": 906,
+  "ratio": 0.9581,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/dog-gate-barn-480.webp",
+    "avif": "/img/work/dog-gate-barn-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/dog-gate-barn-800.webp",
+    "avif": "/img/work/dog-gate-barn-800.avif"
+   },
+   {
+    "w": 868,
+    "src": "/img/work/dog-gate-barn-868.webp",
+    "avif": "/img/work/dog-gate-barn-868.avif"
+   }
+  ],
+  "thumb": "/img/work/dog-gate-barn-thumb.webp"
+ },
+ "endgrain-brick-cover": {
+  "alt": "End-grain cutting board in a brick pattern of dark and purple wood with light accents",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/endgrain-brick-cover-480.webp",
+    "avif": "/img/work/endgrain-brick-cover-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/endgrain-brick-cover-800.webp",
+    "avif": "/img/work/endgrain-brick-cover-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/endgrain-brick-cover-1024.webp",
+    "avif": "/img/work/endgrain-brick-cover-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/endgrain-brick-cover-thumb.webp"
+ },
+ "coaster-holder-angled": {
+  "alt": "Striped wooden coasters standing in an angled holder",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/coaster-holder-angled-480.webp",
+    "avif": "/img/work/coaster-holder-angled-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/coaster-holder-angled-768.webp",
+    "avif": "/img/work/coaster-holder-angled-768.avif"
+   }
+  ],
+  "thumb": "/img/work/coaster-holder-angled-thumb.webp"
+ },
+ "endgrain-checker-feet": {
+  "alt": "End-grain checkerboard cutting board on edge, showing brass feet",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/endgrain-checker-feet-480.webp",
+    "avif": "/img/work/endgrain-checker-feet-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/endgrain-checker-feet-768.webp",
+    "avif": "/img/work/endgrain-checker-feet-768.avif"
+   }
+  ],
+  "thumb": "/img/work/endgrain-checker-feet-thumb.webp"
+ },
+ "fold-desk-closed": {
+  "alt": "Wall-mounted fold-down desk, closed, with a chalkboard face and yellow frame",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/fold-desk-closed-480.webp",
+    "avif": "/img/work/fold-desk-closed-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/fold-desk-closed-768.webp",
+    "avif": "/img/work/fold-desk-closed-768.avif"
+   }
+  ],
+  "thumb": "/img/work/fold-desk-closed-thumb.webp"
+ },
+ "coaster-octagon-pair": {
+  "alt": "Octagonal walnut coaster beside its striped holder",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/coaster-octagon-pair-480.webp",
+    "avif": "/img/work/coaster-octagon-pair-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/coaster-octagon-pair-800.webp",
+    "avif": "/img/work/coaster-octagon-pair-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/coaster-octagon-pair-1024.webp",
+    "avif": "/img/work/coaster-octagon-pair-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/coaster-octagon-pair-thumb.webp"
+ },
+ "diamond-boards-kitchen": {
+  "alt": "Two cutting boards with dark diamond inlays standing in a kitchen",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/diamond-boards-kitchen-480.webp",
+    "avif": "/img/work/diamond-boards-kitchen-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/diamond-boards-kitchen-800.webp",
+    "avif": "/img/work/diamond-boards-kitchen-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/diamond-boards-kitchen-1024.webp",
+    "avif": "/img/work/diamond-boards-kitchen-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/diamond-boards-kitchen-thumb.webp"
+ },
+ "coaster-octagon-holder": {
+  "alt": "Set of octagonal coasters in a striped wooden holder",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/coaster-octagon-holder-480.webp",
+    "avif": "/img/work/coaster-octagon-holder-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/coaster-octagon-holder-768.webp",
+    "avif": "/img/work/coaster-octagon-holder-768.avif"
+   }
+  ],
+  "thumb": "/img/work/coaster-octagon-holder-thumb.webp"
+ },
+ "fold-desk-open": {
+  "alt": "Wall-mounted fold-down desk opened, with shelves above",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/fold-desk-open-480.webp",
+    "avif": "/img/work/fold-desk-open-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/fold-desk-open-768.webp",
+    "avif": "/img/work/fold-desk-open-768.avif"
+   }
+  ],
+  "thumb": "/img/work/fold-desk-open-thumb.webp"
+ },
+ "diamond-board-bench": {
+  "alt": "Long board with a row of dark diamonds on the workbench",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/diamond-board-bench-480.webp",
+    "avif": "/img/work/diamond-board-bench-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/diamond-board-bench-768.webp",
+    "avif": "/img/work/diamond-board-bench-768.avif"
+   }
+  ],
+  "thumb": "/img/work/diamond-board-bench-thumb.webp"
+ },
+ "coaster-padauk-set": {
+  "alt": "Stack of red and light striped square coasters with a matching holder",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/coaster-padauk-set-480.webp",
+    "avif": "/img/work/coaster-padauk-set-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/coaster-padauk-set-800.webp",
+    "avif": "/img/work/coaster-padauk-set-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/coaster-padauk-set-1024.webp",
+    "avif": "/img/work/coaster-padauk-set-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/coaster-padauk-set-thumb.webp"
+ },
+ "striped-chevron-board": {
+  "alt": "Striped edge-grain cutting board with a chevron band",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/striped-chevron-board-480.webp",
+    "avif": "/img/work/striped-chevron-board-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/striped-chevron-board-768.webp",
+    "avif": "/img/work/striped-chevron-board-768.avif"
+   }
+  ],
+  "thumb": "/img/work/striped-chevron-board-thumb.webp"
+ },
+ "challenge-coin-display": {
+  "alt": "Walnut challenge coin display with five shelves and an engraved W4 crest",
+  "width": 3024,
+  "height": 4032,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/challenge-coin-display-480.webp",
+    "avif": "/img/work/challenge-coin-display-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/challenge-coin-display-800.webp",
+    "avif": "/img/work/challenge-coin-display-800.avif"
+   },
+   {
+    "w": 1200,
+    "src": "/img/work/challenge-coin-display-1200.webp",
+    "avif": "/img/work/challenge-coin-display-1200.avif"
+   }
+  ],
+  "thumb": "/img/work/challenge-coin-display-thumb.webp"
+ },
+ "endgrain-brick-counter": {
+  "alt": "End-grain brick-pattern cutting board on a kitchen counter",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/endgrain-brick-counter-480.webp",
+    "avif": "/img/work/endgrain-brick-counter-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/endgrain-brick-counter-768.webp",
+    "avif": "/img/work/endgrain-brick-counter-768.avif"
+   }
+  ],
+  "thumb": "/img/work/endgrain-brick-counter-thumb.webp"
+ },
+ "boards-in-progress": {
+  "alt": "Cutting boards in progress on a shop bench",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/boards-in-progress-480.webp",
+    "avif": "/img/work/boards-in-progress-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/boards-in-progress-768.webp",
+    "avif": "/img/work/boards-in-progress-768.avif"
+   }
+  ],
+  "thumb": "/img/work/boards-in-progress-thumb.webp"
+ },
+ "pumpkin-tray": {
+  "alt": "Cherry serving tray carved in the shape of a pumpkin with grooved sections",
+  "width": 2836,
+  "height": 2992,
+  "ratio": 0.9479,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/pumpkin-tray-480.webp",
+    "avif": "/img/work/pumpkin-tray-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/pumpkin-tray-800.webp",
+    "avif": "/img/work/pumpkin-tray-800.avif"
+   },
+   {
+    "w": 1200,
+    "src": "/img/work/pumpkin-tray-1200.webp",
+    "avif": "/img/work/pumpkin-tray-1200.avif"
+   }
+  ],
+  "thumb": "/img/work/pumpkin-tray-thumb.webp"
+ },
+ "diamond-board-feet": {
+  "alt": "Diamond-pattern cutting board on edge with brass feet",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/diamond-board-feet-480.webp",
+    "avif": "/img/work/diamond-board-feet-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/diamond-board-feet-800.webp",
+    "avif": "/img/work/diamond-board-feet-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/diamond-board-feet-1024.webp",
+    "avif": "/img/work/diamond-board-feet-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/diamond-board-feet-thumb.webp"
+ },
+ "diamond-band-board": {
+  "alt": "Cutting board with a band of dark diamonds between striped edges",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/diamond-band-board-480.webp",
+    "avif": "/img/work/diamond-band-board-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/diamond-band-board-800.webp",
+    "avif": "/img/work/diamond-band-board-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/diamond-band-board-1024.webp",
+    "avif": "/img/work/diamond-band-board-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/diamond-band-board-thumb.webp"
+ },
+ "built-in-wide": {
+  "alt": "Living room with built-in cabinets and shelving around the fireplace",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/built-in-wide-480.webp",
+    "avif": "/img/work/built-in-wide-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/built-in-wide-800.webp",
+    "avif": "/img/work/built-in-wide-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/built-in-wide-1024.webp",
+    "avif": "/img/work/built-in-wide-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/built-in-wide-thumb.webp"
+ },
+ "pumpkin-board": {
+  "alt": "Cherry cutting board cut in the shape of a pumpkin",
+  "width": 968,
+  "height": 816,
+  "ratio": 1.1863,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/pumpkin-board-480.webp",
+    "avif": "/img/work/pumpkin-board-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/pumpkin-board-800.webp",
+    "avif": "/img/work/pumpkin-board-800.avif"
+   },
+   {
+    "w": 968,
+    "src": "/img/work/pumpkin-board-968.webp",
+    "avif": "/img/work/pumpkin-board-968.avif"
+   }
+  ],
+  "thumb": "/img/work/pumpkin-board-thumb.webp"
+ },
+ "coaster-stack": {
+  "alt": "Small stack of square coasters in red, walnut and light wood",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/coaster-stack-480.webp",
+    "avif": "/img/work/coaster-stack-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/coaster-stack-768.webp",
+    "avif": "/img/work/coaster-stack-768.avif"
+   }
+  ],
+  "thumb": "/img/work/coaster-stack-thumb.webp"
+ },
+ "striped-board-counter": {
+  "alt": "Walnut and maple striped cutting board on a granite counter",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/striped-board-counter-480.webp",
+    "avif": "/img/work/striped-board-counter-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/striped-board-counter-768.webp",
+    "avif": "/img/work/striped-board-counter-768.avif"
+   }
+  ],
+  "thumb": "/img/work/striped-board-counter-thumb.webp"
+ },
+ "dog-gate-tall": {
+  "alt": "Wooden dog gate across a hallway",
+  "width": 602,
+  "height": 1308,
+  "ratio": 0.4602,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/dog-gate-tall-480.webp",
+    "avif": "/img/work/dog-gate-tall-480.avif"
+   },
+   {
+    "w": 602,
+    "src": "/img/work/dog-gate-tall-602.webp",
+    "avif": "/img/work/dog-gate-tall-602.avif"
+   }
+  ],
+  "thumb": "/img/work/dog-gate-tall-thumb.webp"
+ },
+ "endgrain-stripe-board": {
+  "alt": "Dark end-grain cutting board with a padauk stripe",
+  "width": 1024,
+  "height": 768,
+  "ratio": 1.3333,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/endgrain-stripe-board-480.webp",
+    "avif": "/img/work/endgrain-stripe-board-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/endgrain-stripe-board-800.webp",
+    "avif": "/img/work/endgrain-stripe-board-800.avif"
+   },
+   {
+    "w": 1024,
+    "src": "/img/work/endgrain-stripe-board-1024.webp",
+    "avif": "/img/work/endgrain-stripe-board-1024.avif"
+   }
+  ],
+  "thumb": "/img/work/endgrain-stripe-board-thumb.webp"
+ },
+ "endgrain-checker-tall": {
+  "alt": "Tall end-grain checkerboard cutting board standing on a counter",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/endgrain-checker-tall-480.webp",
+    "avif": "/img/work/endgrain-checker-tall-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/endgrain-checker-tall-768.webp",
+    "avif": "/img/work/endgrain-checker-tall-768.avif"
+   }
+  ],
+  "thumb": "/img/work/endgrain-checker-tall-thumb.webp"
+ },
+ "endgrain-brick-feet": {
+  "alt": "Brick-pattern end-grain board on edge with brass feet",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/endgrain-brick-feet-480.webp",
+    "avif": "/img/work/endgrain-brick-feet-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/endgrain-brick-feet-768.webp",
+    "avif": "/img/work/endgrain-brick-feet-768.avif"
+   }
+  ],
+  "thumb": "/img/work/endgrain-brick-feet-thumb.webp"
+ },
+ "dog-gate-panel": {
+  "alt": "Wooden gate panel held up outdoors with two dogs beside it",
+  "width": 768,
+  "height": 1024,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/dog-gate-panel-480.webp",
+    "avif": "/img/work/dog-gate-panel-480.avif"
+   },
+   {
+    "w": 768,
+    "src": "/img/work/dog-gate-panel-768.webp",
+    "avif": "/img/work/dog-gate-panel-768.avif"
+   }
+  ],
+  "thumb": "/img/work/dog-gate-panel-thumb.webp"
+ },
+ "dog-gate-installed": {
+  "alt": "Barn-door dog gate installed in a doorway",
+  "width": 1202,
+  "height": 1608,
+  "ratio": 0.7475,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/dog-gate-installed-480.webp",
+    "avif": "/img/work/dog-gate-installed-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/dog-gate-installed-800.webp",
+    "avif": "/img/work/dog-gate-installed-800.avif"
+   },
+   {
+    "w": 1200,
+    "src": "/img/work/dog-gate-installed-1200.webp",
+    "avif": "/img/work/dog-gate-installed-1200.avif"
+   }
+  ],
+  "thumb": "/img/work/dog-gate-installed-thumb.webp"
+ },
+ "walnut-backer": {
+  "alt": "Arched walnut panel showing its grain",
+  "width": 4284,
+  "height": 5712,
+  "ratio": 0.75,
+  "variants": [
+   {
+    "w": 480,
+    "src": "/img/work/walnut-backer-480.webp",
+    "avif": "/img/work/walnut-backer-480.avif"
+   },
+   {
+    "w": 800,
+    "src": "/img/work/walnut-backer-800.webp",
+    "avif": "/img/work/walnut-backer-800.avif"
+   },
+   {
+    "w": 1200,
+    "src": "/img/work/walnut-backer-1200.webp",
+    "avif": "/img/work/walnut-backer-1200.avif"
+   }
+  ],
+  "thumb": "/img/work/walnut-backer-thumb.webp"
+ }
+}

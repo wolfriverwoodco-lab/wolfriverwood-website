@@ -1,0 +1,207 @@
+---
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '@fontsource/barlow/600.css';
+import '@fontsource/barlow-condensed/600.css';
+import '@fontsource/barlow-condensed/700.css';
+import '../styles/global.css';
+import fontDisplay from '@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2?url';
+import Icon from '../components/Icon.astro';
+import catalog from '../data/catalog.json';
+import photos from '../data/photos.json';
+
+interface Props { title?: string; description?: string; current?: string; ogImage?: string; bodyClass?: string }
+const {
+  title,
+  description = 'Custom cutting boards, coasters, holiday trays and made-to-order furniture, built by hand in Collierville, Tennessee.',
+  current = '',
+  ogImage = '/og-default.jpg',
+  bodyClass = '',
+} = Astro.props;
+const fullTitle = title ? `${title} | Wolf River Wood Co.` : 'Wolf River Wood Co. | Custom Woodwork in Collierville, TN';
+// Preview build: staging notice + noindex on. Release build sets PUBLIC_STAGING=false.
+const staging = import.meta.env.PUBLIC_STAGING !== 'false';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const EMAIL = 'wolfriverwoodco@gmail.com';
+const FACEBOOK = 'https://www.facebook.com/profile.php?id=61592891616080';
+const thumb = (slug: string) => (photos as any)[slug].thumb;
+const byCat = (id: string) => catalog.products.filter((p) => p.category === id);
+const navCats = catalog.categories;
+const ld = {
+  '@context': 'https://schema.org', '@type': 'LocalBusiness', name: 'Wolf River Wood Co.',
+  description: 'Custom woodworking: cutting boards, coasters, serving trays, displays and made-to-order furniture.',
+  email: EMAIL, sameAs: [FACEBOOK], image: new URL('/brand/logo-badge-1024.png', Astro.site).href,
+  address: { '@type': 'PostalAddress', addressLocality: 'Collierville', addressRegion: 'TN', addressCountry: 'US' },
+};
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  {staging && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="canonical" href={canonical} />
+  <link rel="preload" href={fontDisplay} as="font" type="font/woff2" crossorigin />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#f2f1ed" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#17110f" media="(prefers-color-scheme: dark)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Wolf River Wood Co." />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Wolf River Wood Co. badge beside an end-grain cutting board" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <script is:inline>
+    // Motion is opt-in: only with JS and without reduced motion does the seam hide content.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('plane-ready');
+  </script>
+</head>
+<body class={bodyClass}>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="utility">
+    <div class="wrap">
+      <a class="utility__mail" href={`mailto:${EMAIL}`} aria-label={`Email ${EMAIL}`}><Icon name="envelope-simple" /><span>{EMAIL}</span></a>
+      <nav class="utility__pills" aria-label="Quick links">
+        <a class="pill" href="/shop/holiday-serving-tray/">Holiday trays</a>
+        <a class="pill" href="/work/">Our work</a>
+        <a class="pill pill--hot" href="/custom/">Custom work</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="header">
+    {staging && <div class="staging" role="note"><Icon name="pencil-simple" size="14" />Website in progress — being built by HospCreative</div>}
+    <div class="wrap header__bar">
+      <div class="header__left">
+        <button class="icon-btn only-mobile" type="button" data-drawer-open="menu" aria-label="Open menu" aria-haspopup="dialog"><Icon name="list" size="26" /></button>
+      </div>
+      <a class="lockup" href="/" aria-label="Wolf River Wood Co., home">
+        <span class="lockup__mark" aria-hidden="true"></span>
+        <span class="lockup__word" aria-hidden="true"></span>
+      </a>
+      <div class="header__right">
+        <button class="icon-btn" type="button" data-drawer-open="cart" aria-haspopup="dialog" aria-label="Open cart, 0 items" data-cart-button>
+          <Icon name="shopping-bag-open" size="26" />
+          <span class="count" data-cart-count hidden>0</span>
+        </button>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <ul class="wrap nav__list">
+        {navCats.map((c) => (
+          <li class="nav__item">
+            <button class="nav__link" type="button" aria-expanded="false" aria-controls={`pop-${c.id}`} data-menu-toggle>
+              {c.label} <Icon name="caret-down" size="14" />
+            </button>
+            <div class="menu-pop" id={`pop-${c.id}`} data-menu-pop>
+              {byCat(c.id).map((p) => (
+                <a href={`/shop/${p.slug}/`}>
+                  <img src={thumb(p.photos[0])} alt="" width="56" height="56" loading="lazy" />
+                  <span><strong>{p.name}</strong><small>{p.mode === 'consult' ? 'Free consultation' : p.summary}</small></span>
+                </a>
+              ))}
+            </div>
+          </li>
+        ))}
+        <li class="nav__item"><a class="nav__link" href="/shop/" aria-current={current === 'shop' ? 'page' : undefined}>Shop all</a></li>
+        <li class="nav__item"><a class="nav__link" href="/work/" aria-current={current === 'work' ? 'page' : undefined}>Our work</a></li>
+        <li class="nav__item"><a class="nav__link" href="/custom/" aria-current={current === 'custom' ? 'page' : undefined}>Custom orders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="lockup" href="/" aria-label="Wolf River Wood Co., home" data-footer-lockup><span class="lockup__mark" aria-hidden="true"></span><span class="lockup__word" aria-hidden="true"></span></a>
+          <p>Custom woodwork, built by hand in Collierville, Tennessee.</p>
+        </div>
+        <div>
+          <h2>Shop</h2>
+          <ul>{catalog.products.filter((p) => p.mode === 'buy').map((p) => <li><a href={`/shop/${p.slug}/`}>{p.name}</a></li>)}</ul>
+        </div>
+        <div>
+          <h2>Custom</h2>
+          <ul>
+            {byCat('furniture').map((p) => <li><a href={`/shop/${p.slug}/`}>{p.name}</a></li>)}
+            <li><a href="/custom/#consult">Book a free consultation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Get in touch</h2>
+          <ul>
+            <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+            <li><a href={FACEBOOK} rel="noopener" target="_blank">Facebook<span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href="/work/">Our work</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__fine">
+        <span>&copy; 2026 Wolf River Wood Co.</span>
+        <span>Collierville, Tennessee</span>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="drawer drawer--left" id="drawer-menu" aria-labelledby="menu-title" data-drawer="menu">
+    <div class="drawer__head">
+      <h2 id="menu-title">Menu</h2>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Close menu"><Icon name="x" size="24" /></button>
+    </div>
+    <div class="drawer__body">
+      <ul class="mnav">
+        {navCats.map((c, i) => (
+          <li style={`--i:${i}`}>
+            <details>
+              <summary>{c.label} <Icon name="caret-down" size="18" /></summary>
+              <ul>
+                {byCat(c.id).map((p) => <li><a href={`/shop/${p.slug}/`}><img src={thumb(p.photos[0])} alt="" width="40" height="40" loading="lazy" />{p.name}</a></li>)}
+              </ul>
+            </details>
+          </li>
+        ))}
+        <li style="--i:3"><a href="/shop/">Shop all <Icon name="arrow-right" /></a></li>
+        <li style="--i:4"><a href="/work/">Our work <Icon name="arrow-right" /></a></li>
+        <li style="--i:5"><a href="/custom/">Custom orders <Icon name="arrow-right" /></a></li>
+      </ul>
+    </div>
+    <div class="drawer__foot">
+      <a class="btn btn--block" href="/custom/#consult">Book a free consultation</a>
+    </div>
+  </dialog>
+
+  <dialog class="drawer" id="drawer-cart" aria-labelledby="cart-title" data-drawer="cart">
+    <div class="drawer__head">
+      <h2 id="cart-title">Your cart</h2>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Close cart"><Icon name="x" size="24" /></button>
+    </div>
+    <div class="drawer__body" data-cart-body aria-live="polite"></div>
+    <div class="drawer__foot" data-cart-foot hidden>
+      <div class="totals"><span>Subtotal</span><span data-cart-subtotal></span></div>
+      <p class="note"><Icon name="info" />Demo prices. The final total is confirmed on the server at checkout.</p>
+      <a class="btn btn--block" href="/checkout/">Go to checkout <Icon name="arrow-right" class="icon-arrow" /></a>
+    </div>
+  </dialog>
+
+
+  <script>
+    import '../scripts/site.js';
+  </script>
+</body>
+</html>
