@@ -284,3 +284,20 @@ body?.addEventListener('click', (e) => {
 });
 cart.subscribe(renderCart);
 renderCart();
+
+/* ---------- hero b-roll: pause button, stopped with reduced motion, idle while off screen ---------- */
+(function initHeroVideo() {
+  const v = $('[data-hero-video]');
+  const btn = $('[data-hero-pause]');
+  if (!v || !btn) return;
+  let userPaused = false;
+  const label = btn.querySelector('.sr-only');
+  const sync = () => { btn.setAttribute('aria-pressed', String(userPaused)); label.textContent = userPaused ? 'Play background video' : 'Pause background video'; };
+  const want = () => !userPaused && !reduce.matches;
+  const play = () => { if (want()) v.play().catch(() => {}); };
+  v.muted = true; // required for script-started playback
+  reduce.addEventListener('change', () => (reduce.matches ? v.pause() : play()));
+  btn.addEventListener('click', () => { userPaused = !userPaused; sync(); userPaused ? v.pause() : play(); });
+  new IntersectionObserver(([e]) => (e.isIntersecting ? play() : v.pause())).observe(v);
+  sync();
+})();

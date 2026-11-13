@@ -46,7 +46,14 @@ const rings = [
 const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1), y: (200 + r * Math.sin(a)).toFixed(1) });
 ---
 <Base current="home">
-  <section class="hero" data-plane data-opening>
+  <section class="hero hero--video" data-plane data-opening>
+    <div class="hero__bg" aria-hidden="true">
+      <video class="hero__video" muted loop playsinline preload="metadata" poster="/video/hero-router-poster.webp" data-hero-video>
+        <source src="/video/hero-router-720.mp4" type="video/mp4" media="(max-width: 767px)" />
+        <source src="/video/hero-router-1280.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <button class="hero__pause" type="button" data-hero-pause aria-pressed="false"><Icon name="pause" size="16" class="hero__pause-off" /><Icon name="play" size="16" class="hero__pause-on" /><span class="sr-only">Pause background video</span></button>
     <div class="wrap hero__grid">
       <div class="hero__copy">
         <p class="hero__place">Wolf River Wood Co. · Collierville, Tennessee</p>
@@ -87,7 +94,7 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
 
   <SawLine />
   <section class="section section--maple has-board" data-plane data-saw-target aria-labelledby="flow-h">
-    <div class="cut-board" aria-hidden="true"></div>
+    <div class="cut-board" aria-hidden="true"><div class="cut-board__in"></div></div>
     <div class="wrap flow">
       <Photo slug="diamond-board-bench" wet sizes="(max-width: 767px) 100vw, 45vw" alt="A long board with a row of dark diamonds, on the workbench before finishing" />
       <div>
@@ -110,7 +117,8 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
     })();
   </script>
 
-  <section class="section band--padauk" data-plane aria-labelledby="banner-h">
+  <section class="section band--padauk has-board" data-plane aria-labelledby="banner-h">
+    <div class="cut-board cut-board--left cut-board--checker" aria-hidden="true"><div class="cut-board__in"></div></div>
     <div class="wrap">
       <div class="commission__copy">
         <h2 id="banner-h">Gifts and kitchen pieces you can order today.</h2>

@@ -282,7 +282,7 @@ p { margin: 0; text-wrap: pretty; }
 /* ---------- wood bands: the pattern breaks ----------
    Same in light and dark mode on purpose: walnut is always dark, maple always light, so each band
    breaks the page whichever scheme the visitor uses. Tokens are re-scoped so everything inside follows. */
-.section--wood, .band--walnut, .band--padauk, .band--purpleheart {
+.section--wood, .band--walnut, .band--padauk, .band--purpleheart, .hero--video {
   color-scheme: dark;
   --ground: #1a110d; --surface: rgba(239, 233, 225, .08); --surface-2: rgba(239, 233, 225, .14);
   --ink: #efe9e1; --ink-2: #c9bcb1; --line: rgba(239, 233, 225, .24);
@@ -318,6 +318,22 @@ p { margin: 0; text-wrap: pretty; }
 .hero__media { position: relative; }
 .hero__media .photo { aspect-ratio: 4 / 3.4; }
 .hero__media figcaption { margin-top: 10px; font-size: .875rem; color: var(--ink-2); }
+/* Video hero: shop b-roll (router sled, slowed and looped forward-and-back) behind a dark veil.
+   The veil is heaviest behind the copy so text contrast never depends on the frame. Walnut shows until
+   the video paints; with reduced motion only the still poster shows. A pause button covers WCAG 2.2.2. */
+.hero--video { position: relative; isolation: isolate; overflow: hidden; }
+.hero__bg { position: absolute; inset: 0; z-index: -1; background: #1a110d url(/video/hero-router-poster.webp) center / cover no-repeat; }
+.hero__video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; display: block; }
+.hero__bg::after { content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(20, 12, 8, .88) 0%, rgba(20, 12, 8, .8) 50%, rgba(20, 12, 8, .55) 100%), linear-gradient(0deg, rgba(20, 12, 8, .35), transparent 40%); }
+.hero--video .hero__place { color: var(--maple); }
+.hero__pause { position: absolute; right: 16px; bottom: 16px; z-index: 2; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid rgba(239, 233, 225, .35); border-radius: 50%; background: rgba(20, 12, 8, .55); color: #efe9e1; cursor: pointer; }
+.hero__pause:hover { background: rgba(20, 12, 8, .8); }
+.hero__pause:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.hero__pause .hero__pause-on, .hero__pause[aria-pressed='true'] .hero__pause-off { display: none; }
+.hero__pause[aria-pressed='true'] .hero__pause-on { display: block; }
+@media (prefers-reduced-motion: reduce) { .hero__video, .hero__pause { display: none; } }
+@media (max-width: 767px) { .hero__bg::after { background: rgba(20, 12, 8, .8); } }
 @media (max-width: 767px) {
   .hero__grid { grid-template-columns: 1fr; }
   .hero__media { order: -1; margin-inline: calc(var(--gutter) * -1); }
@@ -351,7 +367,9 @@ p { margin: 0; text-wrap: pretty; }
 @media (max-width: 767px) { .flow { grid-template-columns: 1fr; } .flow .photo { aspect-ratio: 4 / 3; } }
 
 /* End-grain board in the empty right margin, after the diamond board in the photo beside it:
-   walnut blocks in a checker, a maple centre strip with purpleheart diamonds, maple rails all round.
+   walnut blocks in a checker, a maple centre strip with purpleheart diamonds, maple rails down each side.
+   It runs edge to edge through the section and stays fixed to the screen: the section is a window
+   that scrolls past the board (the clip-path on the outer box clips its fixed inner board).
    Only on screens wide enough to have a margin to fill. */
 .cut-board { display: none; }
 @media (min-width: 1680px) {
@@ -362,37 +380,61 @@ p { margin: 0; text-wrap: pretty; }
     --rail: calc(var(--w) * .07);
     --strip: calc(var(--w) * .36);
     display: block; position: absolute; z-index: 0; pointer-events: none;
-    top: clamp(48px, 6vw, 88px); bottom: clamp(48px, 6vw, 88px);
+    top: 0; bottom: 0; right: calc((var(--free) - var(--w)) / 2); width: var(--w);
+    clip-path: inset(0 -40px);
+  }
+  /* the planing reveal slides children sideways; a transform here would unfix the board */
+  .plane-ready [data-plane] > .cut-board { transform: none !important; }
+  .cut-board__in {
+    position: fixed; top: 0; height: 100vh;
     right: calc((var(--free) - var(--w)) / 2); width: var(--w);
-    border: var(--rail) solid transparent; border-radius: 10px;
+    border-inline: var(--rail) solid transparent;
     background:
       /* glue lines between the end-grain blocks, and each block a shade apart, like end grain turned each way */
       repeating-linear-gradient(180deg, rgba(10, 5, 2, .55) 0 1px, rgba(255, 225, 190, .07) 1px calc(var(--w) * .34), rgba(10, 5, 2, .55) calc(var(--w) * .34) calc(var(--w) * .34 + 1px), rgba(0, 0, 0, .14) calc(var(--w) * .34 + 1px) calc(var(--w) * .68)) padding-box,
       linear-gradient(rgba(255, 230, 200, .06), rgba(255, 230, 200, .06)) padding-box,
       url(/img/texture/walnut-640.webp) center / 260px padding-box,
       url(/img/texture/maple-640.webp) center / 300px border-box;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, .35) inset, 0 18px 30px -18px rgba(40, 20, 8, .55), 0 2px 4px rgba(40, 20, 8, .25);
+    box-shadow: 0 0 24px -6px rgba(40, 20, 8, .45), 0 0 3px rgba(40, 20, 8, .25);
   }
-  .cut-board::before, .cut-board::after {
+  .cut-board__in::before, .cut-board__in::after {
     content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: var(--strip); translate: -50% 0;
   }
   /* the maple centre strip, with a glue line either side */
-  .cut-board::before {
+  .cut-board__in::before {
     background: url(/img/texture/maple-640.webp) center / 300px;
     box-shadow: -1px 0 0 rgba(10, 5, 2, .45), 1px 0 0 rgba(10, 5, 2, .45);
   }
   /* purpleheart diamonds set point to point down the strip */
-  .cut-board::after {
+  .cut-board__in::after {
     background: linear-gradient(rgba(30, 8, 22, .42), rgba(30, 8, 22, .42)), url(/img/texture/purpleheart-640.webp) center / 220px;
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 100 50 50 100 0 50z'/%3E%3C/svg%3E") center / 100% auto repeat-y;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 100 50 50 100 0 50z'/%3E%3C/svg%3E") center / 100% auto repeat-y;
   }
   .has-board > .wrap { position: relative; z-index: 1; }
+
+  /* Left-margin variant: the staggered padauk-and-maple end-grain checker from the board in the gifts photo.
+     Four columns; every other column drops half a block, like strips flipped and offset before the glue-up. */
+  .cut-board--left, .cut-board--left .cut-board__in { right: auto; left: calc((var(--free) - var(--w)) / 2); }
+  .cut-board--checker { --col: calc((var(--w) - 2 * var(--rail)) / 4); }
+  .cut-board--checker .cut-board__in {
+    background:
+      repeating-linear-gradient(90deg, rgba(10, 5, 2, .4) 0 1px, transparent 1px var(--col)) padding-box,
+      url(/img/texture/maple-640.webp) center / 300px padding-box,
+      url(/img/texture/maple-640.webp) 40% 30% / 360px border-box;
+  }
+  .cut-board--checker .cut-board__in::before { content: none; }
+  .cut-board--checker .cut-board__in::after {
+    left: 0; width: 100%; translate: none;
+    background: linear-gradient(rgb(165, 38, 44), rgb(165, 38, 44)), url(/img/texture/padauk-640.webp) center / 240px; background-blend-mode: multiply;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2' preserveAspectRatio='none'%3E%3Cpath d='M0 0h1v1H0zM1 .5h1v1H1z'/%3E%3C/svg%3E") 0 0 / calc(2 * var(--col)) calc(2.5 * var(--col)) repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2' preserveAspectRatio='none'%3E%3Cpath d='M0 0h1v1H0zM1 .5h1v1H1z'/%3E%3C/svg%3E") 0 0 / calc(2 * var(--col)) calc(2.5 * var(--col)) repeat;
+  }
 }
 
 /* commission band: walnut ground, copy over a strip of real commissions */
 .commission__copy { display: grid; gap: 18px; max-width: 620px; margin-bottom: clamp(32px, 5vw, 56px); }
-:is(.section--wood, .band--walnut, .band--padauk, .band--purpleheart) .btn { --bg: var(--maple); --fg: #1f1412; }
+:is(.section--wood, .band--walnut, .band--padauk, .band--purpleheart, .hero--video) .btn { --bg: var(--maple); --fg: #1f1412; }
 .section--wood .btn:hover { background: #efd3ab; }
 .strip { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; list-style: none; margin: 0; padding: 0; }
 .strip .photo { aspect-ratio: auto; height: clamp(280px, 34vw, 460px); }

@@ -303,3 +303,18 @@ test('logo intro: centred, howls, glides into the header, skippable', async ({ p
   await page.mouse.click(10, vp.height - 10);
   await expect(page.locator('html')).not.toHaveClass(/intro/, { timeout: 1000 });
 });
+
+test('hero b-roll: plays muted, pause button stops it, reduced motion keeps it still', async ({ page }) => {
+  await page.goto('/');
+  const v = page.locator('[data-hero-video]');
+  await expect.poll(() => v.evaluate((el) => !el.paused && el.currentTime > 0.3), { timeout: 5000 }).toBe(true);
+  expect(await v.evaluate((el) => el.muted)).toBe(true);
+  await page.click('[data-hero-pause]');
+  await expect(page.locator('[data-hero-pause]')).toHaveAttribute('aria-pressed', 'true');
+  expect(await v.evaluate((el) => el.paused)).toBe(true);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.waitForTimeout(1000);
+  await expect(v).toBeHidden();
+  expect(await v.evaluate((el) => el.paused && el.currentTime === 0)).toBe(true);
+});
