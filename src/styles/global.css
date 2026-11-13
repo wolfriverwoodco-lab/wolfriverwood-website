@@ -36,6 +36,14 @@
   --e-in: cubic-bezier(.4, 0, 1, 1);
   --e-ui: cubic-bezier(.2, .8, .2, 1);
 
+  /* Real wood under a veil. Veils are set so every text colour inside passes contrast at the
+     texture's brightest (walnut) or darkest (maple) pixel: see DESIGN.md, "Wood bands". */
+  --walnut-bg: linear-gradient(rgba(26, 17, 13, .4), rgba(26, 17, 13, .4)), #1a110d url(/img/texture/walnut-640.webp) center / 640px repeat;
+  --maple-bg: linear-gradient(rgba(244, 236, 224, .6), rgba(244, 236, 224, .6)), #d8bb9f url(/img/texture/maple-640.webp) center / 640px repeat;
+  --padauk-bg: linear-gradient(rgba(31, 15, 8, .5), rgba(31, 15, 8, .5)), #5f2807 url(/img/texture/padauk-640.webp) center / 640px repeat;
+  --purpleheart-bg: linear-gradient(rgba(26, 10, 18, .3), rgba(26, 10, 18, .3)), #411620 url(/img/texture/purpleheart-640.webp) center / 640px repeat;
+  --inlay: url(/img/texture/inlay-maple-640.webp) center / 300px repeat;
+
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -66,7 +74,7 @@
 [hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + var(--notice-h) + 16px); }
 body {
-  margin: 0; background: var(--ground); color: var(--ink);
+  margin: 0; overflow-x: clip; background: var(--ground); color: var(--ink);
   font: 400 1.0625rem/1.6 var(--font-body);
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
 }
@@ -202,9 +210,9 @@ p { margin: 0; text-wrap: pretty; }
 @keyframes settle { from { opacity: 0; transform: translateX(-12px); } }
 
 /* cart: the drawer sits on a whisper of the shop's diamond end-grain board (low contrast, behind content) */
-#drawer-cart { --board-veil: color-mix(in srgb, var(--ground) 93%, transparent); }
-@media (prefers-color-scheme: dark) { #drawer-cart { --board-veil: color-mix(in srgb, var(--ground) 91%, transparent); } }
-#drawer-cart .drawer__body { background: linear-gradient(var(--board-veil), var(--board-veil)), url(/img/board-diamond.svg) center top / 100% auto repeat-y; background-color: var(--ground); }
+#drawer-cart { --board-veil: color-mix(in srgb, var(--ground) 80%, transparent); --board: url(/img/texture/maple-640.webp); }
+@media (prefers-color-scheme: dark) { #drawer-cart { --board-veil: color-mix(in srgb, var(--ground) 72%, transparent); --board: url(/img/texture/walnut-640.webp); } }
+#drawer-cart .drawer__body { background: linear-gradient(var(--board-veil), var(--board-veil)), var(--board) center top / 640px auto repeat; background-color: var(--ground); }
 #drawer-cart .drawer__head, #drawer-cart .drawer__foot { background: var(--ground); }
 .cart-empty { display: grid; gap: 16px; justify-items: start; padding: 32px 0; }
 .cart-empty p { color: var(--ink-2); }
@@ -258,7 +266,7 @@ p { margin: 0; text-wrap: pretty; }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo img.fit-contain { object-fit: contain; }
 .gap-10 { --gap: 10px; } .gap-12 { --gap: 12px; } .gap-16 { --gap: 16px; } .gap-18 { --gap: 18px; } .gap-24 { --gap: 24px; }
-.mb-24 { margin-bottom: 24px; } .pb-20 { padding-bottom: 20px; } .pb-96 { padding-bottom: 96px; }
+.mb-24 { margin-bottom: 24px; } .pb-20 { padding-bottom: 20px; } .pb-96 { padding-bottom: 96px; } .mb-96 { margin-bottom: 96px; }
 .self-start { justify-self: start; } .small { font-size: .8125rem; } .h-sm { font-size: 1.5rem; }
 .shop-foot { margin-block: 48px 72px; }
 [data-flush] { justify-self: start; padding-left: 0; }
@@ -269,9 +277,36 @@ p { margin: 0; text-wrap: pretty; }
 /* ---------- sections ---------- */
 .section { padding-block: clamp(56px, 9vw, 112px); }
 .section--tight { padding-block: clamp(40px, 6vw, 72px); }
-.section--wood { --plane-ground: var(--wood); background: var(--wood); color: var(--wood-ink); }
-.section--wood .muted, .section--wood .lede { color: #c9bcb1; }
 .section--surface { --plane-ground: var(--surface); background: var(--surface); }
+
+/* ---------- wood bands: the pattern breaks ----------
+   Same in light and dark mode on purpose: walnut is always dark, maple always light, so each band
+   breaks the page whichever scheme the visitor uses. Tokens are re-scoped so everything inside follows. */
+.section--wood, .band--walnut, .band--padauk, .band--purpleheart {
+  color-scheme: dark;
+  --ground: #1a110d; --surface: rgba(239, 233, 225, .08); --surface-2: rgba(239, 233, 225, .14);
+  --ink: #efe9e1; --ink-2: #c9bcb1; --line: rgba(239, 233, 225, .24);
+  --accent: #e0805a; --accent-hover: #ea976f; --accent-ink: #17110f; --focus: #e0805a;
+  --veil: rgba(26, 17, 13, .45);
+  --band-bg: var(--walnut-bg);
+  --plane-ground: var(--band-bg);
+  background: var(--band-bg); color: var(--ink);
+}
+/* the exotics: the same padauk and purpleheart that go into the boards. Maple is their accent. */
+.band--padauk { --band-bg: var(--padauk-bg); }
+.band--purpleheart { --band-bg: var(--purpleheart-bg); }
+:is(.band--padauk, .band--purpleheart) { --ink-2: #d9cbbf; --accent: var(--maple); --accent-hover: #efd3ab; --accent-ink: #1f1412; --focus: var(--maple); }
+.section--maple, .band--maple {
+  color-scheme: light;
+  --ground: #e6d3bb; --surface: rgba(255, 250, 242, .5); --surface-2: rgba(255, 250, 242, .72);
+  --ink: #1f1412; --ink-2: #3f302a; --line: rgba(31, 20, 18, .24);
+  --accent: #6e1a0c; --accent-hover: #5a150a; --accent-ink: #fbf7f2; --focus: #6e1a0c;
+  --veil: rgba(230, 211, 187, .42);
+  --plane-ground: var(--maple-bg);
+  background: var(--maple-bg); color: var(--ink);
+}
+/* a band inside .wrap that runs edge to edge while its content keeps the wrap's column */
+.band { margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%); padding-block: clamp(56px, 8vw, 96px); }
 .stack > * + * { margin-top: var(--gap, 16px); }
 
 /* hero */
@@ -315,9 +350,49 @@ p { margin: 0; text-wrap: pretty; }
 .flow .photo { aspect-ratio: 3 / 4; }
 @media (max-width: 767px) { .flow { grid-template-columns: 1fr; } .flow .photo { aspect-ratio: 4 / 3; } }
 
+/* End-grain board in the empty right margin, after the diamond board in the photo beside it:
+   walnut blocks in a checker, a maple centre strip with purpleheart diamonds, maple rails all round.
+   Only on screens wide enough to have a margin to fill. */
+.cut-board { display: none; }
+@media (min-width: 1680px) {
+  .has-board { position: relative; }
+  .cut-board {
+    --free: calc((100vw - var(--max)) / 2);
+    --w: clamp(130px, calc(var(--free) * .5), 210px);
+    --rail: calc(var(--w) * .07);
+    --strip: calc(var(--w) * .36);
+    display: block; position: absolute; z-index: 0; pointer-events: none;
+    top: clamp(48px, 6vw, 88px); bottom: clamp(48px, 6vw, 88px);
+    right: calc((var(--free) - var(--w)) / 2); width: var(--w);
+    border: var(--rail) solid transparent; border-radius: 10px;
+    background:
+      /* glue lines between the end-grain blocks, and each block a shade apart, like end grain turned each way */
+      repeating-linear-gradient(180deg, rgba(10, 5, 2, .55) 0 1px, rgba(255, 225, 190, .07) 1px calc(var(--w) * .34), rgba(10, 5, 2, .55) calc(var(--w) * .34) calc(var(--w) * .34 + 1px), rgba(0, 0, 0, .14) calc(var(--w) * .34 + 1px) calc(var(--w) * .68)) padding-box,
+      linear-gradient(rgba(255, 230, 200, .06), rgba(255, 230, 200, .06)) padding-box,
+      url(/img/texture/walnut-640.webp) center / 260px padding-box,
+      url(/img/texture/maple-640.webp) center / 300px border-box;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .35) inset, 0 18px 30px -18px rgba(40, 20, 8, .55), 0 2px 4px rgba(40, 20, 8, .25);
+  }
+  .cut-board::before, .cut-board::after {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: var(--strip); translate: -50% 0;
+  }
+  /* the maple centre strip, with a glue line either side */
+  .cut-board::before {
+    background: url(/img/texture/maple-640.webp) center / 300px;
+    box-shadow: -1px 0 0 rgba(10, 5, 2, .45), 1px 0 0 rgba(10, 5, 2, .45);
+  }
+  /* purpleheart diamonds set point to point down the strip */
+  .cut-board::after {
+    background: linear-gradient(rgba(30, 8, 22, .42), rgba(30, 8, 22, .42)), url(/img/texture/purpleheart-640.webp) center / 220px;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 100 50 50 100 0 50z'/%3E%3C/svg%3E") center / 100% auto repeat-y;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 100 50 50 100 0 50z'/%3E%3C/svg%3E") center / 100% auto repeat-y;
+  }
+  .has-board > .wrap { position: relative; z-index: 1; }
+}
+
 /* commission band: walnut ground, copy over a strip of real commissions */
 .commission__copy { display: grid; gap: 18px; max-width: 620px; margin-bottom: clamp(32px, 5vw, 56px); }
-.section--wood .btn { --bg: var(--maple); --fg: #1f1412; }
+:is(.section--wood, .band--walnut, .band--padauk, .band--purpleheart) .btn { --bg: var(--maple); --fg: #1f1412; }
 .section--wood .btn:hover { background: #efd3ab; }
 .strip { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; list-style: none; margin: 0; padding: 0; }
 .strip .photo { aspect-ratio: auto; height: clamp(280px, 34vw, 460px); }
@@ -352,7 +427,10 @@ p { margin: 0; text-wrap: pretty; }
 /* workshop note */
 .maker { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: clamp(24px, 6vw, 80px); align-items: center; }
 .maker__mark { position: relative; display: grid; place-items: center; justify-self: center; width: min(340px, 100%); aspect-ratio: 1; }
-.maker .badge { width: 82%; aspect-ratio: 1; background: currentColor; -webkit-mask: url(/brand/logo-badge.svg) center / contain no-repeat; mask: url(/brand/logo-badge.svg) center / contain no-repeat; }
+.maker .inlay { display: grid; width: 82%; aspect-ratio: 1;
+  /* a maple inlay set into the walnut: a hairline glue line and the faintest lip */
+  filter: drop-shadow(0 0 .7px rgba(12, 6, 3, .95)) drop-shadow(0 1px 0 rgba(0, 0, 0, .5)) drop-shadow(0 -1px 0 rgba(255, 236, 205, .07)); }
+.maker .badge { width: 100%; aspect-ratio: 1; background: linear-gradient(160deg, rgba(255, 250, 240, .12), transparent 45%, rgba(70, 35, 10, .14)), var(--inlay); -webkit-mask: url(/brand/logo-badge.svg) center / contain no-repeat; mask: url(/brand/logo-badge.svg) center / contain no-repeat; }
 @media (max-width: 767px) { .maker { grid-template-columns: 1fr; } .maker__mark { width: 200px; justify-self: start; } }
 
 /* footer */
@@ -580,10 +658,10 @@ p { margin: 0; text-wrap: pretty; }
 @keyframes stamp { from { opacity: 0; transform: rotate(-10deg) scale(1.35); } }
 
 /* ---- oil: the oiled section glows warm and the badge catches a pass of light ---- */
-.craft-oil [data-oiled] { background: radial-gradient(ellipse 70% 90% at 22% 50%, #2e1d16, var(--wood) 70%); }
-.craft-oil .maker .badge { background: linear-gradient(105deg, var(--wood-ink) 40%, #fff1d6 50%, var(--wood-ink) 60%) 100% 0 / 320% 100% no-repeat; }
+.craft-oil [data-oiled] { background: radial-gradient(ellipse 70% 90% at 22% 50%, rgba(255, 214, 160, .07), transparent 70%), var(--walnut-bg); }
+.craft-oil .maker .badge { background: linear-gradient(105deg, transparent 40%, rgba(255, 246, 226, .6) 50%, transparent 60%) 100% 0 / 320% 100% no-repeat, var(--inlay); }
 .craft-oil .is-planed .maker .badge { animation: oil-sheen 2600ms var(--e-out) calc(var(--d-plane) * .9) both; }
-@keyframes oil-sheen { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes oil-sheen { from { background-position: 100% 0, center; } to { background-position: 0 0, center; } }
 
 /* ---- checker: end-grain loader ---- */
 .eg-loader { --t: 5px; display: inline-grid; grid-template-columns: repeat(3, var(--t)); grid-auto-rows: var(--t); gap: 1px; margin-right: 10px; vertical-align: -2px; }
@@ -657,7 +735,7 @@ p { margin: 0; text-wrap: pretty; }
 .passport dd.tbd { color: var(--ink-2); font-style: italic; }
 
 /* ---- rings: growth-ring timeline ---- */
-.craft-rings .maker .badge { width: 50%; }
+.craft-rings .maker .inlay { width: 50%; }
 .rings { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .ring { fill: none; stroke: rgba(239, 233, 225, .3); stroke-width: 1.4; }
 .ring--now { stroke: var(--maple); stroke-width: 2; }
@@ -838,13 +916,12 @@ html:not(.plane-ready) .sawline { display: none; }
 .craft-map [data-oiled] > .wrap { position: relative; z-index: 1; }
 .craft-map .mapbg { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .mapbg img { position: absolute; left: 0; top: -12%; width: 100%; height: 124%; max-width: none; object-fit: cover; object-position: 50% 14%; opacity: .62; will-change: transform; }
-.mapbg::after { content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--wood) 20%, transparent) 0%, color-mix(in srgb, var(--wood) 35%, transparent) 38%, color-mix(in srgb, var(--wood) 86%, transparent) 58%, color-mix(in srgb, var(--wood) 92%, transparent) 100%); }
+.mapbg img { -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .7) 30%, rgba(0, 0, 0, .12) 50%, transparent 62%); mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .7) 30%, rgba(0, 0, 0, .12) 50%, transparent 62%); }
 @media (max-width: 767px) {
   .mapbg img { object-position: 52% 50%; opacity: .55; }
-  .mapbg::after { background: linear-gradient(180deg, color-mix(in srgb, var(--wood) 25%, transparent) 0%, color-mix(in srgb, var(--wood) 45%, transparent) 26%, color-mix(in srgb, var(--wood) 88%, transparent) 42%, color-mix(in srgb, var(--wood) 92%, transparent) 100%); }
+  .mapbg img { -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 22%, transparent 38%); mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 22%, transparent 38%); }
 }
-.craft-map .map-credit { display: block; position: absolute; right: var(--gutter); bottom: 12px; z-index: 1; margin: 0; font-size: .6875rem; color: #a89a8f; }
+.craft-map .map-credit { display: block; position: absolute; right: var(--gutter); bottom: 12px; z-index: 1; margin: 0; font-size: .6875rem; color: var(--ink-2); }
 .map-credit a { color: inherit; }
 .geo { display: none; }
 .craft-map .geo { display: block; font: 600 .8125rem/1 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--maple); font-variant-numeric: tabular-nums; }
@@ -892,7 +969,7 @@ html:not(.plane-ready) .sawline { display: none; }
 .people strong { font: 600 1.375rem/1 var(--font-display); text-transform: uppercase; letter-spacing: .03em; }
 .people__photo { aspect-ratio: 4 / 5; display: grid; place-items: center; align-content: center; gap: 6px; border: 1.5px dashed var(--line); border-radius: var(--r); color: var(--ink-2); font-size: .8125rem; }
 @media (max-width: 767px) { .people { grid-template-columns: 1fr 1fr; } }
-.about-cta { display: grid; gap: 12px; justify-items: start; padding: 32px; margin-bottom: 96px; border-radius: var(--r); background: var(--surface); }
+.about-cta { display: grid; gap: 12px; justify-items: start; }
 
 /* ---- care ---- */
 .care__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); padding-bottom: 32px; }

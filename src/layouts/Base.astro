@@ -76,19 +76,19 @@ const ld = {
       for (const id of craftIds) if (id in saved) document.documentElement.classList.toggle('craft-' + id, !!saved[id]);
     } catch {}
   </script>}
-  <script is:inline define:vars={{ introEveryLoad: staging }}>
-    // Logo intro. Preview build: every page load. Release build: at most once every 3 hours per browser.
-    // Never with reduced motion; ?intro always plays it.
+  {current === 'home' && <script is:inline>
+    // Logo intro: home page only, at most once every 3 hours per browser.
+    // Never with reduced motion; /?intro always plays it.
     try {
       var KEY = 'wrw-intro-at', GAP = 3 * 60 * 60 * 1000, now = Date.now(), last = 0;
       try { last = Number(localStorage.getItem(KEY)) || 0; } catch (e) {}
-      var play = location.search.indexOf('intro') > -1 || introEveryLoad || now - last > GAP;
+      var play = location.search.indexOf('intro') > -1 || now - last > GAP;
       if (play && !window.__wrwNoIntro && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('intro');
         try { localStorage.setItem(KEY, String(now)); } catch (e) {}
       }
     } catch (e) {}
-  </script>
+  </script>}
   <script is:inline>
     // Motion is opt-in: only with JS and without reduced motion does the seam hide content.
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('plane-ready');

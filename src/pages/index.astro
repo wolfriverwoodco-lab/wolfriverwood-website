@@ -86,7 +86,8 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
   </section>
 
   <SawLine />
-  <section class="section section--surface" data-plane data-saw-target aria-labelledby="flow-h">
+  <section class="section section--maple has-board" data-plane data-saw-target aria-labelledby="flow-h">
+    <div class="cut-board" aria-hidden="true"></div>
     <div class="wrap flow">
       <Photo slug="diamond-board-bench" wet sizes="(max-width: 767px) 100vw, 45vw" alt="A long board with a row of dark diamonds, on the workbench before finishing" />
       <div>
@@ -109,7 +110,7 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
     })();
   </script>
 
-  <section class="section section--wood" data-plane aria-labelledby="banner-h">
+  <section class="section band--padauk" data-plane aria-labelledby="banner-h">
     <div class="wrap">
       <div class="commission__copy">
         <h2 id="banner-h">Gifts and kitchen pieces you can order today.</h2>
@@ -150,7 +151,7 @@ const marker = (r: number, a: number) => ({ x: (200 + r * Math.cos(a)).toFixed(1
           {rings.map((g, i) => <path d={ring(g.r, i * 1.7 + .4)} class="ring-hit" data-ring={g.n} />)}
           {rings.map((g) => { const m = marker(g.r, g.a); return <g class="ring-pin" data-ring={g.n}><circle cx={m.x} cy={m.y} r="14" /><text x={m.x} y={Number(m.y) + 5} text-anchor="middle">{g.n}</text></g>; })}
         </svg>
-        <div class="badge" role="img" aria-label="Wolf River Wood Co. badge"></div>
+        <div class="inlay"><div class="badge" role="img" aria-label="Wolf River Wood Co. badge, inlaid in maple"></div></div>
       </div>
       <div class="stack gap-18">
         <p class="geo" data-craft="map">Collierville, Tennessee · 35.04° N, 89.66° W</p>

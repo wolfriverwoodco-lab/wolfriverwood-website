@@ -285,11 +285,19 @@ test('logo intro: centred, howls, glides into the header, skippable', async ({ p
   await expect(page.locator('html')).not.toHaveClass(/intro/, { timeout: 7000 });
   await expect(lock).toHaveCSS('transform', 'none');
   await expect(page.locator('.hero')).toHaveClass(/is-planed/);
-  // preview build: every page load plays it, including clicking to another page
+  // home page only, and once every 3 hours: other pages never play it, and a second home visit doesn't either
   await page.evaluate(() => { window.__wrwNoIntro = false; });
   await page.goto('/shop/?intro');
-  await expect(page.locator('html')).toHaveClass(/intro/);
-  await expect(page.locator('html')).not.toHaveClass(/intro/, { timeout: 7000 });
+  await expect(page.locator('html')).not.toHaveClass(/intro/);
+  // a page without the test's no-intro hook, sharing this browser's storage
+  const fresh = await page.context().newPage();
+  await fresh.goto('/');
+  await expect(fresh.locator('html')).not.toHaveClass(/intro/);
+  // after 3 hours it plays again
+  await fresh.evaluate(() => localStorage.setItem('wrw-intro-at', String(Date.now() - 3 * 60 * 60 * 1000 - 1000)));
+  await fresh.goto('/');
+  await expect(fresh.locator('html')).toHaveClass(/intro/);
+  await fresh.close();
   // any input skips it
   await page.goto('/?intro');
   await page.mouse.click(10, vp.height - 10);

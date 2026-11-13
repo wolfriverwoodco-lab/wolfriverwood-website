@@ -1,0 +1,6 @@
+maple-640.webp       <- ambientCG Wood092 (Color map, 1K), one knot patched out (it repeated visibly), resized to 640px
+walnut-640.webp      <- ambientCG Wood067 (Color map, 1K), rotated 90deg, resized to 640px
+padauk-640.webp      <- ambientCG Wood069 (Color map, 1K), resized to 640px
+purpleheart-640.webp <- ambientCG Wood008 (Color map, 1K), rotated 90deg, hue shifted -16deg toward violet, resized to 640px
+inlay-maple-640.webp <- ambientCG Wood021 (Color map, 1K), brightened 16%, saturation -15%, resized to 640px
+License: CC0 1.0 (public domain), https://ambientcg.com/ - no attribution required.
